@@ -44,6 +44,23 @@ syncfit-presentation/
 
 TypeScript, Slidev, Vue.
 
+## Tasks
+
+> **Language: TypeScript (Slidev).**
+
+### Requirements
+
+- [ ] Scaffold the Slidev project.
+- [ ] Write the narrative sections in `slides.md`.
+- [ ] Add architecture diagrams (hardware, core, reasoning, backend, frontend).
+- [ ] Add the data structures section (Ring Buffer, Segment Tree, Max-Heap, Directed State Graph).
+- [ ] Add the hybrid AI section (deterministic `k_load` plus cloud audit).
+- [ ] Add the impact section (social, cultural, economic, normative).
+- [ ] Add the references in APA 7th edition.
+- [ ] Write speaker notes and the presentation script.
+- [ ] Collect demo assets produced by the other repositories.
+- [ ] Rehearse and time the deck for the defense.
+
 ## Related repositories
 
 - [`syncfit-hardware`](../syncfit-hardware)
