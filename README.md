@@ -70,3 +70,18 @@ TypeScript, Slidev, Vue.
 - [`syncfit-frontend`](../syncfit-frontend)
 
 All code, comments, documentation and commits in this repository are written in English.
+
+## Context for a new session
+
+**What it is.** Academic defense deck (Slidev, TypeScript) plus the product
+backlog of user stories as GitHub **issues** in this repo.
+
+**Layout.** `slides.md`, `components/`, `public/`, `notes/`.
+
+**Backlog.** ~25 US (US-01..US-25). Labels: `user-story`, `epic:*`
+(hardware/core/ai/backend/frontend/data/security/infra), `prio:urgente|alta|media|baja`.
+Highlights: **US-21 Rutinas más personalizadas (URGENTE)**, US-22 verificar
+estructuras, US-18 animaciones, US-19 frontend, US-20 backend, US-23 hardware,
+US-24 AWS, US-25 PWA/notificaciones.
+
+**Run.** `npm i && npm run dev` (Slidev). `npm run export` to PDF.
