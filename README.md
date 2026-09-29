@@ -90,3 +90,16 @@ Per-slide script lives in `notes/README.md`; slide-level notes are also inline i
 [`syncfit-frontend`](../syncfit-frontend) · [`syncfit-contracts`](../syncfit-contracts).
 
 All code, comments, documentation and commits in this repository are written in English.
+
+## Handoff for the team
+
+**Role.** Defense deck (Slidev) + interactive diagrams.
+
+**Run.** `npm i && npm run dev`; diagrams at `/flow.html`, `/architecture.html`,
+`/journey.html` (or open `public/*.html` directly; the 3D ones need internet for
+the three.js CDN).
+
+**Contents.** `slides.md` (narrative), `public/flow.html` (2D two-AI pipeline),
+`public/architecture.html` (3D interactive), `public/journey.html` (3D animated,
+Spanish, 9 stations with per-stage inputs/outputs), `notes/README.md` (speaker
+script). User-story backlog lives as GitHub issues in this repo.
