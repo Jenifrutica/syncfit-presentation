@@ -35,7 +35,7 @@
     transition:opacity .28s var(--ease), transform .28s var(--ease)}
   .sheet.swapping{opacity:0;transform:translateY(8px)}
   .head{display:flex;align-items:center;gap:10px;margin:0 0 8px}
-  .head h2{margin:0;font-size:clamp(17px,1.7vw,20px);font-weight:680;letter-spacing:-.015em}
+  .head h2{margin:0;font-size:clamp(15px,1.35vw,17px);font-weight:680;letter-spacing:-.015em}
   .tag{flex:0 0 auto;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
     color:#fff;background:var(--pink-deep);border-radius:999px;padding:3px 9px}
   .desc{margin:0 0 14px;font-size:13px;line-height:1.55;color:var(--text);opacity:.9;max-width:64ch}
@@ -193,8 +193,8 @@ function person({ skin=0xf2c9a0, hair=0x3a2418, top=0xff4f9c, bottom=0x27324a, b
   animated.push({ type:"person", g }); return g;
 }
 function label(text){ const c=document.createElement("canvas"); c.width=1024; c.height=180; const x=c.getContext("2d");
-  x.font="700 74px ui-sans-serif, system-ui, sans-serif"; x.fillStyle="#ffffff"; x.textAlign="center"; x.letterSpacing="2px"; x.fillText(text,512,112);
-  const t=new THREE.CanvasTexture(c); t.anisotropy=4; const s=new THREE.Sprite(new THREE.SpriteMaterial({map:t,transparent:true,depthWrite:false,opacity:.95})); s.scale.set(8,1.4,1); return s; }
+  x.font="700 54px ui-sans-serif, system-ui, sans-serif"; x.fillStyle="#ffffff"; x.textAlign="center"; x.letterSpacing="1px"; x.fillText(text,512,104);
+  const t=new THREE.CanvasTexture(c); t.anisotropy=4; const s=new THREE.Sprite(new THREE.SpriteMaterial({map:t,transparent:true,depthWrite:false,opacity:.95})); s.scale.set(6.2,1.09,1); return s; }
 
 const STATIONS = [
   { who:"Super admin", title:"Administración de la plataforma",
@@ -271,7 +271,7 @@ STATIONS.forEach((st, i) => {
   const g = new THREE.Group(); g.position.x = i * SPACING; world.add(g);
   const pf = new THREE.Mesh(new THREE.CylinderGeometry(4.6,4.8,0.3,44), mat(0x2a1630,{emissive:0x2a0d22})); pf.receiveShadow = true; g.add(pf); platforms.push(pf);
   const r = new THREE.Mesh(new THREE.TorusGeometry(2.6,0.06,10,60), new THREE.MeshBasicMaterial({ color:0x7c3aed, transparent:true, opacity:.45 })); r.rotation.x = Math.PI/2; r.position.y = 0.18; g.add(r); rings.push(r);
-  const lbl = label(st.title.split(":")[0].split("·")[0].trim()); lbl.position.set(0, 5.0, 0); g.add(lbl);
+  const lbl = label(st.title.split(":")[0].split("·")[0].trim()); lbl.position.set(0, 4.35, 0); g.add(lbl);
   st.build(g);
 });
 
