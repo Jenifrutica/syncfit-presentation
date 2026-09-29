@@ -46,9 +46,14 @@ xdg-open public/architecture.html
 - **architecture.html** — the same flow in interactive 3D (nodes, animated
   connections, orbit/zoom), including the gym-equipment input.
 - **journey.html** — a **3D animated** walkthrough (Spanish) with low-poly
-  characters: a bald bearded gym admin surveying equipment, the athlete scanning
-  at the hardware station, DeepSeek designing the routine, etc. Camera auto-tours
-  the seven stations (drag to orbit).
+  characters across **9 stations**, showing **both AIs** (local `core` and
+  DeepSeek) and the **data entering/leaving each stage** (inputs/outputs panel):
+  1. Super admin · 2. Gym admin surveys equipment · 3. Athlete registers/onboards
+  · 4. Joins the gym by code · 5. Hardware scan (raw PPG/°T/force) · 6. **IA #1
+  local (core)**: DSP + RandomForest → RMSSD/fatigue/`k_load` + assessment ·
+  7. **IA #2 DeepSeek**: designs the routine from assessment + profile + catalog +
+  equipment · 8. Deterministic validator · 9. Trains/tracks/shares. Camera
+  auto-tours the stations (drag to orbit).
   1. Super admin creates the gym admin.
   2. Gym admin creates the gym and surveys equipment.
   3. Athlete registers (cedula) and onboards.

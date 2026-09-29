@@ -84,7 +84,7 @@ The model never recomputes k_load.
 
 <iframe src="/journey.html" class="w-full h-[480px] rounded-xl border border-pink-200" />
 
-<!-- Speaker notes: 7 stations - super admin creates the gym admin; gym admin surveys equipment; athlete registers + onboards; joins by code; hardware scan -> local model; DeepSeek designs + deterministic validation; trains/tracks/shares. -->
+<!-- Speaker notes: 9 stations - super admin; gym admin surveys equipment; athlete registers/onboards; joins by code; hardware scan; IA #1 local core (assessment + k_load); IA #2 DeepSeek designs; deterministic validator; trains/tracks/shares. Each station shows its input/output data. -->
 
 ---
 

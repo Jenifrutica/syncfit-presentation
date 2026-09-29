@@ -3,16 +3,21 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>SyncFit Edge — Recorrido del sistema (3D)</title>
+<title>SyncFit Edge — Recorrido completo del sistema (3D)</title>
 <style>
   html,body{margin:0;height:100%;overflow:hidden;background:radial-gradient(1200px 700px at 50% -10%,#3a0f2b 0%,#120714 55%,#060409 100%);
     font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#ffe3f0}
   #c{display:block;width:100vw;height:100vh}
-  .panel{position:fixed;left:20px;bottom:20px;z-index:10;max-width:440px;background:rgba(20,8,18,.72);backdrop-filter:blur(8px);
+  .panel{position:fixed;left:20px;bottom:20px;z-index:10;max-width:520px;background:rgba(20,8,18,.78);backdrop-filter:blur(10px);
     border:1px solid rgba(244,114,182,.45);border-radius:16px;padding:16px 18px;box-shadow:0 12px 40px rgba(0,0,0,.5)}
   .kicker{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#f472b6;margin:0 0 4px}
   .panel h2{margin:0 0 6px;font-size:18px}
-  .panel p{margin:0;font-size:13px;line-height:1.5;color:#f3c9dd}
+  .panel p.desc{margin:0 0 10px;font-size:13px;line-height:1.5;color:#f3c9dd}
+  .io{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .io h4{margin:0 0 4px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#f472b6}
+  .chips{display:flex;flex-wrap:wrap;gap:5px}
+  .chip{font-size:11px;border:1px solid rgba(244,114,182,.5);border-radius:999px;padding:2px 8px;color:#ffd7ea;background:rgba(219,39,119,.15)}
+  .who{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#334155;border-radius:999px;padding:2px 8px;margin-bottom:6px}
   .nav{position:fixed;right:20px;bottom:20px;z-index:10;display:flex;gap:8px;align-items:center}
   .nav button{background:linear-gradient(135deg,#db2777,#a855f7);color:#fff;border:0;border-radius:999px;padding:9px 16px;font-size:13px;cursor:pointer;font-weight:600}
   .nav button.ghost{background:rgba(255,255,255,.12);color:#ffd7ea}
@@ -20,26 +25,32 @@
   .title{position:fixed;left:20px;top:18px;z-index:10}
   .title h1{margin:0;font-size:17px;color:#ff5fa2}
   .title p{margin:3px 0 0;font-size:12px;color:#c9a3b9}
-  .badge{position:fixed;right:20px;top:18px;z-index:10;font-size:11px;color:#c9a3b9}
-  .dots{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;z-index:10;display:flex;gap:8px}
+  .badge{position:fixed;right:20px;top:18px;z-index:10;font-size:11px;color:#c9a3b9;text-align:right;line-height:1.5}
+  .dots{position:fixed;left:50%;transform:translateX(-50%);bottom:24px;z-index:10;display:flex;gap:7px}
   .dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.25);cursor:pointer}
   .dot.on{background:#ff5fa2;box-shadow:0 0 10px #ff5fa2}
+  @media(max-width:720px){.panel{max-width:92vw;left:4vw}.title{display:none}}
 </style>
 </head>
 <body>
-<div class="title"><h1>SyncFit Edge · recorrido del sistema</h1><p>Del panel de administración al entrenamiento con IA — en 3D, animado.</p></div>
-<div class="badge">arrastra para orbitar · rueda para zoom</div>
+<div class="title"><h1>SyncFit Edge · recorrido completo del sistema</h1><p>Las dos IAs y el flujo de datos, extremo a extremo — en 3D, animado.</p></div>
+<div class="badge">arrastra para orbitar · rueda para zoom<br/><span id="engine">Pausar animación: botón</span></div>
 <canvas id="c"></canvas>
 <div class="panel">
-  <p class="kicker" id="kicker">Estación 1 / 7</p>
+  <p class="kicker" id="kicker">Estación 1 / 9</p>
+  <span class="who" id="who">—</span>
   <h2 id="st-title">—</h2>
-  <p id="st-desc">—</p>
+  <p class="desc" id="st-desc">—</p>
+  <div class="io">
+    <div><h4>Datos de entrada</h4><div class="chips" id="in-list"></div></div>
+    <div><h4>Datos de salida</h4><div class="chips" id="out-list"></div></div>
+  </div>
 </div>
 <div class="dots" id="dots"></div>
 <div class="nav">
-  <span class="counter" id="counter">1 / 7</span>
-  <button class="ghost" id="prev">◀ Anterior</button>
-  <button id="next">Siguiente ▶</button>
+  <span class="counter" id="counter">1 / 9</span>
+  <button class="ghost" id="prev">◀</button>
+  <button id="next">▶</button>
   <button class="ghost" id="play">Pausar</button>
 </div>
 <script type="importmap">
@@ -58,155 +69,172 @@ renderer.setSize(innerWidth, innerHeight);
 renderer.shadowMap.enabled = true;
 
 const scene = new THREE.Scene();
-scene.fog = new THREE.FogExp2(0x120714, 0.012);
-const camera = new THREE.PerspectiveCamera(45, innerWidth/innerHeight, 0.1, 400);
-
+scene.fog = new THREE.FogExp2(0x120714, 0.011);
+const camera = new THREE.PerspectiveCamera(45, innerWidth/innerHeight, 0.1, 500);
 scene.add(new THREE.HemisphereLight(0xffe0f0, 0x2a1030, 0.7));
 const key = new THREE.DirectionalLight(0xff8ec7, 1.1); key.position.set(10, 18, 12); key.castShadow = true;
-key.shadow.mapSize.set(1024,1024); key.shadow.camera.left=-40; key.shadow.camera.right=40; key.shadow.camera.top=40; key.shadow.camera.bottom=-40;
-scene.add(key);
+key.shadow.mapSize.set(1024,1024); key.shadow.camera.left=-60; key.shadow.camera.right=60; key.shadow.camera.top=60; key.shadow.camera.bottom=-60; scene.add(key);
 const rim = new THREE.DirectionalLight(0x7cc7ff, 0.7); rim.position.set(-12, 8, -10); scene.add(rim);
 
-// floor
-const floor = new THREE.Mesh(new THREE.PlaneGeometry(400, 120), new THREE.MeshStandardMaterial({ color:0x1b0e1a, roughness:1, metalness:0 }));
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(600, 140), new THREE.MeshStandardMaterial({ color:0x1b0e1a, roughness:1 }));
 floor.rotation.x = -Math.PI/2; floor.receiveShadow = true; scene.add(floor);
-const grid = new THREE.GridHelper(400, 100, 0x5a2a4a, 0x2a1428); grid.position.y = 0.01; scene.add(grid);
+const grid = new THREE.GridHelper(600, 150, 0x5a2a4a, 0x2a1428); grid.position.y = 0.01; scene.add(grid);
 
 const world = new THREE.Group(); scene.add(world);
-const SPACING = 16;
-const stationGroups = [];
+const SPACING = 18;
 const animated = [];
 
-function mat(color, opts={}) { return new THREE.MeshStandardMaterial({ color, roughness:0.6, metalness:0.1, ...opts }); }
-function box(w,h,d,color,opts={}) { const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d), mat(color,opts)); m.castShadow=true; m.receiveShadow=true; return m; }
-function cyl(rt,rb,h,color,opts={}) { const m=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,20), mat(color,opts)); m.castShadow=true; return m; }
-function ball(r,color,opts={}) { const m=new THREE.Mesh(new THREE.SphereGeometry(r,20,20), mat(color,opts)); m.castShadow=true; return m; }
-function capsule(r,len,color,opts={}) { const m=new THREE.Mesh(new THREE.CapsuleGeometry(r,len,8,16), mat(color,opts)); m.castShadow=true; return m; }
+const mat = (color, opts={}) => new THREE.MeshStandardMaterial({ color, roughness:0.6, metalness:0.1, ...opts });
+const box = (w,h,d,color,opts={}) => { const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d), mat(color,opts)); m.castShadow=true; m.receiveShadow=true; return m; };
+const cyl = (rt,rb,h,color,opts={}) => { const m=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,20), mat(color,opts)); m.castShadow=true; return m; };
+const ball = (r,color,opts={}) => { const m=new THREE.Mesh(new THREE.SphereGeometry(r,20,20), mat(color,opts)); m.castShadow=true; return m; };
+const capsule = (r,len,color,opts={}) => { const m=new THREE.Mesh(new THREE.CapsuleGeometry(r,len,8,16), mat(color,opts)); m.castShadow=true; return m; };
 
-// Simple low-poly character
 function person({ skin=0xf2c9a0, hair=0x3a2418, top=0xdb2777, bottom=0x27324a, bald=false, beard=false, ponytail=false, pants=false } = {}) {
   const g = new THREE.Group();
-  const legs = new THREE.Group();
-  const legColor = pants ? bottom : 0x33405c;
-  for (const sx of [-0.16, 0.16]) {
-    const leg = capsule(0.12, 0.6, legColor); leg.position.set(sx, 0.5, 0); legs.add(leg);
-  }
-  g.add(legs);
+  for (const sx of [-0.16, 0.16]) { const leg = capsule(0.12, 0.6, pants ? bottom : 0x33405c); leg.position.set(sx, 0.5, 0); g.add(leg); }
   const torso = capsule(0.24, 0.5, top); torso.position.y = 1.15; g.add(torso);
   const arms = [];
-  for (const [i, sx] of [[0,-0.34],[1,0.34]]) {
-    const arm = capsule(0.09, 0.5, skin); arm.position.set(sx, 1.28, 0); arm.rotation.z = sx>0?-0.15:0.15; g.add(arm); arms.push(arm);
-  }
+  for (const sx of [-0.34, 0.34]) { const arm = capsule(0.09, 0.5, skin); arm.position.set(sx, 1.28, 0); arm.rotation.z = sx>0?-0.15:0.15; g.add(arm); arms.push(arm); }
   const head = ball(0.2, skin); head.position.y = 1.72; g.add(head);
   if (!bald) { const h = ball(0.215, hair); h.position.y = 1.77; h.scale.set(1,0.72,1); g.add(h); }
   if (ponytail) { const pt = capsule(0.07,0.4,hair); pt.position.set(0,1.7,-0.24); pt.rotation.x=0.5; g.add(pt); }
   if (beard) { const b = ball(0.17, hair); b.position.set(0,1.6,0.08); b.scale.set(1,0.75,1); g.add(b); }
   g.userData = { arms, bob: Math.random()*Math.PI*2 };
-  animated.push({ type:"person", g });
-  return g;
+  animated.push({ type:"person", g }); return g;
 }
-
-function platform() {
-  const p = new THREE.Mesh(new THREE.CylinderGeometry(4.2, 4.4, 0.3, 40), mat(0x2a1630, { emissive:0x2a0d22 }));
-  p.receiveShadow = true; return p;
-}
-function ring(color=0xff5fa2) {
-  const r = new THREE.Mesh(new THREE.TorusGeometry(2.4, 0.06, 10, 60), new THREE.MeshBasicMaterial({ color }));
-  r.rotation.x = Math.PI/2; r.position.y = 0.18; return r;
-}
-function label(text, sub) {
-  const c = document.createElement("canvas"); c.width=1024; c.height=256; const x=c.getContext("2d");
-  x.font="bold 74px ui-sans-serif, system-ui, sans-serif"; x.fillStyle="#ffffff"; x.textAlign="center"; x.fillText(text,512,108);
-  if (sub){ x.font="40px ui-sans-serif, system-ui, sans-serif"; x.fillStyle="rgba(255,200,225,.85)"; x.fillText(sub,512,172); }
-  const t=new THREE.CanvasTexture(c); const s=new THREE.Sprite(new THREE.SpriteMaterial({map:t,transparent:true,depthWrite:false})); s.scale.set(7,1.75,1); return s;
-}
+const platform = () => Object.assign(new THREE.Mesh(new THREE.CylinderGeometry(4.6,4.8,0.3,44), mat(0x2a1630,{emissive:0x2a0d22})), { receiveShadow:true });
+const ring = (color=0xff5fa2) => { const r=new THREE.Mesh(new THREE.TorusGeometry(2.6,0.06,10,60), new THREE.MeshBasicMaterial({color})); r.rotation.x=Math.PI/2; r.position.y=0.18; return r; };
+function label(text){ const c=document.createElement("canvas"); c.width=1024; c.height=180; const x=c.getContext("2d");
+  x.font="bold 76px ui-sans-serif, system-ui, sans-serif"; x.fillStyle="#ffffff"; x.textAlign="center"; x.fillText(text,512,110);
+  const t=new THREE.CanvasTexture(c); const s=new THREE.Sprite(new THREE.SpriteMaterial({map:t,transparent:true,depthWrite:false})); s.scale.set(8,1.4,1); return s; }
 
 const STATIONS = [
-  { title:"Super admin", desc:"Rol administrativo puro: crea al admin de gimnasio y gestiona usuarios y perfiles (activar, desactivar, restablecer contraseña, cambiar rol, eliminar). No crea gimnasios ni máquinas.",
-    build(g){
-      const desk = box(3.2,1.0,1.1,0x6b4a2f); desk.position.set(0,0.5,0.6); g.add(desk);
-      const screen = box(1.1,0.7,0.08,0x111827,{emissive:0x1e293b}); screen.position.set(0,1.35,0.25); screen.rotation.x=-0.35; g.add(screen);
-      const admin = person({ bald:true, beard:true, top:0x7c3aed, bottom:0x1f2937 }); admin.position.set(-0.4,0,-0.9); admin.rotation.y=0.5; g.add(admin);
-      const s2 = person({ top:0xdb2777, ponytail:true, pants:true, bottom:0x334155 }); s2.position.set(1.1,0,-0.6); s2.rotation.y=-0.6; g.add(s2);
-    }},
-  { title:"Admin de gimnasio", desc:"Crea el gimnasio y sondea máquinas y equipo (mancuernas, barra, Smith, banco, polea): nombre, foto, factor de peso, ejercicios y tipo de equipo. Comparte el código/QR.",
-    build(g){
-      const machine = new THREE.Group(); machine.add(box(1.6,1.6,1.0,0x94a3b8)); const seat=box(1.2,0.2,0.8,0x475569); seat.position.set(0,0.7,-0.6); machine.add(seat);
+  { who:"Super admin", color:"#7c3aed",
+    title:"Super admin (administración)",
+    desc:"Rol administrativo puro. Gestiona usuarios y perfiles: activar, desactivar (soft), restablecer contraseña, cambiar rol y eliminar (hard, en cascada, pidiendo su contraseña). No crea gimnasios ni máquinas.",
+    inputs:["cuenta + rol","cédula / email"],
+    outputs:["cuenta Gym Admin","usuarios gestionados"],
+    build(g){ const desk=box(3.2,1.0,1.1,0x6b4a2f); desk.position.set(0,0.5,0.6); g.add(desk);
+      const screen=box(1.1,0.7,0.08,0x111827,{emissive:0x1e293b}); screen.position.set(0,1.35,0.25); screen.rotation.x=-0.35; g.add(screen);
+      const a=person({bald:true,beard:true,top:0x7c3aed,bottom:0x1f2937}); a.position.set(-0.4,0,-0.9); a.rotation.y=0.5; g.add(a);
+      const b=person({top:0xdb2777,ponytail:true,pants:true,bottom:0x334155}); b.position.set(1.1,0,-0.6); b.rotation.y=-0.6; g.add(b); }},
+
+  { who:"Admin de gimnasio", color:"#2563eb",
+    title:"Admin de gimnasio: sondeo de equipos",
+    desc:"Crea el gimnasio y registra cada máquina y equipo libre. La IA infiere tipo/propósito/ejercicios desde el nombre; el peso se escala con weight_factor. Comparte el código/QR para que las usuarias se unan.",
+    inputs:["nombre, descripción, foto","ejercicios, tipo de equipo","weight_factor"],
+    outputs:["inventario del gym","código + QR"],
+    build(g){ const machine=new THREE.Group(); machine.add(box(1.6,1.6,1.0,0x94a3b8)); const seat=box(1.2,0.2,0.8,0x475569); seat.position.set(0,0.7,-0.6); machine.add(seat);
       for (const sx of [-1,1]) { const pl=cyl(0.35,0.35,0.12,0x111827); pl.rotation.z=Math.PI/2; pl.position.set(sx*0.9,0.4,0); machine.add(pl); }
-      machine.position.set(1.4,0.9,0); g.add(machine);
-      const tech = person({ bald:true, beard:true, top:0x2563eb, pants:true, bottom:0x1f2937 }); tech.position.set(-0.8,0,0.4); tech.rotation.y=-0.5; g.add(tech);
-      const tablet = box(0.5,0.35,0.05,0x0f172a,{emissive:0x1d4ed8}); tablet.position.set(-0.55,1.25,0.55); g.add(tablet);
-    }},
-  { title:"Registro y onboarding", desc:"La usuaria se registra con su cédula y completa el onboarding: modalidad (ciclo o embarazo), objetivo, composición corporal, síntomas (dolor 1–10) y metas de entrenamiento.",
-    build(g){
-      const woman = person({ top:0xdb2777, ponytail:true, pants:true, bottom:0x334155 }); woman.position.set(-0.6,0,0); g.add(woman);
-      const panel = box(1.8,2.2,0.08,0xfdf2f8,{emissive:0x3b0a25}); panel.position.set(1.0,1.2,0); g.add(panel);
-      for (let i=0;i<4;i++){ const row=box(1.4,0.12,0.02,0xdb2777); row.position.set(1.0,1.9-i*0.42,0.06); g.add(row); }
-    }},
-  { title:"Se une al gimnasio", desc:"La usuaria ingresa el código del gimnasio y su equipo queda disponible en vivo. Si pertenece a varios, cambia el gimnasio activo.",
-    build(g){
-      const woman = person({ top:0xdb2777, ponytail:true, pants:true, bottom:0x334155 }); woman.position.set(-0.6,0,0.2); g.add(woman);
-      const phone = box(0.5,0.9,0.06,0x0f172a,{emissive:0x0ea5e9}); phone.position.set(0.2,1.1,0.35); phone.rotation.y=-0.3; g.add(phone);
-      const qr = new THREE.Group(); for (let i=0;i<5;i++){ const q=box(0.12,0.12,0.02,0xffffff); q.position.set((i%2)*0.16-0.08, Math.floor(i/2)*0.16-0.16, 0); qr.add(q); }
-      qr.position.set(1.6,1.4,0.2); g.add(qr);
-    }},
-  { title:"Escaneo con hardware", desc:"En la estación: dedo en el sensor PPG, temperatura dérmica y agarre isométrico (3 s). El modelo local (DSP + Random Forest) obtiene RMSSD, fatiga, fase y el factor k_load determinista.",
-    build(g){
-      const table = box(2.4,0.15,1.2,0x475569); table.position.set(0,0.75,0.5); g.add(table);
+      machine.position.set(1.5,0.9,0); g.add(machine);
+      const t=person({bald:true,beard:true,top:0x2563eb,pants:true,bottom:0x1f2937}); t.position.set(-0.8,0,0.4); t.rotation.y=-0.5; g.add(t);
+      const tab=box(0.5,0.35,0.05,0x0f172a,{emissive:0x1d4ed8}); tab.position.set(-0.55,1.25,0.55); g.add(tab); }},
+
+  { who:"Usuaria", color:"#db2777",
+    title:"Registro y onboarding",
+    desc:"La usuaria se registra con su cédula y completa el onboarding: modalidad (ciclo menstrual o embarazo), objetivo, composición corporal, síntomas (dolor 1–10) y metas semanales.",
+    inputs:["cédula, email, contraseña","modalidad y fase/semana","objetivo, medidas, síntomas"],
+    outputs:["UserProfile guardado","línea de ciclo/embarazo"],
+    build(g){ const w=person({top:0xdb2777,ponytail:true,pants:true,bottom:0x334155}); w.position.set(-0.6,0,0); g.add(w);
+      const panel=box(1.8,2.2,0.08,0xfdf2f8,{emissive:0x3b0a25}); panel.position.set(1.0,1.2,0); g.add(panel);
+      for (let i=0;i<4;i++){ const row=box(1.4,0.12,0.02,0xdb2777); row.position.set(1.0,1.9-i*0.42,0.06); g.add(row); } }},
+
+  { who:"Usuaria", color:"#db2777",
+    title:"Se une al gimnasio por código",
+    desc:"Ingresa el código del gimnasio y su inventario queda disponible en vivo (membresía). Si pertenece a varios, cambia el gimnasio activo, que define qué equipo usa la rutina.",
+    inputs:["código del gimnasio"],
+    outputs:["membresía (profile, gym)","gimnasio activo + equipo"],
+    build(g){ const w=person({top:0xdb2777,ponytail:true,pants:true,bottom:0x334155}); w.position.set(-0.6,0,0.2); g.add(w);
+      const phone=box(0.5,0.9,0.06,0x0f172a,{emissive:0x0ea5e9}); phone.position.set(0.2,1.1,0.35); phone.rotation.y=-0.3; g.add(phone);
+      const qr=new THREE.Group(); for (let i=0;i<5;i++){ const q=box(0.12,0.12,0.02,0xffffff); q.position.set((i%2)*0.16-0.08, Math.floor(i/2)*0.16-0.16, 0); qr.add(q); }
+      qr.position.set(1.6,1.4,0.2); g.add(qr); }},
+
+  { who:"Hardware", color:"#f59e0b",
+    title:"Escaneo con hardware (datos crudos)",
+    desc:"En la estación: dedo en el sensor PPG (100 Hz), temperatura dérmica y agarre isométrico (3 s). Se empaqueta como frame de telemetría que respeta el contrato.",
+    inputs:["PPG 100 Hz (MAX30102)","ΔT dérmica (MLX90614)","fuerza isométrica (HX711)"],
+    outputs:["TelemetryFrame crudo","ventana PPG 256 muestras"],
+    build(g){ const table=box(2.4,0.15,1.2,0x475569); table.position.set(0,0.75,0.5); g.add(table);
       for (const sx of [-1,1]) { const leg=cyl(0.06,0.06,0.75,0x334155); leg.position.set(sx*1.0,0.38,0.5); g.add(leg); }
-      const sensor = cyl(0.28,0.28,0.12,0x111827,{emissive:0xdc2626}); sensor.position.set(-0.5,0.85,0.5); g.add(sensor);
-      const grip = cyl(0.12,0.12,0.5,0x64748b); grip.rotation.z=Math.PI/2; grip.position.set(0.5,0.9,0.5); g.add(grip);
-      const woman = person({ top:0xdb2777, ponytail:true, pants:true, bottom:0x334155 }); woman.position.set(0,0,-0.8); woman.rotation.y=Math.PI; g.add(woman);
-      const scan = ring(0x22d3ee); scan.position.set(-0.5,0.5,0.5); scan.scale.setScalar(0.6); g.add(scan);
-      animated.push({ type:"scan", mesh:scan });
-      const pulse = ball(0.12,0xff5fa2,{emissive:0xff5fa2}); pulse.position.set(-0.5,1.1,0.5); g.add(pulse); animated.push({ type:"pulse", mesh:pulse });
-    }},
-  { title:"IA DeepSeek diseña la rutina", desc:"DeepSeek (OpenCode Go) razona con la evaluación, el perfil, la meta y el equipo del gimnasio. Una capa determinista valida: sin repetir patrón, cobertura requerida, compuestos primero, máquinas antes que equipo libre y k_load intacto.",
-    build(g){
-      const core = new THREE.Mesh(new THREE.IcosahedronGeometry(1.1, 1), new THREE.MeshStandardMaterial({ color:0x7c3aed, emissive:0x7c3aed, emissiveIntensity:0.6, roughness:0.3, metalness:0.4 }));
-      core.position.y = 1.6; g.add(core); animated.push({ type:"spin", mesh:core });
-      for (let i=0;i<10;i++){ const s=ball(0.08,0x22d3ee,{emissive:0x22d3ee}); g.add(s); animated.push({ type:"orbit", mesh:s, r:1.9+Math.random()*0.6, y:1.6, ph:Math.random()*Math.PI*2, sp:0.6+Math.random()*0.6 }); }
-      const robot = person({ top:0x0ea5e9, bald:true, skin:0x9fb3c8 }); robot.position.set(-2.2,0,0); robot.rotation.y=0.6; g.add(robot);
-      const woman = person({ top:0xdb2777, ponytail:true, pants:true }); woman.position.set(2.2,0,0); woman.rotation.y=-0.6; g.add(woman);
-    }},
-  { title:"Entrena, registra y comparte", desc:"Realiza la rutina (temporizadores, peso por serie), cambia ejercicios con la lista de alternativas, registra suplementos y comparte un perfil de solo lectura con su entrenadora.",
-    build(g){
-      const woman = person({ top:0xdb2777, ponytail:true, pants:true, bottom:0x334155 }); woman.position.set(0,0,0); g.add(woman);
-      const bar = cyl(0.05,0.05,3.0,0x9ca3af); bar.rotation.z=Math.PI/2; bar.position.set(0,1.9,0.35); g.add(bar);
+      const sensor=cyl(0.28,0.28,0.12,0x111827,{emissive:0xdc2626}); sensor.position.set(-0.5,0.85,0.5); g.add(sensor);
+      const grip=cyl(0.12,0.12,0.5,0x64748b); grip.rotation.z=Math.PI/2; grip.position.set(0.5,0.9,0.5); g.add(grip);
+      const w=person({top:0xdb2777,ponytail:true,pants:true,bottom:0x334155}); w.position.set(0,0,-0.8); w.rotation.y=Math.PI; g.add(w);
+      const scan=ring(0x22d3ee); scan.position.set(-0.5,0.5,0.5); scan.scale.setScalar(0.6); g.add(scan); animated.push({type:"scan",mesh:scan}); }},
+
+  { who:"IA local · core", color:"#0ea5e9",
+    title:"IA #1 local (syncfit-core): sintetiza los datos",
+    desc:"DSP (Butterworth 0.5–5 Hz) limpia el PPG y calcula RMSSD; un Random Forest / XGBoost estima la fatiga central y produce el multiplicador k_load (0.70–1.05). El Grafo de Estados da la fase. Es determinista y offline.",
+    inputs:["TelemetryFrame crudo","[modalidad, día/semana, ΔT, RMSSD, %fuerza]"],
+    outputs:["RMSSD, fatiga, fase","k_load determinista","PhysiologicalAssessment"],
+    build(g){ const chip=box(1.6,0.5,1.6,0x0b1220,{emissive:0x0ea5e9}); chip.position.y=1.3; g.add(chip);
+      const pins=new THREE.Group(); for (let i=0;i<8;i++){ const p=box(0.08,0.25,0.08,0xbae6fd,{emissive:0x38bdf8}); p.position.set(-0.7+ (i%4)*0.46, 1.0, i<4?-0.9:0.9); pins.add(p);} g.add(pins);
+      const wave=new THREE.Group(); const pts=[]; for (let i=0;i<40;i++){ pts.push(new THREE.Vector3(-2+i*0.1, 0.5+Math.sin(i*0.6)*0.25, 0)); }
+      const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), new THREE.LineBasicMaterial({color:0x22d3ee})); line.position.set(0,1.9,0); g.add(line); animated.push({type:"wave",mesh:line});
+      for (let i=0;i<8;i++){ const s=ball(0.07,0x38bdf8,{emissive:0x38bdf8}); g.add(s); animated.push({type:"orbit",mesh:s,r:2.0,y:1.4,ph:Math.random()*6.28,sp:0.7}); } }},
+
+  { who:"IA #2 DeepSeek", color:"#db2777",
+    title:"IA #2 DeepSeek (OpenCode Go): diseña la rutina",
+    desc:"Recibe la evaluación y todos los datos, razona con evidencia (volumen, reps, descanso, compuestos primero) y elige el ejercicio de cada patrón, respetando el equipo del gimnasio. Devuelve la rutina completa + justificación en JSON estricto. Nunca recalcula k_load.",
+    inputs:["assessment + k_load","perfil, objetivo, síntomas","catálogo + equipo del gym","guías de evidencia"],
+    outputs:["rutina completa + rationale","patrones, series, reps, descanso"],
+    build(g){ const core=new THREE.Mesh(new THREE.IcosahedronGeometry(1.1,1), new THREE.MeshStandardMaterial({color:0xdb2777,emissive:0xdb2777,emissiveIntensity:0.6,roughness:0.3,metalness:0.4}));
+      core.position.y=1.6; g.add(core); animated.push({type:"spin",mesh:core});
+      for (let i=0;i<12;i++){ const s=ball(0.08,0x22d3ee,{emissive:0x22d3ee}); g.add(s); animated.push({type:"orbit",mesh:s,r:1.9+Math.random()*0.7,y:1.6,ph:Math.random()*6.28,sp:0.6+Math.random()*0.7}); }
+      const robot=person({top:0x0ea5e9,bald:true,skin:0x9fb3c8}); robot.position.set(-2.4,0,0); robot.rotation.y=0.6; g.add(robot);
+      const woman=person({top:0xdb2777,ponytail:true,pants:true}); woman.position.set(2.4,0,0); woman.rotation.y=-0.6; g.add(woman); }},
+
+  { who:"Validador determinista", color:"#f59e0b",
+    title:"Validador determinista (guardarraíles)",
+    desc:"No diseña: repara y garantiza. Normaliza ids, excluye contraindicaciones (rodilla → sin búlgara; lumbar → sin peso muerto), evita patrón duplicado, cubre patrones requeridos, ordena compuestos primero, fuerza la máquina del gym y hace eco de k_load.",
+    inputs:["rutina de la IA","reglas de seguridad + síntomas","reglas de evidencia","equipo disponible"],
+    outputs:["rutina validada y segura","machine_preferences + alertas"],
+    build(g){ const shield=new THREE.Mesh(new THREE.TorusGeometry(1.5,0.18,16,60), mat(0xf59e0b,{emissive:0xf59e0b,emissiveIntensity:0.4})); shield.position.y=1.6; g.add(shield); animated.push({type:"spin",mesh:shield,y:1.6});
+      const check=new THREE.Group(); const c1=box(0.9,0.1,0.06,0x22c55e,{emissive:0x22c55e}); c1.position.set(0,1.7,0.1); c1.rotation.z=0.6; check.add(c1);
+      const c2=box(0.5,0.1,0.06,0x22c55e,{emissive:0x22c55e}); c2.position.set(0.42,1.5,0.1); c2.rotation.z=-0.6; check.add(c2); g.add(check);
+      const woman=person({top:0x22c55e,ponytail:true,pants:true}); woman.position.set(-2.4,0,0); woman.rotation.y=0.6; g.add(woman); }},
+
+  { who:"Usuaria", color:"#db2777",
+    title:"Entrena, registra y comparte",
+    desc:"Realiza la rutina con temporizadores y registro de peso por serie, cambia ejercicios con la lista de alternativas, registra suplementos y comparte un perfil de solo lectura con su entrenadora.",
+    inputs:["rutina validada","peso por serie, energía"],
+    outputs:["sesión + telemetría","estadísticas/racha","enlaces para compartir"],
+    build(g){ const w=person({top:0xdb2777,ponytail:true,pants:true,bottom:0x334155}); w.position.set(0,0,0); g.add(w);
+      const bar=cyl(0.05,0.05,3.0,0x9ca3af); bar.rotation.z=Math.PI/2; bar.position.set(0,1.9,0.35); g.add(bar);
       for (const sx of [-1.1,1.1]) { const pl=cyl(0.4,0.4,0.14,0x111827); pl.rotation.z=Math.PI/2; pl.position.set(sx,1.9,0.35); g.add(pl); }
       for (const sx of [-0.55,0.55]) { const pl=cyl(0.28,0.28,0.14,0xdb2777); pl.rotation.z=Math.PI/2; pl.position.set(sx,1.9,0.35); g.add(pl); }
-      const coach = person({ top:0x22c55e, ponytail:true }); coach.position.set(2.4,0,0.4); coach.rotation.y=-0.8; g.add(coach);
-    }},
+      const coach=person({top:0x22c55e,ponytail:true}); coach.position.set(2.4,0,0.4); coach.rotation.y=-0.8; g.add(coach); }},
 ];
 
 STATIONS.forEach((st, i) => {
   const g = new THREE.Group(); g.position.x = i * SPACING; world.add(g);
-  g.add(platform());
-  const r = ring(i===5 ? 0x22d3ee : 0xff5fa2); g.add(r);
-  const lbl = label(st.title); lbl.position.set(0, 4.6, 0); g.add(lbl);
+  g.add(platform()); g.add(ring(i === 5 || i === 6 ? 0x22d3ee : 0xff5fa2));
+  const lbl = label(st.title.split(":")[0]); lbl.position.set(0, 5.0, 0); g.add(lbl);
   st.build(g);
-  stationGroups.push(g);
 });
 
-// dots
 const dotsEl = document.getElementById("dots");
 STATIONS.forEach((_, i) => { const d=document.createElement("div"); d.className="dot"+(i===0?" on":""); d.onclick=()=>go(i); dotsEl.appendChild(d); });
 
 let current = 0, auto = true, autoT = 0;
 const controls = new OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true; controls.enablePan = false; controls.minDistance = 8; controls.maxDistance = 40;
+controls.enableDamping = true; controls.enablePan = false; controls.minDistance = 8; controls.maxDistance = 46;
 controls.target.set(0, 1.6, 0);
 
-function stationView(i) {
-  const x = i * SPACING;
-  return { pos: new THREE.Vector3(x + 5.5, 6.0, 12.5), tgt: new THREE.Vector3(x, 1.5, 0) };
-}
+const stationView = (i) => ({ pos:new THREE.Vector3(i*SPACING + 6.0, 6.4, 13.2), tgt:new THREE.Vector3(i*SPACING, 1.6, 0) });
+
+function chips(el, items) { el.innerHTML = ""; items.forEach(t => { const s=document.createElement("span"); s.className="chip"; s.textContent=t; el.appendChild(s); }); }
 function go(i) {
   current = (i + STATIONS.length) % STATIONS.length;
-  document.getElementById("st-title").textContent = STATIONS[current].title;
-  document.getElementById("st-desc").textContent = STATIONS[current].desc;
+  const st = STATIONS[current];
+  document.getElementById("who").textContent = st.who;
+  document.getElementById("who").style.background = st.color;
+  document.getElementById("st-title").textContent = st.title;
+  document.getElementById("st-desc").textContent = st.desc;
   document.getElementById("kicker").textContent = `Estación ${current+1} / ${STATIONS.length}`;
   document.getElementById("counter").textContent = `${current+1} / ${STATIONS.length}`;
+  chips(document.getElementById("in-list"), st.inputs);
+  chips(document.getElementById("out-list"), st.outputs);
   [...dotsEl.children].forEach((d, k) => d.classList.toggle("on", k === current));
   autoT = 0;
 }
@@ -219,26 +247,20 @@ addEventListener("resize", () => { camera.aspect = innerWidth/innerHeight; camer
 
 const clock = new THREE.Clock();
 const camPos = camera.position.clone(), camTgt = controls.target.clone();
-
 function animate() {
   requestAnimationFrame(animate);
   const dt = clock.getDelta(), t = clock.elapsedTime;
-
   for (const a of animated) {
     if (a.type === "person") { const u=a.g.userData; a.g.position.y = Math.sin(t*1.6+u.bob)*0.03; u.arms.forEach((arm,k)=>arm.rotation.x = Math.sin(t*1.6+u.bob+k*Math.PI)*0.12); }
-    else if (a.type === "spin") a.mesh.rotation.y += dt*0.7;
-    else if (a.type === "scan") { const s=1.0+Math.sin(t*3)*0.5; a.mesh.scale.setScalar(s); a.mesh.rotation.z += dt*1.5; }
-    else if (a.type === "pulse") a.mesh.scale.setScalar(1+Math.sin(t*6)*0.35);
+    else if (a.type === "spin") { a.mesh.rotation.y += dt*0.7; if (a.y) a.mesh.position.y = a.y + Math.sin(t*1.5)*0.12; }
+    else if (a.type === "scan") { a.mesh.scale.setScalar(1.0+Math.sin(t*3)*0.5); a.mesh.rotation.z += dt*1.5; }
     else if (a.type === "orbit") { a.ph += dt*a.sp; a.mesh.position.set(Math.cos(a.ph)*a.r, a.y+Math.sin(a.ph*2)*0.25, Math.sin(a.ph)*a.r); }
+    else if (a.type === "wave") { a.mesh.position.y = 1.9 + Math.sin(t*3)*0.06; }
   }
-
   const v = stationView(current);
-  camPos.lerp(v.pos, 1 - Math.pow(0.001, dt)); camTgt.lerp(v.tgt, 1 - Math.pow(0.001, dt));
-  controls.target.copy(camTgt);
-  camera.position.copy(camPos);
-  controls.update();
-
-  if (auto) { autoT += dt; if (autoT > 6) go(current + 1); }
+  camPos.lerp(v.pos, 1 - Math.pow(0.0015, dt)); camTgt.lerp(v.tgt, 1 - Math.pow(0.0015, dt));
+  controls.target.copy(camTgt); camera.position.copy(camPos); controls.update();
+  if (auto) { autoT += dt; if (autoT > 7) go(current + 1); }
   renderer.render(scene, camera);
 }
 animate();
