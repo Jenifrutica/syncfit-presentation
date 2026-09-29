@@ -3,6 +3,11 @@
 Academic defense and demo material for **SyncFit Edge**, built with Slidev
 (TypeScript + Vue). Everything here supports the oral defense of the project.
 
+## Architecture
+
+See [`ARCHITECTURE.md`](./ARCHITECTURE.md) for the software architecture
+(style, layers, patterns, deployment, hybrid AI).
+
 ## Purpose
 
 Communicate the project clearly to an evaluation panel: the problem, the dual
