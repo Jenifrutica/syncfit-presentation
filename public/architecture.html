@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SyncFit Edge — 3D architecture</title>
+<style>
+  html,body{margin:0;height:100%;background:radial-gradient(1200px 700px at 50% -10%,#2a0a1f 0%,#0b0710 55%,#05040a 100%);overflow:hidden;font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,sans-serif}
+  #hud{position:fixed;inset:16px auto auto 18px;color:#f9d7e8;z-index:10}
+  #hud h1{margin:0;font-size:18px;letter-spacing:.02em}
+  #hud p{margin:4px 0 0;font-size:12px;color:#c9a3b9;max-width:520px;line-height:1.4}
+  .legend{position:fixed;bottom:14px;left:18px;color:#c9a3b9;font-size:11px;z-index:10}
+  .legend b{color:#ff5fa2}
+  #c{display:block;width:100vw;height:100vh}
+  .badge{position:fixed;bottom:14px;right:18px;color:#c9a3b9;font-size:11px;z-index:10}
+</style>
+</head>
+<body>
+<div id="hud"><h1>SyncFit Edge · adapter flow</h1><p>Two AIs: the trained local model synthesizes the hardware; DeepSeek designs the routine. The deterministic layer only validates &amp; repairs.</p></div>
+<div class="legend"><b>Local AI</b> &nbsp;·&nbsp; <b>DeepSeek</b> &nbsp;·&nbsp; data pipeline &nbsp;·&nbsp; drag to orbit, scroll to zoom</div>
+<div class="badge">3D architecture · drag / zoom</div>
+<canvas id="c"></canvas>
+<script type="importmap">
+{ "imports": {
+  "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+}}
+</script>
+<script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x0b0710, 0.045);
+const camera = new THREE.PerspectiveCamera(45, innerWidth/innerHeight, 0.1, 200);
+camera.position.set(0, 6, 24);
+const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("c"), antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; controls.autoRotate = true; controls.autoRotateSpeed = 0.6;
+controls.minDistance = 10; controls.maxDistance = 48; controls.maxPolarAngle = Math.PI * 0.85;
+
+scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+const key = new THREE.DirectionalLight(0xff7ab8, 1.15); key.position.set(6, 10, 8); scene.add(key);
+const rim = new THREE.DirectionalLight(0x66ccff, 0.8); rim.position.set(-8, -4, -6); scene.add(rim);
+
+const world = new THREE.Group(); scene.add(world);
+
+function label(text, sub, color) {
+  const c = document.createElement("canvas"); c.width = 1024; c.height = 256;
+  const x = c.getContext("2d");
+  x.fillStyle = "rgba(0,0,0,0)"; x.fillRect(0,0,c.width,c.height);
+  x.font = "bold 66px ui-sans-serif, system-ui, sans-serif"; x.fillStyle = color; x.textAlign = "center";
+  x.fillText(text, 512, 110);
+  if (sub) { x.font = "38px ui-sans-serif, system-ui, sans-serif"; x.fillStyle = "rgba(240,240,255,.75)"; x.fillText(sub, 512, 176); }
+  const tex = new THREE.CanvasTexture(c); tex.anisotropy = 4;
+  const spr = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true, depthWrite:false }));
+  spr.scale.set(6.4, 1.6, 1);
+  return spr;
+}
+
+const nodes = [
+  { id:"hw",   t:"Hardware / Sim", s:"PPG · °T · force",  c:0x38bdf8, p:[-11, 3, 0] },
+  { id:"core", t:"Local AI · core", s:"DSP + ML · k_load", c:0x22d3ee, p:[-5.5, 3, 2] },
+  { id:"assess",t:"Assessment",      s:"phase · risk",      c:0xa78bfa, p:[0, 3, 3] },
+  { id:"deep", t:"DeepSeek · OpenCode", s:"designs routine", c:0xff4f9d, p:[5.5, 3, 2] },
+  { id:"valid",t:"Validator",        s:"patterns · safety", c:0xf59e0b, p:[11, 3, 0] },
+  { id:"back", t:"Backend",          s:"persist · REST",    c:0x34d399, p:[5.5, -3, -2] },
+  { id:"front",t:"Frontend",         s:"routine · modal",   c:0xfb7185, p:[-1.5, -3, -3] },
+  { id:"gym",  t:"Gym equipment",    s:"machines · benches",c:0x93c5fd, p:[-8, -3, -3] },
+];
+
+const boxGeo = new THREE.BoxGeometry(3.4, 2.0, 1.0, 4, 4, 4);
+const nodeMap = {};
+for (const n of nodes) {
+  const mat = new THREE.MeshStandardMaterial({
+    color: n.c, emissive: new THREE.Color(n.c).multiplyScalar(0.35), roughness: 0.35, metalness: 0.35,
+    transparent: true, opacity: 0.94,
+  });
+  const mesh = new THREE.Mesh(boxGeo, mat);
+  mesh.position.set(...n.p);
+  world.add(mesh);
+  const wire = new THREE.Mesh(boxGeo, new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, transparent: true, opacity: 0.08 }));
+  mesh.add(wire);
+  const lbl = label(n.t, n.s, "#ffffff"); lbl.position.set(0, 1.9, 0); mesh.add(lbl);
+  nodeMap[n.id] = mesh;
+}
+
+const links = [
+  ["hw","core"],["core","assess"],["assess","deep"],["deep","valid"],["valid","back"],["back","front"],["gym","deep"],["front","gym"]
+];
+const linkMat = new THREE.LineBasicMaterial({ color: 0x8b5cff, transparent: true, opacity: 0.5 });
+const flowSpheres = [];
+for (const [a,b] of links) {
+  const pa = nodeMap[a].position, pb = nodeMap[b].position;
+  const curve = new THREE.CatmullRomCurve3([pa.clone(), pa.clone().lerp(pb,0.5).add(new THREE.Vector3(0,0.8,0)), pb.clone()]);
+  const geo = new THREE.BufferGeometry().setFromPoints(curve.getPoints(40));
+  world.add(new THREE.Line(geo, linkMat));
+  const dot = new THREE.Mesh(new THREE.SphereGeometry(0.14, 12, 12), new THREE.MeshBasicMaterial({ color: 0xff9ecb }));
+  world.add(dot); flowSpheres.push({ curve, dot, t: Math.random() });
+}
+
+addEventListener("resize", () => {
+  camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight);
+});
+
+const clock = new THREE.Clock();
+function animate() {
+  requestAnimationFrame(animate);
+  const dt = clock.getDelta(); const t = clock.elapsedTime;
+  for (const f of flowSpheres) { f.t = (f.t + dt*0.35) % 1; f.dot.position.copy(f.curve.getPoint(f.t)); }
+  for (const n of nodes) { const m = nodeMap[n.id]; m.position.y = n.p[1] + Math.sin(t*1.2 + n.p[0])*0.18; }
+  controls.update(); renderer.render(scene, camera);
+}
+animate();
+</script>
+</body>
+</html>

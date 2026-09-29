@@ -52,11 +52,39 @@ Speaker notes: cite Hewett, Wojtys, ACOG, Sims.
 # Architecture
 
 - **Hardware / firmware** (C++/ESP-IDF): ESP32, MAX30102, MLX90614, HX711.
-- **Core** (Python): DSP, trained fatigue model, deterministic `k_load`.
-- **Reasoning** (Python): DeepSeek biomechanical audit in strict JSON.
+- **Core — local AI** (Python): DSP, trained fatigue model, deterministic `k_load`.
+- **Reasoning — DeepSeek** (OpenCode Go): designs the routine in strict JSON.
 - **Backend** (Python/FastAPI): REST + WebSockets, mandatory data structures.
 - **Frontend** (TypeScript/Next.js): real-time analytics and adaptive routine.
 - **Simulator** replaces the hardware while real captures are recorded.
+
+---
+
+# Routine flow (two AIs)
+
+<iframe src="/flow.html" class="w-full h-[430px] rounded-xl border border-pink-200" />
+
+<!--
+Speaker notes: hardware -> local model (assessment + k_load) -> DeepSeek designs
+(patterns, exercises, dose, rationale) -> deterministic enforcement -> backend -> UI.
+The model never recomputes k_load.
+-->
+
+---
+
+# Architecture (3D)
+
+<iframe src="/architecture.html" class="w-full h-[440px] rounded-xl border border-pink-200" />
+
+<!-- Speaker notes: interactive 3D flow; drag/zoom. Hardware -> local model -> assessment -> DeepSeek -> validator -> backend/frontend, with the gym equipment feeding the designer. -->
+
+---
+
+# User journey (stations)
+
+<iframe src="/journey.html" class="w-full h-[460px] rounded-xl border border-pink-200" />
+
+<!-- Speaker notes: 7 stations - super admin creates the gym admin; gym admin surveys equipment; athlete registers + onboards; joins by code; hardware scan -> local model; DeepSeek designs + deterministic validation; trains/tracks/shares. -->
 
 ---
 
@@ -71,13 +99,18 @@ Speaker notes: cite Hewett, Wojtys, ACOG, Sims.
 
 ---
 
-# Hybrid AI
+# Hybrid AI (two AIs)
 
-1. **Deterministic half** (`syncfit-core`): DSP + Random Forest -> `k_load`.
-2. **Generative half** (`syncfit-ai-reasoning`): DeepSeek audits and structures.
+1. **Local AI** (`syncfit-core`): DSP + Random Forest → biomarkers + deterministic `k_load`.
+2. **Cloud AI** (`syncfit-ai-reasoning`): **DeepSeek designs the whole routine** from the
+   assessment, the profile, the gym machines and evidence guidelines.
 
-The model **never** recomputes `k_load`; a deterministic rule engine preserves it
-and enforces the biomechanical blocks.
+A deterministic layer **never designs**: it validates and repairs — pattern coverage,
+no repeated pattern, compounds first, contraindications, machine-first — and **echoes
+`k_load`** (the model never recomputes it).
+
+Evidence: Schoenfeld (2017, 2021), Baz-Valle (2022), Currier (2023), Contreras (2016),
+Plotkin (2023); safety from ACOG (2020), Hewett (2007), Wojtys (1998), Maniar (2022).
 
 ---
 
@@ -87,6 +120,16 @@ and enforces the biomechanical blocks.
 - **Cultural:** removes taboos around training during the cycle and pregnancy.
 - **Economic:** fewer orthopedic surgeries and postpartum dysfunctions.
 - **Normative:** aligned with SDG 3 and 5 and biomedical data protection.
+
+---
+
+# Roles and administration
+
+- **Super admin**: purely administrative — users/profiles CRUD (activate,
+  deactivate, reset password, change role, delete). Cannot create gyms/machines.
+- **Gym admin**: creates gyms and registers **equipment** (machines and free
+  equipment: dumbbells, barbell, Smith, benches), each with photo and weight factor.
+- **Athlete**: joins a gym by code; routines are filtered by the gym's equipment.
 
 ---
 

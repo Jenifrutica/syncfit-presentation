@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SyncFit Edge — Routine flow</title>
+<style>
+  :root { --pink:#db2777; --pink-soft:#fce7f3; --ink:#0f172a; --muted:#64748b; --edge:#e5e7eb; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+         color:var(--ink); background:linear-gradient(180deg,#fff1f5 0%, #ffffff 55%); padding:24px; }
+  h1 { font-size:18px; margin:0 0 4px; color:var(--pink); }
+  .sub { color:var(--muted); font-size:13px; margin:0 0 20px; }
+  .flow { display:flex; flex-direction:column; gap:14px; max-width:960px; }
+  .row { display:flex; align-items:stretch; gap:12px; flex-wrap:wrap; }
+  .node { flex:1; min-width:180px; background:#fff; border:1px solid var(--edge); border-radius:14px;
+          padding:14px; box-shadow:0 6px 18px rgba(219,39,119,.06); }
+  .node h3 { margin:0 0 6px; font-size:14px; }
+  .node p { margin:0; font-size:12px; color:var(--muted); }
+  .ai { border-color:var(--pink); background:linear-gradient(180deg,#fff,#fdf2f8); }
+  .tag { display:inline-block; font-size:10px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+         color:#fff; background:var(--pink); border-radius:999px; padding:2px 8px; margin-bottom:6px; }
+  .tag.local { background:#0ea5e9; }
+  .tag.cloud { background:var(--pink); }
+  .tag.det { background:#334155; }
+  .arrow { align-self:center; color:var(--pink); font-size:22px; line-height:1; }
+  .out { background:var(--pink-soft); border-style:dashed; }
+  ul.mini { margin:8px 0 0; padding-left:16px; font-size:12px; color:#334155; }
+  .two { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media (max-width:720px){ .two{ grid-template-columns:1fr; } }
+  code { background:#f1f5f9; border-radius:6px; padding:1px 5px; font-size:11px; }
+</style>
+</head>
+<body>
+  <h1>SyncFit Edge — Adaptive routine flow</h1>
+  <p class="sub">Two AIs: the trained <strong>local model</strong> synthesizes the hardware and DeepSeek designs the routine. The deterministic layer only validates and repairs, so every rule always holds.</p>
+
+  <div class="flow">
+    <div class="row">
+      <div class="node"><h3>1 · Hardware / Simulator</h3><p>PPG 100 Hz (MAX30102), dermal temperature (MLX90614), isometric force (HX711) — simulated until the device is built.</p></div>
+      <div class="arrow">→</div>
+      <div class="node ai"><span class="tag local">AI #1 · local</span><h3>2 · syncfit-core (trained model)</h3><p>DSP → RMSSD · Random Forest/XGBoost → central fatigue · deterministic <code>k_load</code>.</p><ul class="mini"><li>Ring Buffer, Directed State Graph</li><li>Emits <code>PhysiologicalAssessment</code></li></ul></div>
+    </div>
+
+    <div class="row">
+      <div class="arrow">↓</div>
+      <div class="node out"><h3>PhysiologicalAssessment</h3><p>phase · fatigue · autonomic status · articular risk · contraindicated patterns · <code>k_load</code></p></div>
+    </div>
+
+    <div class="row">
+      <div class="node ai"><span class="tag cloud">AI #2 · DeepSeek (OpenCode Go)</span><h3>3 · Routine designer</h3><p>Reasons over the assessment, the profile, the gym machines and the evidence guidelines. Chooses patterns, exercises, order, sets, reps, rest and rationale.</p><ul class="mini"><li>Coverage of required patterns</li><li>No repeated movement pattern</li><li>Compounds before isolation</li><li>Machine-first + evidence dose</li></ul></div>
+    </div>
+
+    <div class="row">
+      <div class="arrow">↓</div>
+      <div class="node"><span class="tag det">validator</span><h3>4 · Deterministic enforcement</h3><p>Repairs and guarantees invariants before anything is shown or stored.</p>
+        <div class="two">
+          <ul class="mini"><li>Normalize ids and map to catalog</li><li>Contraindications excluded (knee → no lunge; low back → no hinge)</li></ul>
+          <ul class="mini"><li>Deduplicate patterns + required coverage</li><li>Filters: gym machines → free equipment (dumbbell/barbell/smith/bench) → bodyweight</li><li>Machine-first (photo + weight factor)</li><li><code>k_load</code> echoed, never recomputed</li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="arrow">↓</div>
+      <div class="node"><h3>5 · Backend</h3><p>Persists session, telemetry and routine; exposes REST/WebSockets. <code>engine_used</code>, <code>machine_preferences</code> and <code>rationale</code> in the response.</p></div>
+      <div class="arrow">→</div>
+      <div class="node out"><h3>6 · Frontend</h3><p>Adaptive routine with machine photo, exercise detail modal (metrics, estimated weight, pattern, why) and a Change button with the ordered alternatives list. Super admin has a users console; gym admin manages gyms and equipment.</p></div>
+    </div>
+  </div>
+</body>
+</html>

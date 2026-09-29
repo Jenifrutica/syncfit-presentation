@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SyncFit Edge — User journey (stations)</title>
+<style>
+  :root{--pink:#db2777;--pink-2:#f472b6;--ink:#0f172a;--muted:#64748b;--line:#f9a8d4;--card:#ffffff}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);
+       background:linear-gradient(180deg,#fff1f5 0%,#ffffff 60%);padding:26px 22px 40px}
+  h1{margin:0 0 2px;font-size:19px;color:var(--pink)}
+  .sub{margin:0 0 22px;color:var(--muted);font-size:13px}
+  .path{position:relative;max-width:1080px;margin:0 auto}
+  .rail{position:absolute;left:26px;top:6px;bottom:6px;width:3px;background:linear-gradient(180deg,var(--pink),var(--pink-2),#a5b4fc);border-radius:3px;opacity:.5}
+  .station{position:relative;display:flex;gap:16px;padding:10px 0 10px 0;align-items:flex-start}
+  .dot{flex:0 0 54px;height:54px;border-radius:16px;display:flex;align-items:center;justify-content:center;
+       font-weight:800;color:#fff;background:linear-gradient(135deg,var(--pink),#a855f7);box-shadow:0 8px 20px rgba(219,39,119,.25);z-index:2}
+  .card{flex:1;background:var(--card);border:1px solid #fbcfe8;border-radius:16px;padding:14px 16px;box-shadow:0 6px 16px rgba(219,39,119,.06);
+        transition:transform .18s ease, box-shadow .18s ease}
+  .card:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(219,39,119,.14)}
+  .card h3{margin:0 0 4px;font-size:15px}
+  .card p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.5}
+  .who{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#334155;border-radius:999px;padding:2px 8px;margin-bottom:6px}
+  .who.super{background:#7c3aed}.who.admin{background:#2563eb}.who.athlete{background:var(--pink)}.who.ai{background:#0ea5e9}.who.hw{background:#f59e0b}
+  .tags{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px}
+  .tag{font-size:11px;border:1px solid #fbcfe8;border-radius:999px;padding:2px 8px;color:#9d174d;background:#fff5f9}
+  @media(max-width:620px){.dot{flex-basis:44px;height:44px;border-radius:12px}.rail{left:21px}}
+</style>
+</head>
+<body>
+  <h1>SyncFit Edge — user journey</h1>
+  <p class="sub">From administration to a hardware-driven, AI-designed routine: seven stations of the real product flow.</p>
+
+  <div class="path">
+    <div class="rail"></div>
+
+    <div class="station">
+      <div class="dot">01</div>
+      <div class="card">
+        <span class="who super">Super admin</span>
+        <h3>Creates the gym admin</h3>
+        <p>Purely administrative: manages users/profiles (activate, deactivate, reset password, change role, delete). Does <b>not</b> create gyms or machines.</p>
+        <div class="tags"><span class="tag">POST /admin/gym-admins</span><span class="tag">/admin/users CRUD</span></div>
+      </div>
+    </div>
+
+    <div class="station">
+      <div class="dot">02</div>
+      <div class="card">
+        <span class="who admin">Gym admin</span>
+        <h3>Creates the gym &amp; surveys equipment</h3>
+        <p>Registers machines and free equipment (dumbbell, barbell, Smith, bench, cable) with a photo, weight factor, covered exercises and equipment type. Shares the join code/QR.</p>
+        <div class="tags"><span class="tag">POST /gyms</span><span class="tag">POST /gyms/{id}/machines</span><span class="tag">QR</span></div>
+      </div>
+    </div>
+
+    <div class="station">
+      <div class="dot">03</div>
+      <div class="card">
+        <span class="who athlete">Athlete</span>
+        <h3>Registers &amp; onboards</h3>
+        <p>Signs up with her cedula and completes onboarding: modality (cycle/pregnancy), goal, body composition, symptoms (pain 1-10) and training targets.</p>
+        <div class="tags"><span class="tag">POST /auth/register</span><span class="tag">PUT /profiles/me</span><span class="tag">symptoms</span></div>
+      </div>
+    </div>
+
+    <div class="station">
+      <div class="dot">04</div>
+      <div class="card">
+        <span class="who athlete">Athlete</span>
+        <h3>Joins the gym by code</h3>
+        <p>The gym's equipment becomes available (live). She can switch the active gym if she belongs to several.</p>
+        <div class="tags"><span class="tag">POST /gyms/join</span><span class="tag">GET /gyms/joined</span></div>
+      </div>
+    </div>
+
+    <div class="station">
+      <div class="dot">05</div>
+      <div class="card">
+        <span class="who hw">Hardware</span>
+        <h3>Scans biomarkers</h3>
+        <p>PPG (100 Hz), dermal temperature and isometric force are captured; the local model (DSP + RandomForest) derives RMSSD, fatigue, phase and the deterministic load multiplier <b>k_load</b>.</p>
+        <div class="tags"><span class="tag">PPG / °T / force</span><span class="tag">k_load ∈ [0.70, 1.05]</span></div>
+      </div>
+    </div>
+
+    <div class="station">
+      <div class="dot">06</div>
+      <div class="card">
+        <span class="who ai">DeepSeek</span>
+        <h3>Designs and validates the routine</h3>
+        <p>DeepSeek (OpenCode Go) reasons from the assessment, profile, goal and gym equipment to design the session. A deterministic layer then enforces patterns, safety, equipment order and echoes <b>k_load</b>.</p>
+        <div class="tags"><span class="tag">patterns · no duplicates</span><span class="tag">compounds first</span><span class="tag">machines → equipment → bodyweight</span></div>
+      </div>
+    </div>
+
+    <div class="station">
+      <div class="dot">07</div>
+      <div class="card">
+        <span class="who athlete">Athlete</span>
+        <h3>Trains, tracks &amp; shares</h3>
+        <p>Runs the routine (timers, per-set weight), swaps exercises, logs supplements and shares a read-only profile with her trainer.</p>
+        <div class="tags"><span class="tag">WorkoutRunner</span><span class="tag">GET /exercises/{id}/alternatives</span><span class="tag">supplements · shares</span></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
