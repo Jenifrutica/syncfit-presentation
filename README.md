@@ -45,7 +45,10 @@ xdg-open public/architecture.html
   `k_load`) → DeepSeek designs → deterministic validation → backend → UI.
 - **architecture.html** — the same flow in interactive 3D (nodes, animated
   connections, orbit/zoom), including the gym-equipment input.
-- **journey.html** — the end-to-end product story as seven stations:
+- **journey.html** — a **3D animated** walkthrough (Spanish) with low-poly
+  characters: a bald bearded gym admin surveying equipment, the athlete scanning
+  at the hardware station, DeepSeek designing the routine, etc. Camera auto-tours
+  the seven stations (drag to orbit).
   1. Super admin creates the gym admin.
   2. Gym admin creates the gym and surveys equipment.
   3. Athlete registers (cedula) and onboards.

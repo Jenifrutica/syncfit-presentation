@@ -80,9 +80,9 @@ The model never recomputes k_load.
 
 ---
 
-# User journey (stations)
+# User journey (3D · stations)
 
-<iframe src="/journey.html" class="w-full h-[460px] rounded-xl border border-pink-200" />
+<iframe src="/journey.html" class="w-full h-[480px] rounded-xl border border-pink-200" />
 
 <!-- Speaker notes: 7 stations - super admin creates the gym admin; gym admin surveys equipment; athlete registers + onboards; joins by code; hardware scan -> local model; DeepSeek designs + deterministic validation; trains/tracks/shares. -->
 
