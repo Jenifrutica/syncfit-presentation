@@ -108,3 +108,42 @@ the three.js CDN).
 `public/architecture.html` (3D interactive), `public/journey.html` (3D animated,
 Spanish, 9 stations with per-stage inputs/outputs), `notes/README.md` (speaker
 script). User-story backlog lives as GitHub issues in this repo.
+
+## Roadmap · Qué falta (español)
+
+> Estado: **para la presentación final · primera versión** (aún no implementado del todo).
+
+- `components/` vacío; falta pulir el deck y los assets.
+- **Primera versión**: faltan muchos ajustes — **login con Google**, arreglar el **compartir datos**, **enlazar el hardware**, y **errores que se vayan viendo**.
+- Convertir el backlog de historias de usuario (issues) en entregables.
+
+## Conoce a Pulsi
+
+<img src="public/pulsi.png" alt="Pulsi, la gotita guía de SyncFit Edge" width="130" align="left" style="margin-right:16px" />
+
+**¡Hola! Soy Pulsi, tu guía en SyncFit Edge.** Acompaño a la usuaria en todo el
+recorrido: me pongo feliz, cansada o alerta según su energía, su fase del ciclo y
+las señales del hardware. Represento el latido del sistema y hago cercana una
+tecnología que, por dentro, es muy seria.
+
+<br clear="left" />
+
+### El sistema en 20 segundos
+
+SyncFit Edge es un sistema **edge-IoT + IA predictiva** que adapta el
+entrenamiento femenino al **ciclo menstrual** y al **embarazo**, y previene
+lesiones. Funciona con **dos IAs que trabajan en cadena**:
+
+1. **IA local** (`syncfit-core`, determinista): toma los datos del hardware
+   (PPG, temperatura dérmica, fuerza isométrica), calcula biomarcadores y
+   produce el factor de carga **`k_load`**.
+2. **IA de nube** (DeepSeek vía OpenCode): **diseña la rutina** a partir de esa
+   evaluación, el perfil, la meta y las **máquinas/equipo del gimnasio**.
+3. Una capa **determinista valida** (patrones, seguridad, sin duplicados,
+   máquinas primero) y hace **eco de `k_load`** (la IA nunca lo recalcula).
+
+Todo se despliega en **AWS** (S3 + CloudFront, ECS + ALB) y está en línea en
+**https://syncfit.jenilarper.dev**.
+
+> ⚠️ **Primera versión.** Faltan muchos ajustes: **login con Google**, arreglar el
+> **compartir datos**, **enlazar el hardware** y los **errores que se vayan viendo**.
