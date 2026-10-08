@@ -20,12 +20,12 @@ HRV, supine/Valsalva constraints) and why prescription must adapt.
 
 ## 4 · Architecture (~50 s)
 Hardware/firmware → core (DSP + RF/XGBoost, deterministic `k_load`) → DeepSeek
-(reasoning) → backend (FastAPI, data structures) → frontend. The simulator
+(GPT-6 Luna backup on transient failures) → backend (FastAPI, data structures) → frontend. The simulator
 replaces hardware until the device is built.
 
 ## 5 · Routine flow (two AIs) — `flow.html` (~60 s)
-"The local model synthesizes the hardware into an assessment; DeepSeek designs the
-routine from that data, the profile, the goal and the gym's equipment; a
+"The local model synthesizes the hardware into an assessment; DeepSeek (GPT-6 Luna
+backup on transient failures) designs the routine from that data, the profile, the goal and the gym's equipment; a
 deterministic layer validates and repairs — it never invents `k_load`."
 
 ## 6 · Architecture (3D) — `architecture.html` (~40 s)
@@ -34,12 +34,12 @@ Drag to orbit. Point out the equipment input feeding the designer.
 ## 7 · User journey (stations) — `journey.html` (~70 s)
 Seven stations: super admin creates the gym admin; the gym admin surveys
 equipment; the athlete registers (cedula) and onboards; joins by code; hardware
-scan → local model; DeepSeek designs + validation; she trains, tracks and shares.
+scan → local model; DeepSeek / GPT-6 Luna designs + validation; she trains, tracks and shares.
 
 ## 8 · Data structures & hybrid AI (~60 s)
 Ring Buffer (fixed 100 Hz stream), Segment Tree (range queries), Max-Heap
 (alerts), Directed State Graph (phases/trimesters), plus hashmaps/sets in the
-routine engine. `k_load` is deterministic; DeepSeek only reasons on top of it.
+routine engine. `k_load` is deterministic; the generative model only reasons on top of it.
 
 ## 9 · Impact (~40 s)
 Social, cultural, economic, normative (SDG 3 & 5; biomedical data protection).

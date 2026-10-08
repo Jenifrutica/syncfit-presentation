@@ -53,7 +53,7 @@ Speaker notes: cite Hewett, Wojtys, ACOG, Sims.
 
 - **Hardware / firmware** (C++/ESP-IDF): ESP32, MAX30102, MLX90614, HX711.
 - **Core — local AI** (Python): DSP, trained fatigue model, deterministic `k_load`.
-- **Reasoning — DeepSeek** (OpenCode Go): designs the routine in strict JSON.
+- **Reasoning — DeepSeek** (OpenCode Go), with GPT-6 Luna on transient outages: designs the routine in strict JSON.
 - **Backend** (Python/FastAPI): REST + WebSockets, mandatory data structures.
 - **Frontend** (TypeScript/Next.js): real-time analytics and adaptive routine.
 - **Simulator** replaces the hardware while real captures are recorded.
@@ -66,7 +66,8 @@ Speaker notes: cite Hewett, Wojtys, ACOG, Sims.
 
 <!--
 Speaker notes: hardware -> local model (assessment + k_load) -> DeepSeek designs
-(patterns, exercises, dose, rationale) -> deterministic enforcement -> backend -> UI.
+(GPT-6 Luna backup for transient outages; patterns, exercises, dose, rationale)
+-> deterministic enforcement -> backend -> UI.
 The model never recomputes k_load.
 -->
 
@@ -76,7 +77,7 @@ The model never recomputes k_load.
 
 <iframe src="/architecture.html" class="w-full h-[440px] rounded-xl border border-pink-200" />
 
-<!-- Speaker notes: interactive 3D flow; drag/zoom. Hardware -> local model -> assessment -> DeepSeek -> validator -> backend/frontend, with the gym equipment feeding the designer. -->
+<!-- Speaker notes: interactive 3D flow; drag/zoom. Hardware -> local model -> assessment -> DeepSeek (GPT-6 Luna backup) -> validator -> backend/frontend, with the gym equipment feeding the designer. -->
 
 ---
 
@@ -84,7 +85,7 @@ The model never recomputes k_load.
 
 <iframe src="/journey.html" class="w-full h-[480px] rounded-xl border border-pink-200" />
 
-<!-- Speaker notes: 9 stations - super admin; gym admin surveys equipment; athlete registers/onboards; joins by code; hardware scan; IA #1 local core (assessment + k_load); IA #2 DeepSeek designs; deterministic validator; trains/tracks/shares. Each station shows its input/output data. -->
+<!-- Speaker notes: 9 stations - super admin; gym admin surveys equipment; athlete registers/onboards; joins by code; hardware scan; IA #1 local core (assessment + k_load); IA #2 DeepSeek with GPT-6 Luna backup; deterministic validator; trains/tracks/shares. Each station shows its input/output data. -->
 
 ---
 
@@ -102,7 +103,7 @@ The model never recomputes k_load.
 # Hybrid AI (two AIs)
 
 1. **Local AI** (`syncfit-core`): DSP + Random Forest → biomarkers + deterministic `k_load`.
-2. **Cloud AI** (`syncfit-ai-reasoning`): **DeepSeek designs the whole routine** from the
+2. **Cloud AI** (`syncfit-ai-reasoning`): **DeepSeek (GPT-6 Luna backup) designs the whole routine** from the
    assessment, the profile, the gym machines and evidence guidelines.
 
 A deterministic layer **never designs**: it validates and repairs — pattern coverage,

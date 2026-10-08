@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- SyncFit Edge — architecture flow (3D, three.js). Interactive: drag to orbit, scroll to zoom. Nodes: hardware -> local AI (core) -> assessment -> DeepSeek -> validator -> backend/frontend, with gym equipment feeding the designer. Needs internet (three.js CDN). -->
+<!-- SyncFit Edge — architecture flow (3D, three.js). Interactive: drag to orbit, scroll to zoom. Nodes: hardware -> local AI (core) -> assessment -> DeepSeek (GPT-6 Luna backup) -> validator -> backend/frontend, with gym equipment feeding the designer. Needs internet (three.js CDN). -->
 <html lang="en">
 <head>
 <meta charset="utf-8" />
@@ -17,8 +17,8 @@
 </style>
 </head>
 <body>
-<div id="hud"><h1>SyncFit Edge · adapter flow</h1><p>Two AIs: the trained local model synthesizes the hardware; DeepSeek designs the routine. The deterministic layer only validates &amp; repairs.</p></div>
-<div class="legend"><b>Local AI</b> &nbsp;·&nbsp; <b>DeepSeek</b> &nbsp;·&nbsp; data pipeline &nbsp;·&nbsp; drag to orbit, scroll to zoom</div>
+<div id="hud"><h1>SyncFit Edge · adapter flow</h1><p>Two AIs: the trained local model synthesizes the hardware; DeepSeek (GPT-6 Luna backup) designs the routine. The deterministic layer only validates &amp; repairs.</p></div>
+<div class="legend"><b>Local AI</b> &nbsp;·&nbsp; <b>DeepSeek / GPT-6 Luna</b> &nbsp;·&nbsp; data pipeline &nbsp;·&nbsp; drag to orbit, scroll to zoom</div>
 <div class="badge">3D architecture · drag / zoom</div>
 <canvas id="c"></canvas>
 <script type="importmap">
@@ -66,7 +66,7 @@ const nodes = [
   { id:"hw",   t:"Hardware / Sim", s:"PPG · °T · force",  c:0x38bdf8, p:[-11, 3, 0] },
   { id:"core", t:"Local AI · core", s:"DSP + ML · k_load", c:0x22d3ee, p:[-5.5, 3, 2] },
   { id:"assess",t:"Assessment",      s:"phase · risk",      c:0xa78bfa, p:[0, 3, 3] },
-  { id:"deep", t:"DeepSeek · OpenCode", s:"designs routine", c:0xff4f9d, p:[5.5, 3, 2] },
+  { id:"deep", t:"DeepSeek · GPT-6 Luna backup", s:"designs routine", c:0xff4f9d, p:[5.5, 3, 2] },
   { id:"valid",t:"Validator",        s:"patterns · safety", c:0xf59e0b, p:[11, 3, 0] },
   { id:"back", t:"Backend",          s:"persist · REST",    c:0x34d399, p:[5.5, -3, -2] },
   { id:"front",t:"Frontend",         s:"routine · modal",   c:0xfb7185, p:[-1.5, -3, -3] },

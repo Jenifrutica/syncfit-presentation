@@ -47,16 +47,16 @@ xdg-open public/architecture.html
 ## Diagrams
 
 - **flow.html** — the two-AI pipeline: hardware → local model (assessment +
-  `k_load`) → DeepSeek designs → deterministic validation → backend → UI.
+  `k_load`) → DeepSeek (GPT-6 Luna outage backup) designs → deterministic validation → backend → UI.
 - **architecture.html** — the same flow in interactive 3D (nodes, animated
   connections, orbit/zoom), including the gym-equipment input.
 - **journey.html** — a **3D animated** walkthrough (Spanish) with low-poly
   characters across **9 stations**, showing **both AIs** (local `core` and
-  DeepSeek) and the **data entering/leaving each stage** (inputs/outputs panel):
+  DeepSeek (with GPT-6 Luna backup) and the **data entering/leaving each stage** (inputs/outputs panel):
   1. Super admin · 2. Gym admin surveys equipment · 3. Athlete registers/onboards
   · 4. Joins the gym by code · 5. Hardware scan (raw PPG/°T/force) · 6. **IA #1
   local (core)**: DSP + RandomForest → RMSSD/fatigue/`k_load` + assessment ·
-  7. **IA #2 DeepSeek**: designs the routine from assessment + profile + catalog +
+  7. **IA #2 DeepSeek / GPT-6 Luna**: designs the routine from assessment + profile + catalog +
   equipment · 8. Deterministic validator · 9. Trains/tracks/shares. Camera
   auto-tours the stations (drag to orbit).
   1. Super admin creates the gym admin.
@@ -64,7 +64,7 @@ xdg-open public/architecture.html
   3. Athlete registers (cedula) and onboards.
   4. Athlete joins the gym by code.
   5. Hardware scan → local model.
-  6. DeepSeek designs + deterministic validation.
+  6. DeepSeek (GPT-6 Luna backup) designs + deterministic validation.
   7. Trains, tracks and shares.
 
 ## Narrative outline (slides.md)
@@ -137,8 +137,9 @@ lesiones. Funciona con **dos IAs que trabajan en cadena**:
 1. **IA local** (`syncfit-core`, determinista): toma los datos del hardware
    (PPG, temperatura dérmica, fuerza isométrica), calcula biomarcadores y
    produce el factor de carga **`k_load`**.
-2. **IA de nube** (DeepSeek vía OpenCode): **diseña la rutina** a partir de esa
-   evaluación, el perfil, la meta y las **máquinas/equipo del gimnasio**.
+2. **IA de nube** (DeepSeek vía OpenCode, GPT-6 Luna ante fallos transitorios):
+   **diseña la rutina** a partir de esa evaluación, el perfil, la meta y las
+   **máquinas/equipo del gimnasio**.
 3. Una capa **determinista valida** (patrones, seguridad, sin duplicados,
    máquinas primero) y hace **eco de `k_load`** (la IA nunca lo recalcula).
 

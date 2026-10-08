@@ -43,6 +43,8 @@ hardware (or simulator)
    → syncfit-core (IA #1, deterministic): DSP + RandomForest/XGBoost → k_load
    → PhysiologicalAssessment
    → DeepSeek (IA #2, OpenCode Go): designs the routine (patterns, dose, rationale)
+   → GPT-6 Luna (Responses API) on transient provider/network failures
+   → deterministic routine if both generative calls fail
    → deterministic enforcement: patterns, safety, equipment order, k_load echo
    → persistence → REST/WebSocket → frontend
 ```
@@ -71,7 +73,8 @@ deterministic stage guarantees the *what*.
 - **Deterministic half** (`syncfit-core`): DSP + trained ML → central fatigue and
   `k_load`. Never hallucinated; runs offline.
 - **Generative half** (`syncfit-ai-reasoning`): DeepSeek reasons from the
-  assessment, profile, goal, catalog and gym equipment to design the routine.
+  assessment, profile, goal, catalog and gym equipment to design the routine;
+  GPT-6 Luna is attempted on transient DeepSeek/provider failures.
 - **Deterministic guardrails** (`enforce_prescription`): normalize ids, exclude
   contraindications, no duplicate pattern, required-pattern coverage, compounds
   first, equipment filters, and a literal echo of `k_load`.

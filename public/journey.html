@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- SyncFit Edge — user journey (3D animated, Spanish). Nine stations with per-stage inputs/outputs: super admin, gym-admin equipment survey, athlete register/onboarding, join by code, hardware scan, IA #1 local (core), IA #2 DeepSeek, deterministic validator, train/track/share. Drag to orbit; arrow keys to navigate. Needs internet (three.js CDN). -->
+<!-- SyncFit Edge — user journey (3D animated, Spanish). Nine stations with per-stage inputs/outputs: super admin, gym-admin equipment survey, athlete register/onboarding, join by code, hardware scan, IA #1 local (core), IA #2 DeepSeek with GPT-6 Luna backup, deterministic validator, train/track/share. Drag to orbit; arrow keys to navigate. Needs internet (three.js CDN). -->
 <html lang="es">
 <head>
 <meta charset="utf-8" />
@@ -243,7 +243,7 @@ const STATIONS = [
       const pts=[]; for (let i=0;i<40;i++){ pts.push(new THREE.Vector3(-2+i*0.1, Math.sin(i*0.6)*0.25, 0)); }
       const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), new THREE.LineBasicMaterial({color:0x22d3ee})); line.position.set(0,1.9,0); g.add(line); animated.push({type:"wave",mesh:line});
       for (let i=0;i<8;i++){ const s=ball(0.07,0x38bdf8,{emissive:0x38bdf8}); g.add(s); animated.push({type:"orbit",mesh:s,r:2.0,y:1.4,ph:Math.random()*6.28,sp:0.7}); } }},
-  { who:"IA #2 · DeepSeek", title:"DeepSeek diseña la rutina",
+  { who:"IA #2 · DeepSeek / GPT-6 Luna", title:"IA generativa diseña la rutina",
     desc:"Recibe la evaluación y todos los datos, razona con evidencia (volumen, reps, descanso, compuestos primero) y elige el ejercicio de cada patrón respetando el equipo del gimnasio. Devuelve la rutina completa con su justificación en JSON estricto. Nunca recalcula k_load.",
     inputs:["assessment + k_load","perfil, objetivo, síntomas","catálogo + equipo del gym","guías de evidencia"], outputs:["rutina completa + rationale","patrones, series, reps, descanso"],
     build(g){ const core=new THREE.Mesh(new THREE.IcosahedronGeometry(1.1,1), new THREE.MeshStandardMaterial({color:0xff4f9c,emissive:0xff4f9c,emissiveIntensity:0.55,roughness:0.3,metalness:0.4}));
