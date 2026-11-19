@@ -1,53 +1,172 @@
 <!doctype html>
 <html lang="es">
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SyncFit Edge | Pitch de 15 minutos</title>
 <style>
-:root{color-scheme:dark;--ink:#f5f4fe;--muted:#cfcae9;--accent:#d8c4ff;--bg:#21173d;font:clamp(16px,2.4vw,32px)/1.35 system-ui,sans-serif}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink)}main{min-height:100svh;display:grid;grid-template-rows:1fr auto;background:radial-gradient(ellipse at 105% 10%,#583e85,transparent 60%)}
-section{padding:clamp(28px,8vw,150px);align-content:center;max-width:1500px}
-h1,h2{font:600 clamp(2.6rem,7vw,7rem)/.97 Georgia,serif;letter-spacing:-.045em;margin:.22em 0 .32em}
-p,ol{max-width:33em}small{color:var(--accent)}strong{color:var(--accent)}li{margin:.5em 0}nav{display:flex;gap:.65rem;align-items:center;padding:1rem clamp(28px,8vw,150px);border-top:1px solid #756494;flex-wrap:wrap;color:var(--muted)}
-button{background:transparent;color:inherit;border:1px solid #a08dbc;border-radius:999px;font:inherit;font-size:.57rem;padding:.45em .9em;cursor:pointer}button:disabled{opacity:.4;cursor:default}button:focus-visible{outline:3px solid var(--accent)}output{font-size:.62rem;font-variant-numeric:tabular-nums;margin-left:auto}a{color:var(--accent)}
-@media print{main{display:block;background:white;color:#21173d}section[hidden]{display:block}section{break-after:page;min-height:90vh}nav{display:none}small,strong{color:#453065}}
+:root{color-scheme:dark;--bg:#21173d;--paper:#f5f4fe;--muted:#cfcae9;--lavender:#d8c4ff;--line:#816a9f;--panel:#30214f;font:clamp(16px,1.5vw,24px)/1.45 system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--paper)}
+main{min-height:100svh;display:flex;flex-direction:column;background:radial-gradient(ellipse at 100% 0%,#523477,transparent 65%)}
+header,nav{padding:.75rem clamp(1rem,4.5vw,5rem);display:flex;align-items:center;gap:.7rem;flex-wrap:wrap}
+header{justify-content:space-between;border-bottom:1px solid var(--line)}
+header strong{font-family:Georgia,serif;font-size:1.12rem}
+header span,small{color:var(--lavender);font-size:.75rem}
+section{flex:1;display:grid;grid-template-columns:1fr .94fr;align-items:center;gap:clamp(1.2rem,4vw,5rem);width:100%;max-width:1800px;margin:auto;padding:clamp(1.4rem,4.2vw,4.5rem) clamp(1rem,6vw,6rem)}
+[hidden]{display:none!important}
+h1,h2{font:600 clamp(2.5rem,5.9vw,6.4rem)/.98 Georgia,serif;letter-spacing:-.055em;margin:.3em 0}
+p{max-width:34em;margin:.7em 0;color:var(--muted)}
+img{display:block;width:100%;height:clamp(240px,40vw,540px);object-fit:cover;border-radius:1rem}
+figure{margin:0;position:relative}figcaption{margin-top:.5rem;color:var(--muted);font-size:.68rem}
+button,select{color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:.6rem;font:inherit;font-size:.7rem;padding:.5rem .8rem}
+button{cursor:pointer}button:hover:not(:disabled),button[aria-pressed="true"]{background:var(--lavender);color:var(--bg)}
+button:disabled{opacity:.4;cursor:default}
+:focus-visible{outline:3px solid var(--lavender);outline-offset:3px}
+nav{border-top:1px solid var(--line);justify-content:space-between}
+nav .group,.switch{display:flex;gap:.45rem;align-items:center;flex-wrap:wrap}
+nav .primary{background:var(--lavender);color:var(--bg);font-weight:700}
+nav output{font-size:.75rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+progress{width:100%;height:.3rem;accent-color:var(--lavender);vertical-align:top}
+.steps{display:grid;gap:.6rem;padding:0;list-style:none}
+.steps label{display:flex;align-items:start;gap:.6rem;padding:.65rem .8rem;border:1px solid var(--line);border-radius:.6rem;cursor:pointer}
+.steps input{width:1rem;height:1rem;margin:.17rem 0 0;flex:none;accent-color:var(--lavender)}
+.steps label:has(input:checked){background:#473463}
+.panel{padding:clamp(1rem,3vw,2rem);background:var(--panel);border:1px solid var(--line);border-radius:1rem}
+.panel h3{font:500 clamp(1.25rem,3vw,2.25rem)/1.15 Georgia,serif;margin:.35em 0}
+.panel strong{color:var(--lavender)}
+.roles{display:grid;gap:.8rem}
+details{border-top:1px solid var(--line);padding:.8rem 0}
+summary{cursor:pointer;font-weight:650}
+meter{width:100%;height:.75rem;accent-color:var(--lavender)}
+@media(max-width:760px){section{grid-template-columns:1fr;gap:1.1rem}img{height:clamp(210px,56vw,380px)}nav{gap:.5rem}header,nav{padding:.7rem 1rem}}
+@media print{main{display:block;background:white;color:#21173d}section[hidden]{display:grid!important}section{break-after:page;min-height:85vh}nav,header,progress{display:none}small,p,figcaption{color:#453065}.panel{background:white}}
 </style>
+</head>
+<body>
 <main>
-<section><small>SyncFit Edge · 00:00–02:00</small><h1>El contexto cambia.<br>La rutina también.</h1><p>Una atleta llega al gimnasio con energía baja, una fase del ciclo distinta y acceso a otras máquinas. Su rutina anterior puede dejar de ajustarse a lo que puede hacer hoy.</p></section>
-<section hidden><small>El problema · 02:00–05:00</small><h2>Elegir qué entrenar hoy</h2><p>SyncFit reúne tres señales para decidir qué ejercicios proponer y cómo ajustar la carga.</p><ol><li>Contexto del ciclo o gestación.</li><li>Energía percibida y señales fisiológicas.</li><li>Inventario disponible en el gimnasio.</li></ol><p>En esta demostración la telemetría es simulada.</p></section>
-<section hidden><small>Demostración · 05:00–06:00</small><h2>Dos accesos, dos tareas</h2><ol><li>Abre la pantalla de inicio de sesión del entorno de evaluación.</li><li>Usa los accesos existentes de administrador de gimnasio y atleta en perfiles de navegador separados.</li></ol></section>
-<section hidden><small>Demostración · 06:00–09:00</small><h2>Registra una máquina</h2><ol><li>Abre el panel del gimnasio y agrega una máquina con nombre y ejercicios asociados.</li><li>Recarga la página y verifica que el inventario y su contador reflejen la nueva máquina.</li></ol></section>
-<section hidden><small>Demostración · 09:00–11:00</small><h2>Edita un grupo muscular</h2><ol><li>En Superadministración → Catálogos → Opciones, crea un grupo muscular. En Ejercicios, agrega su identificador a muscle_groups del ejercicio de prueba.</li><li>Recarga la vista de rutina y verifica que aparezca la opción.</li></ol></section>
-<section hidden><small>Demostración · 11:00–15:00</small><h2>Genera la rutina</h2><ol><li>Como atleta, únete al gimnasio de prueba y actívalo.</li><li>Elige un grupo muscular, registra energía y ejecuta la captura simulada.</li><li>Revisa los ejercicios, el ajuste de carga y el equipo asociado en el resultado.</li></ol></section>
-<nav aria-label="Controles de presentación"><button id="previous">Anterior</button><button id="next">Siguiente</button><button id="start">Iniciar reloj</button><output id="counter" aria-label="Tiempo transcurrido">00:00 / 15:00</output></nav>
+<header><strong>SyncFit Edge</strong><span id="location" aria-live="polite">El problema · 1 de 6</span></header>
+<section data-phase="El problema">
+  <div><small>00:00–02:00</small><h1>El contexto cambia. La rutina también.</h1><p>Una atleta llega al gimnasio con menos energía y encuentra que su máquina habitual está ocupada. ¿Cómo decide qué entrenar hoy?</p></div>
+  <figure><img src="pitch-assets/athlete.webp" alt="Atleta preparándose para entrenar en el gimnasio"><figcaption>Escena ilustrativa generada para el pitch.</figcaption></figure>
+</section>
+<section data-phase="El problema" hidden>
+  <div><small>02:00–05:00</small><h2>¿Qué cambia hoy?</h2><p>Pregunta al público qué información usaría para ajustar la rutina. Elige una respuesta para mostrar cómo entra al flujo de SyncFit.</p>
+  <div class="switch" role="group" aria-label="Contexto de entrenamiento">
+    <button type="button" data-signal="cycle" aria-pressed="true">Ciclo o gestación</button>
+    <button type="button" data-signal="energy" aria-pressed="false">Energía</button>
+    <button type="button" data-signal="equipment" aria-pressed="false">Equipo</button>
+  </div></div>
+  <div class="panel" aria-live="polite"><small>Ejemplo para conversar</small><h3 id="signal-title">Contexto fisiológico</h3><p id="signal-text">La fase del ciclo o la etapa de gestación aporta contexto al generar una propuesta de entrenamiento.</p><p>La demostración usa telemetría simulada.</p></div>
+</section>
+<section data-phase="Demostración" hidden>
+  <div><small>05:00–06:00</small><h2>Dos accesos, dos tareas</h2><p>Abre el entorno de evaluación en dos perfiles del navegador. Usa los accesos rápidos existentes.</p></div>
+  <div class="panel roles"><details open><summary>Administrador de gimnasio</summary><p>Abre el panel y elige el gimnasio de prueba.</p></details><details><summary>Atleta</summary><p>Abre la app y prepara el código para unirte al gimnasio de prueba.</p></details><details><summary>Superadministrador</summary><p>Ten abierta la sesión de catálogos para el ejercicio del minuto nueve.</p></details></div>
+</section>
+<section data-phase="Demostración" hidden>
+  <div><small>06:00–09:00</small><h2>Registra una máquina</h2><ul class="steps"><li><label><input type="checkbox">Agrega una máquina con nombre y ejercicios asociados.</label></li><li><label><input type="checkbox">Recarga el panel y comprueba que el inventario y el contador reflejen el alta.</label></li></ul></div>
+  <figure><img src="pitch-assets/machine.webp" alt="Detalle del selector de peso de una máquina de gimnasio" loading="lazy"><figcaption>Máquina ilustrativa.</figcaption></figure>
+</section>
+<section data-phase="Demostración" hidden>
+  <div><small>09:00–11:00</small><h2>Agrega un grupo muscular</h2><p>Usa el panel de superadministración y comprueba el resultado desde la sesión de atleta.</p></div>
+  <div class="panel"><h3>Catálogos</h3><ul class="steps"><li><label><input type="checkbox">En Opciones, crea un grupo muscular.</label></li><li><label><input type="checkbox">En Ejercicios, agrega su identificador en <code>muscle_groups</code> a un ejercicio de prueba.</label></li><li><label><input type="checkbox">Recarga la vista de rutina y verifica que aparezca el grupo.</label></li></ul></div>
+</section>
+<section data-phase="Demostración" hidden>
+  <div><small>11:00–15:00</small><h2>Genera la rutina</h2>
+  <ul class="steps"><li><label><input type="checkbox">Únete al gimnasio de prueba y actívalo.</label></li><li><label><input type="checkbox">Elige un grupo muscular, registra tu energía y ejecuta la captura simulada.</label></li><li><label><input type="checkbox">Revisa los ejercicios, el ajuste de carga y el equipo de la propuesta.</label></li></ul></div>
+  <figure><img src="pitch-assets/training.webp" alt="Atleta haciendo una subida controlada a un cajón de entrenamiento" loading="lazy"><figcaption>Ejercicio ilustrativo.</figcaption></figure>
+</section>
+<progress id="progress" value="0" max="900" aria-label="Progreso de los 15 minutos"></progress>
+<nav aria-label="Controles de presentación">
+  <div class="group"><button type="button" id="previous">← Anterior</button><button type="button" id="next" class="primary">Siguiente →</button></div>
+  <div class="group"><button type="button" id="fullscreen">Pantalla completa</button><button type="button" id="start">Iniciar reloj</button><output id="counter" aria-label="Tiempo transcurrido">00:00 / 15:00</output></div>
+</nav>
 </main>
 <script>
 const slides = Array.from(document.querySelectorAll("section"));
 const previous = document.querySelector("#previous");
 const next = document.querySelector("#next");
+const locationLabel = document.querySelector("#location");
 const start = document.querySelector("#start");
 const counter = document.querySelector("#counter");
+const progress = document.querySelector("#progress");
+const fullscreen = document.querySelector("#fullscreen");
 let index = 0;
+
 function show(page) {
   index = Math.min(Math.max(page, 0), slides.length - 1);
   slides.forEach((slide, position) => { slide.hidden = position !== index; });
   previous.disabled = index === 0;
   next.disabled = index === slides.length - 1;
+  locationLabel.textContent = slides[index].dataset.phase + " · " + (index + 1) + " de " + slides.length;
 }
 previous.onclick = () => show(index - 1);
 next.onclick = () => show(index + 1);
 document.addEventListener("keydown", (event) => {
-  if (event.key === "ArrowRight") show(index + 1);
-  if (event.key === "ArrowLeft") show(index - 1);
+  if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey) return;
+  if (event.target instanceof HTMLElement && event.target.closest("input, select, textarea, [contenteditable]")) return;
+  if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+    event.preventDefault();
+    show(index + (event.key === "ArrowRight" ? 1 : -1));
+  }
 });
+
+const signals = {
+  cycle: ["Contexto fisiológico", "La fase del ciclo o la etapa de gestación aporta contexto al generar una propuesta de entrenamiento."],
+  energy: ["Energía percibida", "La atleta registra cómo se siente. SyncFit usa esa información junto con las señales de la captura para ajustar la propuesta."],
+  equipment: ["Inventario del gimnasio", "El plan puede priorizar ejercicios asociados a las máquinas que están registradas en el gimnasio activo."]
+};
+const signalButtons = document.querySelectorAll("[data-signal]");
+signalButtons.forEach((button) => {
+  button.onclick = () => {
+    const [title, copy] = signals[button.dataset.signal];
+    document.querySelector("#signal-title").textContent = title;
+    document.querySelector("#signal-text").textContent = copy;
+    signalButtons.forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+  };
+});
+
+fullscreen.hidden = !document.fullscreenEnabled;
+fullscreen.onclick = async () => {
+  try {
+    if (document.fullscreenElement) await document.exitFullscreen();
+    else await document.documentElement.requestFullscreen();
+  } catch {
+    fullscreen.hidden = true;
+  }
+};
+document.addEventListener("fullscreenchange", () => {
+  fullscreen.textContent = document.fullscreenElement ? "Salir de pantalla completa" : "Pantalla completa";
+});
+
+let elapsed = 0;
+let startedAt = 0;
+let interval;
+function tick() {
+  const seconds = Math.min(900, Math.floor((elapsed + (interval ? performance.now() - startedAt : 0)) / 1000));
+  counter.textContent = [Math.floor(seconds / 60), seconds % 60].map((value) => String(value).padStart(2, "0")).join(":") + " / 15:00";
+  progress.value = seconds;
+  if (seconds === 900) {
+    clearInterval(interval);
+    interval = undefined;
+    start.textContent = "Tiempo agotado";
+    start.disabled = true;
+  }
+}
 start.onclick = () => {
-  const began = Date.now();
-  start.disabled = true;
-  const timer = setInterval(() => {
-    const seconds = Math.min(900, Math.floor((Date.now() - began) / 1000));
-    counter.textContent = [Math.floor(seconds / 60), seconds % 60].map((value) => String(value).padStart(2, "0")).join(":") + " / 15:00";
-    if (seconds === 900) clearInterval(timer);
-  }, 200);
+  if (interval) {
+    elapsed += performance.now() - startedAt;
+    clearInterval(interval);
+    interval = undefined;
+    start.textContent = "Reanudar reloj";
+  } else {
+    startedAt = performance.now();
+    interval = setInterval(tick, 200);
+    start.textContent = "Pausar reloj";
+  }
+  tick();
 };
 show(0);
 </script>
+</body>
 </html>
