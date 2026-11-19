@@ -1,74 +1,71 @@
 # SyncFit Presentation
 
-Defense and demo material for **SyncFit Edge**: the deck the team presents and
-the script for each speaker. No production code lives here.
+**Live app:** https://syncfit.jenilarper.dev
 
-## The presentation (short deck + live demo in the app)
+Defense and demo material for **SyncFit Edge**: a short pitch deck (the idea and
+the data structures), the speaker script for the three of us, and the live demo.
 
-- **Deck:** [`beamer/syncfit-pitch.pdf`](./beamer/syncfit-pitch.pdf), LaTeX Beamer
-  in the SyncFit brand style. Present it in Adobe Acrobat, full screen, so the
-  transitions and animations play. How to build and present it:
-  [`beamer/README.md`](./beamer/README.md).
-- **Script:** [`beamer/GUION.md`](./beamer/GUION.md) — what Juan López, Jenifer
-  Urbano and Juan Cuarán say on each of the 8 slides, and who drives each part of
-  the live demo.
-- **Web version:** [the public pitch on Vercel](https://syncfit-presentation-juan-5a09.vercel.app/),
-  a single page (`public/SyncFit-Pitch.html` with `public/pitch-assets/`).
+## Team
+
+- Juan Esteban Cuaran
+- Juan Camilo López
+- Jenifer Daniela Urbano
+
+## Present
+
+| What | Where | Notes |
+|---|---|---|
+| **Pitch (Beamer PDF)** — main deck | [`beamer/syncfit-pitch.pdf`](./beamer/syncfit-pitch.pdf) | 8 slides / 20 pages. Open in Adobe Acrobat, full screen (Ctrl/Cmd+L), allow the document's JavaScript for the animations. |
+| **Script** | [`beamer/GUION.md`](./beamer/GUION.md) | What each of us says per slide, who drives each part of the demo, likely questions. |
+| Pitch (web) | [`public/SyncFit-Pitch.html`](./public/SyncFit-Pitch.html) · [online](https://syncfit-presentation-juan-5a09.vercel.app/) | Same script, opens in any browser. |
+| Live demo | https://syncfit.jenilarper.dev | Shown in the app, without slides, after slide 7. |
+
+Order: slides 1–7 (the idea, how the backend is built and the data structures it
+uses, about 4.5 minutes), then the live demo in the app, then slide 8 for
+questions. Checklist and build steps: [`beamer/README.md`](./beamer/README.md).
+
+### Before presenting
+
+- Acrobat with document JavaScript allowed; start full screen on the cover.
+- For the demo, three browser sessions: gym admin, athlete with the gym code,
+  and superadmin in Catalogs.
+- Prototype plugged in (it zeroes the force platform by itself when it connects);
+  without it, the check-in's "Simulate" uses the athlete's own history or the
+  values expected for her age, weight and height.
 
 ## Contents
 
 ```
-beamer/                 # The deck: .tex, brand theme, fonts (OFL), Pulsi, PDF, script
-public/
-├── SyncFit-Pitch.html  # Web version of the pitch (Vercel)
-├── pitch-assets/       # Its photos
-└── pulsi.png           # Pulsi, used below
-ARCHITECTURE.md         # Software architecture (layers, patterns, deployment, AI)
+syncfit-presentation/
+├── beamer/          # Main deck: syncfit-pitch.tex + brand theme, built PDF, fonts, Pulsi, GUION.md
+├── public/          # Web pitch (SyncFit-Pitch.html), its photos and Pulsi
+└── ARCHITECTURE.md  # Software architecture (layers, patterns, deployment, hybrid AI)
 ```
 
-## Architecture
+## Rebuild the PDF
 
-See [`ARCHITECTURE.md`](./ARCHITECTURE.md) for the software architecture
-(style, layers, patterns, deployment, hybrid AI). The deck summarizes the
-backend and its data structures in the "Cómo está construido" slides.
+```bash
+cd beamer
+xelatex syncfit-pitch.tex && xelatex syncfit-pitch.tex
+```
 
-## Related repositories
+## Meet Pulsi
 
-[`syncfit-hardware`](../syncfit-hardware) · [`syncfit-core`](../syncfit-core) ·
-[`syncfit-ai-reasoning`](../syncfit-ai-reasoning) · [`syncfit-backend`](../syncfit-backend) ·
-[`syncfit-frontend`](../syncfit-frontend) · [`syncfit-contracts`](../syncfit-contracts).
+<img src="public/pulsi.png" alt="Pulsi, the SyncFit Edge guide" width="110" align="left" style="margin-right:16px" />
 
-All code, comments, documentation and commits in this repository are written in English;
-the deck and the script are in Spanish, the language of the defense.
-
-## Conoce a Pulsi
-
-<img src="public/pulsi.png" alt="Pulsi, la gotita guía de SyncFit Edge" width="130" align="left" style="margin-right:16px" />
-
-**¡Hola! Soy Pulsi, tu guía en SyncFit Edge.** Acompaño a la usuaria en todo el
-recorrido: me pongo feliz, cansada o alerta según su energía, su fase del ciclo y
-las señales del hardware. Represento el latido del sistema y hago cercana una
-tecnología que, por dentro, es muy seria.
+Pulsi is the SyncFit guide: a heart-shaped drop whose face mirrors the athlete's
+state (happy, tired, alert, asleep) according to her energy, her cycle phase or
+pregnancy week, and the sensor readings.
 
 <br clear="left" />
 
-### El sistema en 20 segundos
+## Related repositories
 
-SyncFit Edge es un sistema **edge-IoT + IA predictiva** que adapta el
-entrenamiento femenino al **ciclo menstrual** y al **embarazo**, y previene
-lesiones. Funciona con **dos IAs que trabajan en cadena**:
-
-1. **IA local** (`syncfit-core`, determinista): toma los datos del hardware
-   (PPG, temperatura dérmica, fuerza isométrica), calcula biomarcadores y
-   produce el factor de carga **`k_load`**.
-2. **IA de nube** (DeepSeek vía OpenCode, GPT-6 Luna ante fallos transitorios):
-   **diseña la rutina** a partir de esa evaluación, el perfil, la meta y las
-   **máquinas/equipo del gimnasio**.
-3. Una capa **determinista valida** (patrones, seguridad, sin duplicados,
-   máquinas primero) y hace **eco de `k_load`** (la IA nunca lo recalcula).
-
-Todo se despliega en **AWS** (S3 + CloudFront, ECS + ALB) y está en línea en
-**https://syncfit.jenilarper.dev**.
-
-> ⚠️ **Primera versión.** Faltan muchos ajustes: **login con Google**, arreglar el
-> **compartir datos**, **enlazar el hardware** y los **errores que se vayan viendo**.
+[`syncfit-frontend`](https://github.com/Jenifrutica/syncfit-frontend) ·
+[`syncfit-backend`](https://github.com/Jenifrutica/syncfit-backend) ·
+[`syncfit-contracts`](https://github.com/Jenifrutica/syncfit-contracts) ·
+[`syncfit-core`](https://github.com/Jenifrutica/syncfit-core) ·
+[`syncfit-database`](https://github.com/Jenifrutica/syncfit-database) ·
+[`syncfit-ai-reasoning`](https://github.com/Jenifrutica/syncfit-ai-reasoning) ·
+[`syncfit-simulator`](https://github.com/Jenifrutica/syncfit-simulator) ·
+[`syncfit-hardware`](https://github.com/Jenifrutica/syncfit-hardware)
