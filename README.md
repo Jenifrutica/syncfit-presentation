@@ -5,7 +5,7 @@ Academic defense and demo material for **SyncFit Edge**, built with Slidev
 
 ## 15-minute pitch
 
-Open [the standalone HTML pitch](./public/SyncFit-Pitch.html) in your browser.
+Open [the public SyncFit pitch on Vercel](https://syncfit-presentation-juan-5a09.vercel.app/) in your browser.
 It includes five minutes on the problem and ten minutes for the live demo.
 
 ## Architecture
