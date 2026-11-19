@@ -31,8 +31,8 @@ Si Acrobat pregunta, permite el JavaScript del documento: las animaciones lo
 necesitan. En Vista Previa de macOS o en el navegador se ve un cuadro fijo
 de cada animación (el diseño sigue completo, pero sin movimiento).
 
-Avanza con las flechas o la barra espaciadora: varias diapositivas revelan sus
-tarjetas por pasos (8 diapositivas, 20 páginas).
+Avanza con las flechas o la barra espaciadora: cada diapositiva muestra todo su
+contenido de una vez (8 diapositivas, 8 páginas).
 
 ## Antes de exponer
 

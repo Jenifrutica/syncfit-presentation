@@ -6,8 +6,8 @@ Después viene la **demostración en vivo en la app**, sin diapositivas, y al fi
 se vuelve a la última diapositiva para las preguntas.
 
 Exponen **Juan López** (abre), **Jenifer Urbano** y **Juan Cuarán**. Los textos
-son una guía para decirlos con tus palabras, no para leerlos. Los **[clic]**
-marcan cuándo avanzar: algunas diapositivas revelan sus tarjetas una por una.
+son una guía para decirlos con tus palabras, no para leerlos. Cada diapositiva
+muestra todo su contenido de una vez: se avanza una sola vez por diapositiva.
 
 ## Reparto y tiempos
 
@@ -41,8 +41,6 @@ marcan cuándo avanzar: algunas diapositivas revelan sus tarjetas una por una.
 > entrenamiento se diseñaron con datos de cuerpos masculinos y no cambian con el
 > ciclo.
 
-**[clic]**
-
 > Entonces, ¿qué debería entrenar hoy?
 
 ### 3 · ¿Qué cambia hoy? — Juan López (0:40)
@@ -53,12 +51,8 @@ marcan cuándo avanzar: algunas diapositivas revelan sus tarjetas una por una.
 > impacto, en la ovulatoria evitamos saltos, y en el embarazo hay reglas propias,
 > como nada boca arriba desde la semana 16.
 
-**[clic]**
-
 > **Energía:** lo que ella siente, más lo que miden los sensores: su pulso, su
 > temperatura y su fuerza, comparados con los suyos de siempre.
-
-**[clic]**
 
 > **Equipo:** las máquinas que de verdad tiene su gimnasio.
 
@@ -88,15 +82,9 @@ Pase: *"Juan Cuarán les muestra cómo lo construimos."*
 > - **Analítica:** ordena los datos para responder rápido.
 > - **Datos:** lo guarda todo.
 
-**[clic]**
-
 > Las contraseñas van cifradas y cada rol ve solo lo suyo.
 
-**[clic]**
-
 > Si se cae la red mientras se crea una rutina, no se crea dos veces.
-
-**[clic]**
 
 > Y casi 500 pruebas automáticas revisan solas que ningún cambio rompa nada.
 
@@ -106,12 +94,12 @@ Pase: *"Juan Cuarán les muestra cómo lo construimos."*
 > ese problema:
 > - **Arreglos** para las últimas muestras del pulso y del peso. Siempre son la
 >   misma cantidad, así que un tamaño fijo es lo más rápido.
-> - **[clic]** **Listas** para tu rutina, tus máquinas y tus suplementos, que
+> - **Listas** para tu rutina, tus máquinas y tus suplementos, que
 >   crecen o se achican.
-> - **[clic]** Una **cola circular** para el pulso, que llega 100 veces por
+> - Una **cola circular** para el pulso, que llega 100 veces por
 >   segundo. Solo importan los últimos segundos: el dato nuevo reemplaza al más
 >   viejo.
-> - **[clic]** Una **cola de prioridad** para las alertas de salud: la grave va
+> - Una **cola de prioridad** para las alertas de salud: la grave va
 >   primero, aunque llegue después.
 
 Pase: *"Jenifer sigue con las que conectan los datos."*
@@ -120,11 +108,11 @@ Pase: *"Jenifer sigue con las que conectan los datos."*
 
 > - Un **árbol** para ver tus estadísticas entre dos fechas sin recorrer todo el
 >   historial.
-> - **[clic]** Un **grafo** para las fases: una lleva a la siguiente y el ciclo
+> - Un **grafo** para las fases: una lleva a la siguiente y el ciclo
 >   vuelve a empezar, como vimos al principio.
-> - **[clic]** **Tablas hash** para encontrar al instante qué máquina del
+> - **Tablas hash** para encontrar al instante qué máquina del
 >   gimnasio sirve para cada ejercicio.
-> - **[clic]** **Claves únicas** en la base de datos para que una rutina nunca
+> - **Claves únicas** en la base de datos para que una rutina nunca
 >   se genere dos veces.
 >
 > No usamos pilas: ningún proceso necesita deshacer en orden inverso.
