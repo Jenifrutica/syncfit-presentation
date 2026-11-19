@@ -86,10 +86,6 @@
 \setbeamertemplate{itemize item}{\color{ink}\raisebox{.15ex}{\tikz\fill[ink] (0,0) circle (.6ex);}}
 \setbeamertemplate{frametitle}{\vspace*{.2cm}\insertframetitle\par}
 
-% Small pill with the minute range of each slide, e.g. "02:00 – 05:00".
-\newcommand{\minutos}[1]{%
-  \tikz[baseline=(t.base)]\node[fill=nube, text=inksuave, rounded corners=7pt, inner xsep=8pt, inner ysep=3pt, font=\small\bfseries](t){#1};}
-
 % Footer: wordmark + part of the talk + slide number.
 \newcommand{\parte}{El problema}
 % The footer reserves 1 cm (an empty strut) so slide content always ends above it.
