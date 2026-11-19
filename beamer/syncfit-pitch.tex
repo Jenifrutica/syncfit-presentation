@@ -1,6 +1,6 @@
-% SyncFit Edge · pitch in the brand style, 13 slides: 5 minutes presenting
-% (slides 1-8: problem, phases, the two AIs, how the backend is built and its
-% data structures), 10 minutes of live demo (slides 9-12), then questions.
+% SyncFit Edge · short pitch in the brand style, 8 slides: the idea (problem,
+% what changes today, the two AIs), how the backend is built and the data
+% structures it uses, then questions. The app itself is shown live, without slides.
 % Speakers: Juan López opens; each \note{} starts with who presents the slide.
 % The full spoken script is in GUION.md.
 %
@@ -115,6 +115,7 @@
 \end{frame}}
 
 % ================================================================ Dos IAs y un guardián
+\renewcommand{\parte}{La idea}
 {\fondo[ovulatoriasuave]{crema}
 \begin{frame}
   \transpush<1>[direction=0, duration=0.5]
@@ -132,7 +133,7 @@
 \end{frame}}
 
 % ================================================================ Cómo está construido
-\renewcommand{\parte}{El backend}
+\renewcommand{\parte}{Cómo se construyó}
 {\fondo[lutea!55!nube]{rosaclaro}
 \begin{frame}
   \transwipe<1>[direction=90, duration=0.5]
@@ -162,7 +163,7 @@
   \transdissolve<2->[duration=0.35]
   \titular[28]{Estructuras de datos}
   \vspace{.05cm}
-  \bajada{Dónde las usamos y por qué esa y no otra.}
+  \bajada{Cada parte de la idea se apoya en una: dónde y por qué esa.}
   \vspace{.12cm}
   \onslide<1->{\tipoestructura{nube}{Arreglos}{las últimas muestras del pulso y del peso.}{siempre son las mismas; un tamaño fijo es lo más rápido.}}\hfill
   \onslide<2->{\tipoestructura{nube}{Listas}{tu rutina, tus máquinas y tus suplementos.}{crecen o se achican y se recorren en orden.}}\par\vspace{.15cm}
@@ -178,13 +179,13 @@
   \transdissolve<2->[duration=0.35]
   \titular[28]{Estructuras de datos}
   \vspace{.05cm}
-  \bajada{Las que conectan y buscan datos.}
+  \bajada{Las fases, tu historial y tu gimnasio, conectados.}
   \vspace{.12cm}
   \onslide<1->{\tipoestructura{nube}{Árboles}{tus estadísticas entre dos fechas.}{responde rápido sin recorrer todo el historial.}}\hfill
   \onslide<2->{\tipoestructura{nube}{Grafos}{las fases del ciclo y del embarazo.}{una fase lleva a la siguiente y el ciclo se repite.}}\par\vspace{.15cm}
   \onslide<3->{\tipoestructura{nube}{Tablas hash}{qué máquina sirve para cada ejercicio.}{encuentra un dato por su nombre al instante.}}\hfill
   \onslide<4->{\tipoestructura{nube}{Claves únicas}{cada pedido de rutina.}{una rutina nunca se genera dos veces.}}\par\vspace{.2cm}
-  \note{[Juan Cuarán] Árboles: para ver tus estadísticas de pulso o temperatura entre dos fechas, un árbol responde rápido sobre cualquier rango sin recorrer todo el historial. Grafos: las fases del ciclo van una detrás de otra y vuelven a empezar, y el embarazo avanza por trimestres; un grafo modela eso tal cual y nos dice cuánto falta para la siguiente fase. Tablas hash: para saber qué máquina del gimnasio sirve para cada ejercicio, buscamos por nombre al instante; la IA también recuerda respuestas así. Claves únicas: cada pedido de rutina tiene un identificador, así una rutina nunca se genera dos veces. No usamos pilas porque ningún proceso necesita deshacer en orden inverso. Si preguntan: hay dos colas más programadas y probadas que hoy no están en uso.}
+  \note{[Jenifer Urbano] Árboles: para ver tus estadísticas de pulso o temperatura entre dos fechas, un árbol responde rápido sobre cualquier rango sin recorrer todo el historial. Grafos: las fases del ciclo van una detrás de otra y vuelven a empezar, y el embarazo avanza por trimestres; un grafo modela eso tal cual y nos dice cuánto falta para la siguiente fase. Tablas hash: para saber qué máquina del gimnasio sirve para cada ejercicio, buscamos por nombre al instante; la IA también recuerda respuestas así. Claves únicas: cada pedido de rutina tiene un identificador, así una rutina nunca se genera dos veces. No usamos pilas porque ningún proceso necesita deshacer en orden inverso. Si preguntan: hay dos colas más programadas y probadas que hoy no están en uso.}
 \end{frame}}
 
 \renewcommand{\parte}{Cierre}
