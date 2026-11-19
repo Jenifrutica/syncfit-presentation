@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SyncFit Edge | Pitch de 15 minutos</title>
+<style>
+:root{color-scheme:dark;--ink:#f5f4fe;--muted:#cfcae9;--accent:#d8c4ff;--bg:#21173d;font:clamp(16px,2.4vw,32px)/1.35 system-ui,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink)}main{min-height:100svh;display:grid;grid-template-rows:1fr auto;background:radial-gradient(ellipse at 105% 10%,#583e85,transparent 60%)}
+section{padding:clamp(28px,8vw,150px);align-content:center;max-width:1500px}
+h1,h2{font:600 clamp(2.6rem,7vw,7rem)/.97 Georgia,serif;letter-spacing:-.045em;margin:.22em 0 .32em}
+p,ol{max-width:33em}small{color:var(--accent)}strong{color:var(--accent)}li{margin:.5em 0}nav{display:flex;gap:.65rem;align-items:center;padding:1rem clamp(28px,8vw,150px);border-top:1px solid #756494;flex-wrap:wrap;color:var(--muted)}
+button{background:transparent;color:inherit;border:1px solid #a08dbc;border-radius:999px;font:inherit;font-size:.57rem;padding:.45em .9em;cursor:pointer}button:disabled{opacity:.4;cursor:default}button:focus-visible{outline:3px solid var(--accent)}output{font-size:.62rem;font-variant-numeric:tabular-nums;margin-left:auto}a{color:var(--accent)}
+@media print{main{display:block;background:white;color:#21173d}section[hidden]{display:block}section{break-after:page;min-height:90vh}nav{display:none}small,strong{color:#453065}}
+</style>
+<main>
+<section><small>SyncFit Edge · 00:00–02:00</small><h1>El contexto cambia.<br>La rutina también.</h1><p>Una atleta llega al gimnasio con energía baja, una fase del ciclo distinta y acceso a otras máquinas. Su rutina anterior puede dejar de ajustarse a lo que puede hacer hoy.</p></section>
+<section hidden><small>El problema · 02:00–05:00</small><h2>Elegir qué entrenar hoy</h2><p>SyncFit reúne tres señales para decidir qué ejercicios proponer y cómo ajustar la carga.</p><ol><li>Contexto del ciclo o gestación.</li><li>Energía percibida y señales fisiológicas.</li><li>Inventario disponible en el gimnasio.</li></ol><p>En esta demostración la telemetría es simulada.</p></section>
+<section hidden><small>Demostración · 05:00–06:00</small><h2>Dos accesos, dos tareas</h2><ol><li>Abre la pantalla de inicio de sesión del entorno de evaluación.</li><li>Usa los accesos existentes de administrador de gimnasio y atleta en perfiles de navegador separados.</li></ol></section>
+<section hidden><small>Demostración · 06:00–09:00</small><h2>Registra una máquina</h2><ol><li>Abre el panel del gimnasio y agrega una máquina con nombre y ejercicios asociados.</li><li>Recarga la página y verifica que el inventario y su contador reflejen la nueva máquina.</li></ol></section>
+<section hidden><small>Demostración · 09:00–11:00</small><h2>Edita un grupo muscular</h2><ol><li>En Superadministración → Catálogos → Opciones, crea un grupo muscular. En Ejercicios, agrega su identificador a muscle_groups del ejercicio de prueba.</li><li>Recarga la vista de rutina y verifica que aparezca la opción.</li></ol></section>
+<section hidden><small>Demostración · 11:00–15:00</small><h2>Genera la rutina</h2><ol><li>Como atleta, únete al gimnasio de prueba y actívalo.</li><li>Elige un grupo muscular, registra energía y ejecuta la captura simulada.</li><li>Revisa los ejercicios, el ajuste de carga y el equipo asociado en el resultado.</li></ol></section>
+<nav aria-label="Controles de presentación"><button id="previous">Anterior</button><button id="next">Siguiente</button><button id="start">Iniciar reloj</button><output id="counter" aria-label="Tiempo transcurrido">00:00 / 15:00</output></nav>
+</main>
+<script>
+const slides = Array.from(document.querySelectorAll("section"));
+const previous = document.querySelector("#previous");
+const next = document.querySelector("#next");
+const start = document.querySelector("#start");
+const counter = document.querySelector("#counter");
+let index = 0;
+function show(page) {
+  index = Math.min(Math.max(page, 0), slides.length - 1);
+  slides.forEach((slide, position) => { slide.hidden = position !== index; });
+  previous.disabled = index === 0;
+  next.disabled = index === slides.length - 1;
+}
+previous.onclick = () => show(index - 1);
+next.onclick = () => show(index + 1);
+document.addEventListener("keydown", (event) => {
+  if (event.key === "ArrowRight") show(index + 1);
+  if (event.key === "ArrowLeft") show(index - 1);
+});
+start.onclick = () => {
+  const began = Date.now();
+  start.disabled = true;
+  const timer = setInterval(() => {
+    const seconds = Math.min(900, Math.floor((Date.now() - began) / 1000));
+    counter.textContent = [Math.floor(seconds / 60), seconds % 60].map((value) => String(value).padStart(2, "0")).join(":") + " / 15:00";
+    if (seconds === 900) clearInterval(timer);
+  }, 200);
+};
+show(0);
+</script>
+</html>
