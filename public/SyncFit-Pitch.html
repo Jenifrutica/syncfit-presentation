@@ -28,17 +28,39 @@ nav .group,.switch{display:flex;gap:.45rem;align-items:center;flex-wrap:wrap}
 nav .primary{background:var(--lavender);color:var(--bg);font-weight:700}
 nav output{font-size:.75rem;font-variant-numeric:tabular-nums;white-space:nowrap}
 progress{width:100%;height:.3rem;accent-color:var(--lavender);vertical-align:top}
-.steps{display:grid;gap:.6rem;padding:0;list-style:none}
-.steps label{display:flex;align-items:start;gap:.6rem;padding:.65rem .8rem;border:1px solid var(--line);border-radius:.6rem;cursor:pointer}
-.steps input{width:1rem;height:1rem;margin:.17rem 0 0;flex:none;accent-color:var(--lavender)}
-.steps label:has(input:checked){background:#473463}
 .panel{padding:clamp(1rem,3vw,2rem);background:var(--panel);border:1px solid var(--line);border-radius:1rem}
 .panel h3{font:500 clamp(1.25rem,3vw,2.25rem)/1.15 Georgia,serif;margin:.35em 0}
 .panel strong{color:var(--lavender)}
 .roles{display:grid;gap:.8rem}
 details{border-top:1px solid var(--line);padding:.8rem 0}
 summary{cursor:pointer;font-weight:650}
-meter{width:100%;height:.75rem;accent-color:var(--lavender)}
+.depth{perspective:950px}
+.depth img{transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .2s ease;box-shadow:0 26px 64px #12091c88}
+.visual{min-width:0}
+.scene{position:relative;display:grid;place-items:center;overflow:hidden;isolation:isolate;min-height:clamp(230px,27vw,390px);perspective:800px;background:radial-gradient(ellipse at 52% 44%,#66478c,#24163e 71%);border:1px solid #9479b1;border-radius:1.2rem;cursor:grab;touch-action:pan-y}
+.scene:active{cursor:grabbing}
+.scene::after{content:"";position:absolute;pointer-events:none;inset:0;background:repeating-linear-gradient(transparent 0 32px,#dec8ff0d 33px 34px),repeating-linear-gradient(90deg,transparent 0 32px,#dec8ff0d 33px 34px);mask-image:radial-gradient(ellipse,#000,transparent 82%);z-index:-1}
+.world{--size:clamp(44px,6vw,85px);position:relative;width:0;height:0;transform-style:preserve-3d;transform:rotateX(var(--elevation,-23deg)) rotateY(var(--azimuth,-26deg));transition:transform .45s cubic-bezier(.2,.75,.3,1)}
+.scene.dragging .world{transition:none}
+.orbit{position:absolute;left:0;top:0;width:calc(var(--size)*3.4);aspect-ratio:1;border:1px solid #d9c3ff71;border-radius:50%;transform:translate(-50%,-50%) rotateX(90deg);box-shadow:0 0 24px #c6a6ff30,inset 0 0 20px #c6a6ff28}
+.orbit:nth-child(2){transform:translate(-50%,-50%) rotateX(48deg) rotateY(25deg)}
+.cube{--glow:#bc94ff;position:absolute;top:0;left:0;width:var(--size);height:var(--size);transform-style:preserve-3d;transform:translate3d(calc((var(--x,0) - .5)*var(--size)),calc((var(--y,0) - .5)*var(--size)),calc(var(--z,0)*var(--size)));transition:transform .45s ease}
+.cube[data-node="1"]{--x:-1.33;--y:-.57;--z:.52;--glow:#dfa7d9}
+.cube[data-node="2"]{--x:1.28;--y:-.65;--z:.36;--glow:#bdadff}
+.cube[data-node="3"]{--x:.27;--y:1;--z:1.18;--glow:#95e2d2}
+.face{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font-size:.64rem;font-weight:700;color:#fff;background:linear-gradient(145deg,#73569c,#34224f);border:1px solid var(--glow);backface-visibility:hidden;transition:background .2s,box-shadow .2s}
+.face:nth-child(1){transform:translateZ(calc(var(--size)/2))}
+.face:nth-child(2){transform:rotateY(180deg) translateZ(calc(var(--size)/2))}
+.face:nth-child(3){transform:rotateY(90deg) translateZ(calc(var(--size)/2))}
+.face:nth-child(4){transform:rotateY(-90deg) translateZ(calc(var(--size)/2))}
+.face:nth-child(5){transform:rotateX(90deg) translateZ(calc(var(--size)/2))}
+.face:nth-child(6){transform:rotateX(-90deg) translateZ(calc(var(--size)/2))}
+.cube.is-active .face{background:linear-gradient(145deg,var(--glow),#7c55a6);color:#21173d;box-shadow:0 0 20px #d8c4ff63}
+.scene-tools{display:flex;align-items:center;gap:.5rem;margin-top:.55rem;flex-wrap:wrap;color:var(--muted);font-size:.68rem}
+.scene-tools span{margin-right:auto}
+.annotation{border-left:2px solid var(--lavender);padding-left:.75rem;min-height:4em}
+.annotation strong{display:block;color:var(--paper)}
+@media(prefers-reduced-motion:reduce){.world,.cube,.face,.depth img{transition:none}}
 @media(max-width:760px){section{grid-template-columns:1fr;gap:1.1rem}img{height:clamp(210px,56vw,380px)}nav{gap:.5rem}header,nav{padding:.7rem 1rem}}
 @media print{main{display:block;background:white;color:#21173d}section[hidden]{display:grid!important}section{break-after:page;min-height:85vh}nav,header,progress{display:none}small,p,figcaption{color:#453065}.panel{background:white}}
 </style>
@@ -48,7 +70,7 @@ meter{width:100%;height:.75rem;accent-color:var(--lavender)}
 <header><strong>SyncFit Edge</strong><span id="location" aria-live="polite">El problema · 1 de 6</span></header>
 <section data-phase="El problema">
   <div><small>00:00–02:00</small><h1>El contexto cambia. La rutina también.</h1><p>Una atleta llega al gimnasio con menos energía y encuentra que su máquina habitual está ocupada. ¿Cómo decide qué entrenar hoy?</p></div>
-  <figure><img src="pitch-assets/athlete.webp" alt="Atleta preparándose para entrenar en el gimnasio"><figcaption>Escena ilustrativa generada para el pitch.</figcaption></figure>
+  <figure class="depth"><img src="pitch-assets/athlete.webp" alt="Atleta preparándose para entrenar en el gimnasio"><figcaption>Escena ilustrativa generada para el pitch.</figcaption></figure>
 </section>
 <section data-phase="El problema" hidden>
   <div><small>02:00–05:00</small><h2>¿Qué cambia hoy?</h2><p>Pregunta al público qué información usaría para ajustar la rutina. Elige una respuesta para mostrar cómo entra al flujo de SyncFit.</p>
@@ -56,25 +78,36 @@ meter{width:100%;height:.75rem;accent-color:var(--lavender)}
     <button type="button" data-signal="cycle" aria-pressed="true">Ciclo o gestación</button>
     <button type="button" data-signal="energy" aria-pressed="false">Energía</button>
     <button type="button" data-signal="equipment" aria-pressed="false">Equipo</button>
-  </div></div>
-  <div class="panel" aria-live="polite"><small>Ejemplo para conversar</small><h3 id="signal-title">Contexto fisiológico</h3><p id="signal-text">La fase del ciclo o la etapa de gestación aporta contexto al generar una propuesta de entrenamiento.</p><p>La demostración usa telemetría simulada.</p></div>
+  </div><p class="annotation" aria-live="polite"><strong id="signal-title">Contexto fisiológico</strong><span id="signal-text">La fase del ciclo o la etapa de gestación aporta contexto al generar una propuesta de entrenamiento.</span></p></div>
+  <div class="visual">
+    <div class="scene" id="context-scene" data-blocks="Rutina|Ciclo|Energía|Equipo" aria-label="Modelo tridimensional del contexto de la rutina"></div>
+    <div class="scene-tools"><span>Arrastra para girar</span><button type="button" data-turn="-30" aria-label="Girar contexto a la izquierda">↶</button><button type="button" data-turn="30" aria-label="Girar contexto a la derecha">↷</button></div>
+  </div>
 </section>
 <section data-phase="Demostración" hidden>
   <div><small>05:00–06:00</small><h2>Dos accesos, dos tareas</h2><p>Abre el entorno de evaluación en dos perfiles del navegador. Usa los accesos rápidos existentes.</p></div>
   <div class="panel roles"><details open><summary>Administrador de gimnasio</summary><p>Abre el panel y elige el gimnasio de prueba.</p></details><details><summary>Atleta</summary><p>Abre la app y prepara el código para unirte al gimnasio de prueba.</p></details><details><summary>Superadministrador</summary><p>Ten abierta la sesión de catálogos para el ejercicio del minuto nueve.</p></details></div>
 </section>
 <section data-phase="Demostración" hidden>
-  <div><small>06:00–09:00</small><h2>Registra una máquina</h2><ul class="steps"><li><label><input type="checkbox">Agrega una máquina con nombre y ejercicios asociados.</label></li><li><label><input type="checkbox">Recarga el panel y comprueba que el inventario y el contador reflejen el alta.</label></li></ul></div>
-  <figure><img src="pitch-assets/machine.webp" alt="Detalle del selector de peso de una máquina de gimnasio" loading="lazy"><figcaption>Máquina ilustrativa.</figcaption></figure>
+  <div><small>06:00–09:00</small><h2>Registra una máquina</h2><p>En el panel del gimnasio, crea una máquina y vincúlala con un ejercicio. Al recargar, el inventario y el contador reflejan el cambio guardado.</p></div>
+  <figure class="depth"><img src="pitch-assets/machine.webp" alt="Detalle del selector de peso de una máquina de gimnasio" loading="lazy"><figcaption>Máquina ilustrativa.</figcaption></figure>
 </section>
 <section data-phase="Demostración" hidden>
-  <div><small>09:00–11:00</small><h2>Agrega un grupo muscular</h2><p>Usa el panel de superadministración y comprueba el resultado desde la sesión de atleta.</p></div>
-  <div class="panel"><h3>Catálogos</h3><ul class="steps"><li><label><input type="checkbox">En Opciones, crea un grupo muscular.</label></li><li><label><input type="checkbox">En Ejercicios, agrega su identificador en <code>muscle_groups</code> a un ejercicio de prueba.</label></li><li><label><input type="checkbox">Recarga la vista de rutina y verifica que aparezca el grupo.</label></li></ul></div>
+  <div><small>09:00–11:00</small><h2>Agrega un grupo muscular</h2><p>Explora cómo una opción de Superadministración llega a la rutina de la atleta.</p>
+  <div class="switch" role="group" aria-label="Flujo del catálogo">
+    <button type="button" data-catalog="option" aria-pressed="true">Grupo</button>
+    <button type="button" data-catalog="exercise" aria-pressed="false">Ejercicio</button>
+    <button type="button" data-catalog="routine" aria-pressed="false">Rutina</button>
+  </div><p class="annotation" aria-live="polite"><strong id="catalog-title">Crea el grupo</strong><span id="catalog-text">En Catálogos → Opciones, crea un grupo muscular de prueba.</span></p></div>
+  <div class="visual">
+    <div class="scene" id="catalog-scene" data-blocks="Catálogo|Grupo|Ejercicio|Rutina" aria-label="Modelo tridimensional del flujo del catálogo"></div>
+    <div class="scene-tools"><span>Arrastra para girar</span><button type="button" data-turn="-30" aria-label="Girar catálogo a la izquierda">↶</button><button type="button" data-turn="30" aria-label="Girar catálogo a la derecha">↷</button></div>
+  </div>
 </section>
 <section data-phase="Demostración" hidden>
   <div><small>11:00–15:00</small><h2>Genera la rutina</h2>
-  <ul class="steps"><li><label><input type="checkbox">Únete al gimnasio de prueba y actívalo.</label></li><li><label><input type="checkbox">Elige un grupo muscular, registra tu energía y ejecuta la captura simulada.</label></li><li><label><input type="checkbox">Revisa los ejercicios, el ajuste de carga y el equipo de la propuesta.</label></li></ul></div>
-  <figure><img src="pitch-assets/training.webp" alt="Atleta haciendo una subida controlada a un cajón de entrenamiento" loading="lazy"><figcaption>Ejercicio ilustrativo.</figcaption></figure>
+  <p>Activa el gimnasio de prueba, elige el grupo muscular y registra tu energía. Genera la rutina con telemetría simulada y revisa qué ejercicios, carga y equipo propone SyncFit.</p></div>
+  <figure class="depth"><img src="pitch-assets/training.webp" alt="Atleta haciendo una subida controlada a un cajón de entrenamiento" loading="lazy"><figcaption>Ejercicio ilustrativo.</figcaption></figure>
 </section>
 <progress id="progress" value="0" max="900" aria-label="Progreso de los 15 minutos"></progress>
 <nav aria-label="Controles de presentación">
@@ -116,15 +149,94 @@ const signals = {
   energy: ["Energía percibida", "La atleta registra cómo se siente. SyncFit usa esa información junto con las señales de la captura para ajustar la propuesta."],
   equipment: ["Inventario del gimnasio", "El plan puede priorizar ejercicios asociados a las máquinas que están registradas en el gimnasio activo."]
 };
-const signalButtons = document.querySelectorAll("[data-signal]");
-signalButtons.forEach((button) => {
-  button.onclick = () => {
-    const [title, copy] = signals[button.dataset.signal];
-    document.querySelector("#signal-title").textContent = title;
-    document.querySelector("#signal-text").textContent = copy;
-    signalButtons.forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
-  };
+const catalog = {
+  option: ["Crea el grupo", "En Catálogos → Opciones, crea un grupo muscular de prueba."],
+  exercise: ["Asocia un ejercicio", "En Ejercicios, añade el identificador del grupo al campo muscle_groups del ejercicio."],
+  routine: ["Comprueba la rutina", "Desde la sesión de atleta, recarga la vista de rutina y selecciona el grupo nuevo."]
+};
+
+document.querySelectorAll(".scene").forEach((scene) => {
+  const world = document.createElement("div");
+  world.className = "world";
+  world.setAttribute("aria-hidden", "true");
+  for (let i = 0; i < 2; i++) {
+    const orbit = document.createElement("span");
+    orbit.className = "orbit";
+    world.append(orbit);
+  }
+  scene.dataset.blocks.split("|").forEach((label, index) => {
+    const cube = document.createElement("div");
+    cube.className = "cube";
+    cube.dataset.node = index;
+    for (let i = 0; i < 6; i++) {
+      const face = document.createElement("span");
+      face.className = "face";
+      face.textContent = label;
+      cube.append(face);
+    }
+    world.append(cube);
+  });
+  scene.append(world);
+  let azimuth = -26;
+  let elevation = -23;
+  let drag;
+  function update() {
+    world.style.setProperty("--azimuth", azimuth + "deg");
+    world.style.setProperty("--elevation", elevation + "deg");
+  }
+  scene.parentElement.querySelectorAll("[data-turn]").forEach((button) => {
+    button.onclick = () => {
+      azimuth += Number(button.dataset.turn);
+      update();
+    };
+  });
+  scene.addEventListener("pointerdown", (event) => {
+    if (!event.isPrimary || event.button !== 0) return;
+    drag = { id: event.pointerId, x: event.clientX, y: event.clientY, azimuth, elevation };
+    scene.setPointerCapture(event.pointerId);
+    scene.classList.add("dragging");
+  });
+  scene.addEventListener("pointermove", (event) => {
+    if (drag?.id !== event.pointerId) return;
+    azimuth = drag.azimuth + (event.clientX - drag.x) * .55;
+    elevation = Math.max(-65, Math.min(45, drag.elevation - (event.clientY - drag.y) * .4));
+    update();
+  });
+  scene.addEventListener("lostpointercapture", () => {
+    drag = undefined;
+    scene.classList.remove("dragging");
+  });
 });
+
+function bindScene(key, data, scene) {
+  const buttons = [...document.querySelectorAll("[data-" + key + "]")];
+  buttons.forEach((button, index) => {
+    button.onclick = () => {
+      const [title, copy] = data[button.dataset[key]];
+      document.querySelector("#" + key + "-title").textContent = title;
+      document.querySelector("#" + key + "-text").textContent = copy;
+      buttons.forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+      scene.querySelectorAll(".cube").forEach((cube) => cube.classList.toggle("is-active", Number(cube.dataset.node) === index + 1));
+    };
+  });
+  buttons[0].click();
+}
+bindScene("signal", signals, document.querySelector("#context-scene"));
+bindScene("catalog", catalog, document.querySelector("#catalog-scene"));
+
+if (matchMedia("(hover:hover) and (prefers-reduced-motion:no-preference)").matches) {
+  document.querySelectorAll(".depth").forEach((figure) => {
+    figure.addEventListener("pointermove", (event) => {
+      const bounds = figure.getBoundingClientRect();
+      figure.style.setProperty("--rx", (0.5 - (event.clientY - bounds.top) / bounds.height) * 12 + "deg");
+      figure.style.setProperty("--ry", ((event.clientX - bounds.left) / bounds.width - 0.5) * 16 + "deg");
+    });
+    figure.addEventListener("pointerleave", () => {
+      figure.style.removeProperty("--rx");
+      figure.style.removeProperty("--ry");
+    });
+  });
+}
 
 fullscreen.hidden = !document.fullscreenEnabled;
 fullscreen.onclick = async () => {
