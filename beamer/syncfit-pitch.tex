@@ -1,6 +1,6 @@
 % SyncFit Edge · short pitch in the brand style, 8 slides: the idea (problem,
 % what changes today, the two AIs), how the backend is built and the data
-% structures it uses, then questions. The app itself is shown live, without slides.
+% structures it uses, then a thank-you slide. The app itself is shown live, without slides.
 % Speakers: Juan López opens; each \note{} starts with who presents the slide.
 % The full spoken script is in GUION.md.
 %
@@ -19,28 +19,28 @@
 % Card with a round icon badge, title and one line. {fill}{badge}{icon}{title}{line}
 \newcommand{\icontarjeta}[5]{%
   \begin{tikzpicture}[baseline=(current bounding box.north)]
-    \node[fill=#1, sombra, rounded corners=16pt, minimum height=1.9cm, text width=3.55cm, inner sep=9pt, align=center]
+    \node[fill=#1, sombra, rounded corners=16pt, minimum height=3.75cm, text width=3.55cm, inner sep=9pt, align=center]
       {\insignia{#2}{#3}\par\vspace{5pt}{\display\Large #4}\par\vspace{3pt}{\small #5}};
   \end{tikzpicture}}
 % Station of the two-AIs flow: badge, title, one line. {badge}{icon}{title}{line}
 \newcommand{\estacion}[4]{%
   \begin{tikzpicture}[baseline=(current bounding box.north)]
-    \node[fill=nube, sombra, rounded corners=14pt, text width=2.7cm, minimum height=1.6cm, inner sep=7pt, align=center]
+    \node[fill=nube, sombra, rounded corners=14pt, text width=2.7cm, minimum height=3.9cm, inner sep=7pt, align=center]
       {\insignia{#1}{#2}\par\vspace{3pt}{\display\large #3}\par\vspace{2pt}{\footnotesize #4}};
   \end{tikzpicture}}
 
 % Backend layer bar. {fill}{name}{line}
 \newcommand{\capa}[3]{%
-  \tikz\node[fill=#1, sombra, rounded corners=11pt, text width=7.3cm, inner xsep=11pt, inner ysep=4pt, align=left]
+  \tikz[baseline=(current bounding box.north)]\node[fill=#1, sombra, rounded corners=11pt, text width=7.3cm, minimum height=1.23cm, inner xsep=11pt, inner ysep=4pt, align=left]
     {{\display\normalsize #2}\quad{\footnotesize #3}};}
 % Fact chip for the backend slide. {title}{line}
 \newcommand{\hecho}[2]{%
-  \tikz\node[fill=nube, sombra, rounded corners=11pt, text width=5.2cm, inner xsep=10pt, inner ysep=5pt, align=left]
+  \tikz[baseline=(current bounding box.north)]\node[fill=nube, sombra, rounded corners=11pt, text width=5.2cm, minimum height=1.7cm, inner xsep=10pt, inner ysep=5pt, align=left]
     {{\display\normalsize #1}\par{\footnotesize #2}};}
 % Data structure type card: where it is used and why this one. {fill}{type}{where}{why}
 \newcommand{\tipoestructura}[4]{%
   \begin{tikzpicture}[baseline=(current bounding box.north)]
-    \node[fill=#1, sombra, rounded corners=13pt, text width=6.15cm, minimum height=1.75cm, inner xsep=10pt, inner ysep=5pt, align=left]
+    \node[fill=#1, sombra, rounded corners=13pt, text width=6.15cm, minimum height=2.8cm, inner xsep=10pt, inner ysep=5pt, align=left]
       {{\display\large #2}\par\vspace{2pt}{\footnotesize\textbf{Dónde:} #3}\par\vspace{1pt}{\footnotesize\textbf{Por qué:} #4}};
   \end{tikzpicture}}
 
@@ -200,15 +200,11 @@
   \vspace{1.1cm}
   \begin{columns}[c]
     \column{.58\textwidth}
-      {\color{nube}\titular[46]{¿Preguntas?}}
-      \vspace{.3cm}
-      \bajada{Tu próxima rutina ya sabe en qué fase estás.}
-      \vspace{.35cm}
-      {\display\Large\color{ovulatoria} syncfit.jenilarper.dev}
+      {\color{nube}\titular[46]{¡Muchas\\gracias!}}
     \column{.36\textwidth}
       \centering\pulsiflota{3.3}
   \end{columns}
-  \note{[Jenifer Urbano] Cierra con la frase de la landing y abre preguntas. Si queda tiempo, muestra la demo de fases en la landing: sin cuenta, cambia el día del ciclo y mira cómo cambia la rutina.}
+  \note{[Jenifer Urbano] Agradece en nombre de los tres.}
 \end{frame}}
 
 \end{document}

@@ -2,7 +2,7 @@
 
 Presentación **corta** de SyncFit Edge: 8 diapositivas con la idea (el problema,
 qué cambia hoy y las dos IAs), cómo se construyó el backend y las estructuras de
-datos que usa, más la de preguntas. La app se muestra en vivo, sin diapositivas.
+datos que usa, y un cierre de agradecimiento. La app se muestra en vivo, sin diapositivas.
 Usa la marca de la app: cielo rosa, tinta índigo, nubes, goteo, Pulsi, Fredoka
 (títulos) y Nunito (texto). Los colores salen de `syncfit-frontend/app/tokens.css`.
 

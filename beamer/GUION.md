@@ -3,7 +3,7 @@
 Una presentación **corta** ([`syncfit-pitch.pdf`](./syncfit-pitch.pdf), 8
 diapositivas, unos 4 minutos y medio) con la idea y las estructuras de datos.
 Después viene la **demostración en vivo en la app**, sin diapositivas, y al final
-se vuelve a la última diapositiva para las preguntas.
+se vuelve a la última diapositiva para agradecer.
 
 Exponen **Juan López** (abre), **Jenifer Urbano** y **Juan Cuarán**. Los textos
 son una guía para decirlos con tus palabras, no para leerlos. Cada diapositiva
@@ -21,7 +21,7 @@ muestra todo su contenido de una vez: se avanza una sola vez por diapositiva.
 | 6 | Estructuras de datos (lineales) | Juan Cuarán | 0:45 |
 | 7 | Estructuras de datos (las que conectan) | Jenifer Urbano | 0:45 |
 | | **Demostración en vivo**, en la app | los tres | según el tiempo |
-| 8 | ¿Preguntas? | Jenifer Urbano | 0:15 |
+| 8 | ¡Muchas gracias! | Jenifer Urbano | 0:10 |
 
 ---
 
@@ -154,12 +154,13 @@ esperen unos segundos y sigan.
    - *Conexión con las estructuras:* la cola circular guarda el pulso y la clave
      única evita una rutina duplicada.
 
-### 8 · ¿Preguntas? — Jenifer Urbano (0:15)
+### 8 · ¡Muchas gracias! — Jenifer Urbano (0:10)
 
 Vuelvan a la presentación.
 
-> Su próxima rutina ya sabe en qué fase está. La app está en línea en
-> syncfit.jenilarper.dev, en español, inglés y chino. ¿Preguntas?
+> Muchas gracias.
+
+Si el jurado pregunta, la tabla de abajo dice quién responde.
 
 ---
 
