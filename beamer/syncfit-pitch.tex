@@ -29,8 +29,13 @@
 % Phase card: color dot, name, days, one line. {fill}{dot}{name}{days}{line}
 \newcommand{\fase}[5]{%
   \begin{tikzpicture}[baseline=(current bounding box.north)]
-    \node[fill=#1, rounded corners=14pt, text width=2.7cm, minimum height=1.95cm, inner sep=7pt, align=left]
-      {\tikz\fill[#2] (0,0) circle (.17);\ {\display\Large #3}\par\vspace{1pt}{\footnotesize\bfseries\color{inksuave} #4}\par\vspace{3pt}{\small #5}};
+    \begin{scope}
+      \clip[rounded corners=14pt] (0,0) rectangle (3.25,3.15);
+      \fill[nube] (0,0) rectangle (3.25,3.15);
+      \fill[#2] (0,2.7) rectangle (3.25,3.15);
+    \end{scope}
+    \node[anchor=north west, text width=2.75cm, inner sep=0pt, align=left] at (.25,2.45)
+      {{\display\Large #3}\par\vspace{2pt}{\footnotesize\bfseries\color{inksuave} #4}\par\vspace{5pt}{\small #5}};
   \end{tikzpicture}}
 % Station of the two-AIs flow: badge, title, one line. {badge}{icon}{title}{line}
 \newcommand{\estacion}[4]{%
@@ -119,13 +124,21 @@
   \titular[28]{Cada fase tiene su clima}
   \vspace{.05cm}
   \bajada{El color de la app cambia contigo, y tu rutina también.}
-  \vspace{.25cm}
-  \fase{menstrualsuave}{menstrual}{Menstrual}{Días 1–5}{Menos impacto; movilidad y fuerza suave.}\hfill
+  \vspace{.35cm}
+  \fase{folicularsuave}{menstrual}{Menstrual}{Días 1–5}{Menos impacto; movilidad y fuerza suave.}\hfill
   \fase{folicularsuave}{folicular}{Folicular}{Energía en alza}{Buen momento para progresar cargas.}\hfill
-  \fase{ovulatoriasuave}{ovulatoria}{Ovulatoria}{Mucha fuerza}{Sin saltos de alto impacto.}\hfill
-  \fase{nube}{lutea}{Lútea}{Fatiga antes}{Más descanso y carga ajustada.}
-  \vspace{.15cm}
-  \par\tikz\node[fill=gestacionsuave, rounded corners=12pt, inner xsep=12pt, inner ysep=4pt, text width=13.4cm, align=left, font=\small]{\textbf{¿Embarazada? También.} Tres trimestres con reglas propias; por ejemplo, nada boca arriba desde la semana 16.};
+  \fase{folicularsuave}{ovulatoria}{Ovulatoria}{Mucha fuerza}{Sin saltos de alto impacto.}\hfill
+  \fase{folicularsuave}{lutea}{Lútea}{Fatiga antes}{Más descanso y carga ajustada.}
+  \vspace{.3cm}
+  \par\noindent\begin{tikzpicture}
+    \begin{scope}
+      \clip[rounded corners=14pt] (0,0) rectangle (\linewidth,1.3);
+      \fill[nube] (0,0) rectangle (\linewidth,1.3);
+      \fill[gestacion] (0,0) rectangle (.3,1.3);
+    \end{scope}
+    \node[anchor=west, text width=\linewidth-1.2cm, inner sep=0pt, align=left] at (.7,.65)
+      {{\display\large ¿Embarazada? También.}\par\vspace{1pt}{\small Tres trimestres con reglas propias: nada boca arriba desde la semana 16.}};
+  \end{tikzpicture}
   \note{Cuatro fases del ciclo y tres trimestres. Cada fase cambia la propuesta: en menstrual baja el impacto, en folicular se progresa, en ovulatoria se evitan saltos, en lútea se ajusta la carga. En embarazo hay reglas propias, como no hacer ejercicios boca arriba desde la semana 16.}
 \end{frame}}
 
