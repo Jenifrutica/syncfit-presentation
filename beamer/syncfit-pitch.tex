@@ -1,10 +1,12 @@
 % SyncFit Edge · 15-minute pitch in the brand style.
-% Same script and timing as public/SyncFit-Pitch.html (5 min problem + 10 min live demo),
-% plus a cover and a closing slide. One idea per slide; the full script is in the notes.
+% Same timing as public/SyncFit-Pitch.html (5 min problem + 10 min live demo),
+% with a cover, three context slides (phases, the two AIs, why SyncFit) and a
+% closing slide. One idea per slide; the full script is in the notes.
 %
 % Build:  cd beamer && xelatex syncfit-pitch.tex && xelatex syncfit-pitch.tex
 % Present in Adobe Acrobat/Reader, full screen (Ctrl/Cmd+L): it plays the slide
-% transitions and the looping animations (animate package, needs JavaScript on).
+% transitions and the animations (animate package, needs JavaScript on).
+% Each animation plays once; later reveal pages of a slide show it already finished.
 % Speaker notes: uncomment \setbeameroption below.
 \documentclass[aspectratio=169,11pt]{beamer}
 \usepackage{beamerthemesyncfit}
@@ -13,20 +15,33 @@
 \title{SyncFit Edge}
 
 % Time pill, larger than the theme's for the projector.
-\newcommand{\tiempo}[1]{\tikz[baseline=(t.base)]\node[fill=nube, text=ink, rounded corners=9pt, inner xsep=10pt, inner ysep=4pt, font=\bfseries](t){#1};}
+\newcommand{\tiempo}[2][nube]{\tikz[baseline=(t.base)]\node[fill=#1, text=ink, rounded corners=9pt, inner xsep=10pt, inner ysep=4pt, font=\bfseries](t){#2};}
 % Card with a round icon badge, title and one line. {fill}{badge}{icon}{title}{line}
 \newcommand{\icontarjeta}[5]{%
   \begin{tikzpicture}[baseline=(current bounding box.north)]
-    \node[fill=#1, rounded corners=16pt, minimum height=2.3cm, text width=3.55cm, inner sep=9pt, align=center]
-      {\insignia{#2}{#3}\par\vspace{5pt}{\display\Large #4}\par\vspace{3pt}{\small\hyphenpenalty=10000 #5}};
+    \node[fill=#1, rounded corners=16pt, minimum height=1.9cm, text width=3.55cm, inner sep=9pt, align=center]
+      {\insignia{#2}{#3}\par\vspace{5pt}{\display\Large #4}\par\vspace{3pt}{\small #5}};
   \end{tikzpicture}}
-
 % Step card for the catalog → routine track. {fill}{n}{title}{line}{overlay}
-\newcommand{\etapa}[5]{% {fill}{n}{title}{line}{overlay}
+\newcommand{\etapa}[5]{%
   \onslide<#5->{\begin{tikzpicture}[baseline=(current bounding box.north)]
-    \node[fill=#1, rounded corners=14pt, text width=3.85cm, minimum height=1.9cm, inner sep=8pt, align=left]
-      {{\footnotesize\bfseries 0#2}\par{\display\Large #3}\par\vspace{2pt}{\small\hyphenpenalty=10000 #4}};
+    \node[fill=#1, rounded corners=14pt, text width=3.85cm, minimum height=1.75cm, inner sep=8pt, align=left]
+      {{\footnotesize\bfseries 0#2}\par{\display\Large #3}\par\vspace{2pt}{\small #4}};
   \end{tikzpicture}}}
+% Phase card: color dot, name, days, one line. {fill}{dot}{name}{days}{line}
+\newcommand{\fase}[5]{%
+  \begin{tikzpicture}[baseline=(current bounding box.north)]
+    \node[fill=#1, rounded corners=14pt, text width=2.7cm, minimum height=1.95cm, inner sep=7pt, align=left]
+      {\tikz\fill[#2] (0,0) circle (.17);\ {\display\Large #3}\par\vspace{1pt}{\footnotesize\bfseries\color{inksuave} #4}\par\vspace{3pt}{\small #5}};
+  \end{tikzpicture}}
+% Station of the two-AIs flow: badge, title, one line. {badge}{icon}{title}{line}
+\newcommand{\estacion}[4]{%
+  \begin{tikzpicture}[baseline=(current bounding box.north)]
+    \node[fill=nube, rounded corners=14pt, text width=2.7cm, minimum height=1.6cm, inner sep=7pt, align=center]
+      {\insignia{#1}{#2}\par\vspace{3pt}{\display\large #3}\par\vspace{2pt}{\footnotesize #4}};
+  \end{tikzpicture}}
+% Small "dato" chip under a demo slide. {text}
+\newcommand{\dato}[1]{\tikz[baseline=(t.base)]\node[fill=nube, text=ink, rounded corners=9pt, inner xsep=9pt, inner ysep=5pt, text width=5.2cm, font=\small](t){\textbf{Dato:} #1};}
 
 \begin{document}
 
@@ -35,7 +50,8 @@
 \begin{frame}[plain]
   \transdissolve[duration=0.8]
   \begin{tikzpicture}[remember picture, overlay]
-    \node[anchor=north west, inner sep=0pt] at (current page.north west) {\nubesviajan{16}{9}};
+    % Clouds only in the empty bottom-right corner (animations paint above text).
+    \node[anchor=south east, inner sep=0pt] at (current page.south east) {\nubesllegan{5.2}{1.5}};
   \end{tikzpicture}
   \begin{columns}[c]
     \column{.6\textwidth}
@@ -43,69 +59,111 @@
       \titular[44]{SyncFit\\Edge}
       \vspace{.25cm}
       \bajada{\textbf{Entrena con tu ciclo, no contra él.}}
-      \vspace{.35cm}
-      {\small\color{inksuave} Pitch \textperiodcentered\ 15 minutos \textperiodcentered\ 5 de problema + 10 de demo}
+      \vspace{.3cm}
+      {\small\color{inksuave} Rutinas que se adaptan a tu fase del ciclo o a tu semana de embarazo,\\ con sensores, dos IAs y las máquinas de tu gimnasio.}
     \column{.36\textwidth}
       \centering\pulsiflota{4.2}
   \end{columns}
-  \note{Saluda y presenta a Pulsi. Una frase: SyncFit adapta el entrenamiento a la fisiología de cada atleta.}
+  \note{Saluda y presenta a Pulsi. Una frase: SyncFit adapta el entrenamiento a la fisiología de cada atleta, ciclo o embarazo, con sensores y las máquinas reales del gimnasio.}
 \end{frame}}
 
 % ================================================================ 1 · El contexto cambia
 {\setbeamercolor{background canvas}{bg=rosa}
 \begin{frame}
   \transwipe<1>[direction=0, duration=0.6]
-  \transdissolve<2->[duration=0.35]% each reveal fades in
+  \transdissolve<2->[duration=0.35]
   \begin{columns}[c]
     \column{.6\textwidth}
       \tiempo{00:00 – 02:00}\par\vspace{.45cm}
       \titular[25]{El contexto cambia.\\La rutina también.}
       \vspace{.35cm}
       \bajada{Llega con menos energía y su máquina está ocupada.}
-      \vspace{.4cm}
+      \vspace{.25cm}
+      {\small\color{inksuave} La mayoría de planes se diseñaron con datos de cuerpos masculinos y no cambian con el ciclo.\par}
+      \vspace{.3cm}
       \onslide<2->{\burbuja{¿Qué entrena hoy?}}
     \column{.37\textwidth}
       \centering\ilusciclo
   \end{columns}
-  \note{Escena: una atleta llega al gimnasio con menos energía y encuentra su máquina habitual ocupada. Clic: deja la pregunta en el aire. ¿Cómo decide qué entrenar hoy?}
+  \note{Escena: una atleta llega al gimnasio con menos energía y encuentra su máquina habitual ocupada. Casi todos los planes de entrenamiento se pensaron con datos de cuerpos masculinos. Clic: deja la pregunta en el aire.}
 \end{frame}}
 
 % ================================================================ 2 · ¿Qué cambia hoy?
 {\setbeamercolor{background canvas}{bg=lavanda}\setbeamercolor{normal text}{fg=lavandatexto}
-% No footer here: the three answer cards use the full width.
-\setbeamertemplate{footline}{}
+% Lavender slide: same reserved footer height, number only.
+\setbeamertemplate{footline}{\reservapie
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=south east, font=\footnotesize\bfseries, text=lavandatexto] at ($(current page.south east)+(-.6,.42)$)
+      {El problema \textperiodcentered\ \insertframenumber\ de \inserttotalframenumber};
+  \end{tikzpicture}}
 \begin{frame}[t]
   \transblindshorizontal<1>[duration=0.5]
-  \transdissolve<2->[duration=0.35]% each reveal fades in
+  \transdissolve<2->[duration=0.35]
   \begin{tikzpicture}[remember picture, overlay]
-    \node[anchor=north west, inner sep=0pt] at (current page.north west) {\goteosube{16}{1.2}{rosa}{ovulatoria}{menstrual}{lavanda}};
-    % Placed by hand below the drip: animations are drawn above page content.
+    \node[anchor=north west, inner sep=0pt] at (current page.north west)
+      {\only<1>{\goteosube{16}{1.2}{rosa}{ovulatoria}{menstrual}{lavanda}}\only<2->{\goteofijo{16}{1.2}{rosa}{ovulatoria}{menstrual}{lavanda}}};
     \node[anchor=north west, fill=lavandanoche, text=lavandatexto, rounded corners=9pt, inner xsep=10pt, inner ysep=4pt, font=\bfseries]
-      at ($(current page.north west)+(1,-1.35)$) {02:00 – 05:00};
+      at ($(current page.north west)+(1,-1.35)$) {02:00 – 03:00};
   \end{tikzpicture}\par
-  \vspace*{1.3cm}
-  {\color{nube}\titular[30]{¿Qué cambia hoy?}}
+  \vspace*{1.2cm}
+  {\color{nube}\titular[28]{¿Qué cambia hoy?}}
   \vspace{.1cm}
-  {\large\color{lavandatexto} Pregúntale al público: cada respuesta entra al flujo de SyncFit.\par}
+  {\normalsize\color{lavandatexto} Pregúntale al público: cada respuesta entra al flujo de SyncFit.\par}
   \vspace{.2cm}
   \color{ink}
-  \onslide<1->{\icontarjeta{menstrualsuave}{nube}{\iconoCiclo}{Ciclo o gestación}{La fase da contexto a la propuesta.}}\hfill
-  \onslide<2->{\icontarjeta{folicularsuave}{nube}{\iconoEnergia}{Energía}{Cómo te sientes, junto a los sensores.}}\hfill
-  \onslide<3->{\icontarjeta{ovulatoriasuave}{nube}{\iconoEquipo}{Equipo}{Las máquinas del gimnasio activo.}}
+  \onslide<1->{\icontarjeta{menstrualsuave}{nube}{\iconoCiclo}{Ciclo o gestación}{La fase da contexto.}}\hfill
+  \onslide<2->{\icontarjeta{folicularsuave}{nube}{\iconoEnergia}{Energía}{Cómo te sientes + sensores.}}\hfill
+  \onslide<3->{\icontarjeta{ovulatoriasuave}{nube}{\iconoEquipo}{Equipo}{Las máquinas de tu gym.}}
   \note{Pide respuestas al público y revela una tarjeta por respuesta. Ciclo o gestación: la fase aporta contexto fisiológico. Energía: la atleta registra cómo se siente y SyncFit lo combina con las señales de la captura. Equipo: el plan prioriza ejercicios de las máquinas registradas en el gimnasio activo.}
+\end{frame}}
+
+% ================================================================ Cada fase tiene su clima
+{\setbeamercolor{background canvas}{bg=luteasuave}
+\begin{frame}
+  \transcover<1>[direction=0, duration=0.5]
+  \tiempo{03:00 – 04:00}\par\vspace{.2cm}
+  \titular[28]{Cada fase tiene su clima}
+  \vspace{.05cm}
+  \bajada{El color de la app cambia contigo, y tu rutina también.}
+  \vspace{.25cm}
+  \fase{menstrualsuave}{menstrual}{Menstrual}{Días 1–5}{Menos impacto; movilidad y fuerza suave.}\hfill
+  \fase{folicularsuave}{folicular}{Folicular}{Energía en alza}{Buen momento para progresar cargas.}\hfill
+  \fase{ovulatoriasuave}{ovulatoria}{Ovulatoria}{Mucha fuerza}{Sin saltos de alto impacto.}\hfill
+  \fase{nube}{lutea}{Lútea}{Fatiga antes}{Más descanso y carga ajustada.}
+  \vspace{.15cm}
+  \par\tikz\node[fill=gestacionsuave, rounded corners=12pt, inner xsep=12pt, inner ysep=4pt, text width=13.4cm, align=left, font=\small]{\textbf{¿Embarazada? También.} Tres trimestres con reglas propias; por ejemplo, nada boca arriba desde la semana 16.};
+  \note{Cuatro fases del ciclo y tres trimestres. Cada fase cambia la propuesta: en menstrual baja el impacto, en folicular se progresa, en ovulatoria se evitan saltos, en lútea se ajusta la carga. En embarazo hay reglas propias, como no hacer ejercicios boca arriba desde la semana 16.}
+\end{frame}}
+
+% ================================================================ Dos IAs y un guardián
+{\setbeamercolor{background canvas}{bg=crema}
+\begin{frame}
+  \transpush<1>[direction=0, duration=0.5]
+  \tiempo{04:00 – 05:00}\par\vspace{.2cm}
+  \titular[28]{Dos IAs y un guardián}
+  \vspace{.05cm}
+  \bajada{La matemática nunca la hace un modelo generativo.}
+  \vspace{.15cm}
+  {\centering\pulsiviaja{13.6}{4}{0}{1}\par}
+  \vspace{.05cm}
+  \estacion{luteasuave}{\iconoPulso}{Sensor}{Pulso, piel y fuerza.}\hfill
+  \estacion{folicularsuave}{\iconoChip}{IA local}{Fatiga y carga del día.}\hfill
+  \estacion{ovulatoriasuave}{\iconoChispa}{DeepSeek}{Diseña tu rutina.}\hfill
+  \estacion{menstrualsuave}{\iconoEscudo}{Validador}{Bloquea lo riesgoso.}
+  \note{El dato viaja en cuatro paradas. El sensor toma pulso a 100 Hz, temperatura de la piel y fuerza. La IA local limpia la señal, calcula la variabilidad (RMSSD) y la fatiga y fija la carga del día, k\_load. DeepSeek, con GPT-6 Luna de respaldo, diseña la rutina con el objetivo, la fase y las máquinas. Un validador con reglas fijas bloquea lo contraindicado y respeta la carga. La matemática nunca la hace un modelo generativo.}
 \end{frame}}
 
 % ================================================================ 3 · Dos accesos
 \renewcommand{\parte}{Demostración}
-{\setbeamercolor{background canvas}{bg=crema}
+{\setbeamercolor{background canvas}{bg=rosaclaro}
 \begin{frame}
   \transsplitverticalout<1>[duration=0.5]
-  \transdissolve<2->[duration=0.35]% each reveal fades in
+  \transdissolve<2->[duration=0.35]
   \tiempo{05:00 – 06:00}\par\vspace{.3cm}
-  \titular[34]{Dos accesos, dos tareas}
-  \vspace{.1cm}
+  \titular[30]{Dos accesos, dos tareas}
+  \vspace{.05cm}
   \bajada{Abre dos perfiles del navegador con los accesos rápidos.}
-  \vspace{.55cm}
+  \vspace{.45cm}
   \onslide<1->{\icontarjeta{nube}{luteasuave}{\iconoGym}{Gimnasio}{Abre el panel y elige el gimnasio de prueba.}}\hfill
   \onslide<2->{\icontarjeta{nube}{folicularsuave}{\iconoAtleta}{Atleta}{Abre la app y ten listo el código del gimnasio.}}\hfill
   \onslide<3->{\icontarjeta{nube}{menstrualsuave}{\iconoEscudo}{Super admin}{Deja abiertos los catálogos para el minuto 9.}}
@@ -116,47 +174,49 @@
 {\setbeamercolor{background canvas}{bg=folicularsuave}
 \begin{frame}
   \transcover<1>[direction=90, duration=0.5]
-  \transdissolve<2->[duration=0.35]% each reveal fades in
+  \transdissolve<2->[duration=0.35]
   \begin{columns}[c]
     \column{.53\textwidth}
-      \tiempo{06:00 – 09:00}\par\vspace{.35cm}
+      \tiempo{06:00 – 09:00}\par\vspace{.3cm}
       \titular[30]{Registra\\una máquina}
-      \vspace{.45cm}
-      \onslide<1->{\paso{folicular}{1}{Crea la máquina en el panel.}}\par\vspace{.18cm}
-      \onslide<2->{\paso{ovulatoria}{2}{Vincúlala con un ejercicio.}}\par\vspace{.18cm}
+      \vspace{.35cm}
+      \onslide<1->{\paso{folicular}{1}{Crea la máquina en el panel.}}\par\vspace{.15cm}
+      \onslide<2->{\paso{ovulatoria}{2}{Vincúlala con un ejercicio.}}\par\vspace{.15cm}
       \onslide<3->{\paso{lutea}{3}{Recarga: inventario y contador cambian.}}
     \column{.43\textwidth}
-      \ilusmaquinas
+      \ilusmaquinas\par\vspace{.25cm}
+      \onslide<3->{\dato{la IA infiere para qué sirve la máquina y su factor de carga a partir del nombre.}}
   \end{columns}
-  \note{Panel del gimnasio: crea una máquina, vincúlala con un ejercicio y guarda. Al recargar, el inventario y el contador reflejan el cambio.}
+  \note{Panel del gimnasio: crea una máquina, vincúlala con un ejercicio y guarda. La IA infiere el propósito y el factor de carga a partir del nombre. Al recargar, el inventario y el contador reflejan el cambio.}
 \end{frame}}
 
 % ================================================================ 5 · Agrega un grupo muscular
-{\setbeamercolor{background canvas}{bg=rosaclaro}
+{\setbeamercolor{background canvas}{bg=menstrualsuave}
 \begin{frame}
   \transpush<1>[direction=0, duration=0.5]
-  \transdissolve<2->[duration=0.35]% each reveal fades in
+  \transdissolve<2->[duration=0.35]
   \tiempo{09:00 – 11:00}\par\vspace{.3cm}
   \titular[28]{Agrega un grupo muscular}
   \vspace{.05cm}
-  \bajada{Una opción del Superadmin llega hasta la rutina.}
-  \vspace{.2cm}
-  {\centering\pulsiviaja{13.6}\par}
-  \vspace{.1cm}
+  \bajada{Una opción del Superadmin llega a la rutina, sin código.}
+  \vspace{.15cm}
+  % Pulsi moves one stop per click; each move plays once.
+  {\centering\only<1>{\pulsiquieto{13.6}{3}{0}}\only<2>{\pulsiviaja{13.6}{3}{0}{.5}}\only<3>{\pulsiviaja{13.6}{3}{.5}{1}}\par}
+  \vspace{.05cm}
   \etapa{luteasuave}{1}{Crea el grupo}{Catálogos \(\rightarrow\) Opciones: un grupo de prueba.}{1}\hfill
   \etapa{folicularsuave}{2}{Asocia un ejercicio}{En Ejercicios, añádelo a sus grupos.}{2}\hfill
   \etapa{ovulatoriasuave}{3}{Compruébalo}{La atleta recarga y elige el grupo nuevo.}{3}
-  \note{Superadmin: Catálogos, Opciones, crea un grupo muscular de prueba. En Ejercicios, añade el identificador del grupo al campo muscle\_groups de un ejercicio. Desde la sesión de atleta, recarga la vista de rutina y selecciona el grupo nuevo.}
+  \note{Superadmin: Catálogos, Opciones, crea un grupo muscular de prueba. En Ejercicios, añade el identificador del grupo al campo muscle\_groups de un ejercicio. Desde la sesión de atleta, recarga la vista de rutina y selecciona el grupo nuevo. Todo sale de la base de datos: no hay que tocar código.}
 \end{frame}}
 
 % ================================================================ 6 · Genera la rutina
 {\setbeamercolor{background canvas}{bg=ovulatoriasuave}
 \begin{frame}
   \transglitter<1>[direction=315, duration=0.6]
-  \transdissolve<2->[duration=0.35]% each reveal fades in
+  \transdissolve<2->[duration=0.35]
   \begin{columns}[c]
     \column{.53\textwidth}
-      \tiempo{11:00 – 15:00}\par\vspace{.35cm}
+      \tiempo{11:00 – 15:00}\par\vspace{.3cm}
       \titular[30]{Genera la rutina}
       \vspace{.3cm}
       \onslide<1->{\paso{lutea}{1}{Activa el gimnasio y elige el grupo.}}\par\vspace{.15cm}
@@ -164,9 +224,26 @@
       \onslide<3->{\paso{folicular}{3}{Genera con telemetría simulada.}}
     \column{.43\textwidth}
       \ilusrutina\par\vspace{4pt}
-      \only<3->{{\footnotesize\bfseries\color{inksuave} Telemetría en vivo}\par\ondapulso{6}{menstrual}}
+      \only<3>{{\footnotesize\bfseries\color{inksuave} Telemetría en vivo}\par\vspace{4pt}\ondapulso{6}{menstrual}}%
+      \only<1-2>{\dato{cada ejercicio trae su porqué, las series ajustadas y el peso sugerido por tu carga del día.}}
   \end{columns}
-  \note{Atleta: activa el gimnasio de prueba, elige el grupo muscular y registra su energía. Genera la rutina con telemetría simulada y comenta qué ejercicios, carga (k\_load) y equipo propone SyncFit.}
+  \note{Atleta: activa el gimnasio de prueba, elige el grupo muscular y registra su energía. Genera la rutina con telemetría simulada. Comenta qué ejercicios propone, por qué, las series y el peso según la carga del día (k\_load), y el equipo del gimnasio que usa.}
+\end{frame}}
+
+% ================================================================ Por qué SyncFit
+\renewcommand{\parte}{Cierre}
+{\setbeamercolor{background canvas}{bg=rosa}
+\begin{frame}
+  \transdissolve<1>[duration=0.6]
+  \transdissolve<2->[duration=0.35]
+  \titular[32]{Por qué SyncFit}
+  \vspace{.05cm}
+  \bajada{Tres ideas para llevarse.}
+  \vspace{.45cm}
+  \onslide<1->{\icontarjeta{nube}{luteasuave}{\iconoPulso}{Mide, no adivina}{Variabilidad cardiaca, temperatura y fuerza.}}\hfill
+  \onslide<2->{\icontarjeta{nube}{menstrualsuave}{\iconoEscudo}{Seguridad primero}{Lo contraindicado se bloquea y te dice por qué.}}\hfill
+  \onslide<3->{\icontarjeta{nube}{folicularsuave}{\iconoGym}{Con tu gimnasio}{Usa el equipo real que tu gimnasio registró.}}
+  \note{Resume en tres ideas: mide en lugar de adivinar, la seguridad va primero con un validador de reglas fijas, y la rutina usa las máquinas reales del gimnasio. Además, la app está en español, inglés y chino.}
 \end{frame}}
 
 % ================================================================ Closing
@@ -174,8 +251,8 @@
 \begin{frame}[plain]
   \transdissolve[duration=0.8]
   \begin{tikzpicture}[remember picture, overlay]
-    \node[anchor=north west, inner sep=0pt] at (current page.north west) {\goteosube{16}{2}{ovulatoriasuave}{menstrual}{lavanda}{ink}};
-    \foreach \x/\y/\s in {2/2.2/.09, 4.5/1.3/.06, 12.5/2.6/.08, 14.2/1.5/.05, 9.5/1.1/.07}
+    \node[anchor=north west, inner sep=0pt] at (current page.north west) {\goteosube{16}{2}{rosa}{menstrual}{lavanda}{ink}};
+    \foreach \x/\y/\s in {2/1.4/.09, 4.5/.9/.06, 12.5/2.2/.08, 14.2/1.1/.05, 9.5/.7/.07}
       \fill[ovulatoria] ($(current page.south west)+(\x,\y)$) circle (\s);
   \end{tikzpicture}
   \vspace{1.1cm}
@@ -187,9 +264,9 @@
       \vspace{.35cm}
       {\display\Large\color{ovulatoria} syncfit.jenilarper.dev}
     \column{.36\textwidth}
-      \centering\pulsiflota{3.8}
+      \centering\pulsiflota{3.3}
   \end{columns}
-  \note{Cierra con la frase de la landing y abre preguntas. Si queda tiempo, muestra la demo de fases en la landing.}
+  \note{Cierra con la frase de la landing y abre preguntas. Si queda tiempo, muestra la demo de fases en la landing: sin cuenta, cambia el día del ciclo y mira cómo cambia la rutina.}
 \end{frame}}
 
 \end{document}
