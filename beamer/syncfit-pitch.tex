@@ -1,5 +1,5 @@
-% SyncFit Edge · 15-minute pitch in the brand style.
-% Same timing as public/SyncFit-Pitch.html (5 min problem + 10 min live demo),
+% SyncFit Edge · pitch in the brand style: 5 minutes presenting (slides 1-5),
+% 10 minutes of live demo (slides 6-9), then the close.
 % with a cover, three context slides (phases, the two AIs, why SyncFit) and a
 % closing slide. One idea per slide; the full script is in the notes.
 %
@@ -14,8 +14,6 @@
 
 \title{SyncFit Edge}
 
-% Time pill, larger than the theme's for the projector.
-\newcommand{\tiempo}[2][nube]{\tikz[baseline=(t.base)]\node[fill=#1, text=ink, rounded corners=9pt, inner xsep=10pt, inner ysep=4pt, font=\bfseries](t){#2};}
 % Card with a round icon badge, title and one line. {fill}{badge}{icon}{title}{line}
 \newcommand{\icontarjeta}[5]{%
   \begin{tikzpicture}[baseline=(current bounding box.north)]
@@ -62,7 +60,7 @@
       \vspace{.3cm}
       {\small\color{inksuave} Rutinas que se adaptan a tu fase del ciclo o a tu semana de embarazo,\\ con sensores, dos IAs y las máquinas de tu gimnasio.}
     \column{.36\textwidth}
-      \centering\pulsiflota{4.2}
+      \centering\pulsibaila{4.2}
   \end{columns}
   \note{Saluda y presenta a Pulsi. Una frase: SyncFit adapta el entrenamiento a la fisiología de cada atleta, ciclo o embarazo, con sensores y las máquinas reales del gimnasio.}
 \end{frame}}
@@ -74,7 +72,6 @@
   \transdissolve<2->[duration=0.35]
   \begin{columns}[c]
     \column{.6\textwidth}
-      \tiempo{00:00 – 02:00}\par\vspace{.45cm}
       \titular[25]{El contexto cambia.\\La rutina también.}
       \vspace{.35cm}
       \bajada{Llega con menos energía y su máquina está ocupada.}
@@ -102,8 +99,6 @@
   \begin{tikzpicture}[remember picture, overlay]
     \node[anchor=north west, inner sep=0pt] at (current page.north west)
       {\only<1>{\goteosube{16}{1.2}{rosa}{ovulatoria}{menstrual}{lavanda}}\only<2->{\goteofijo{16}{1.2}{rosa}{ovulatoria}{menstrual}{lavanda}}};
-    \node[anchor=north west, fill=lavandanoche, text=lavandatexto, rounded corners=9pt, inner xsep=10pt, inner ysep=4pt, font=\bfseries]
-      at ($(current page.north west)+(1,-1.35)$) {02:00 – 03:00};
   \end{tikzpicture}\par
   \vspace*{1.2cm}
   {\color{nube}\titular[28]{¿Qué cambia hoy?}}
@@ -121,7 +116,6 @@
 {\setbeamercolor{background canvas}{bg=luteasuave}
 \begin{frame}
   \transcover<1>[direction=0, duration=0.5]
-  \tiempo{03:00 – 04:00}\par\vspace{.2cm}
   \titular[28]{Cada fase tiene su clima}
   \vspace{.05cm}
   \bajada{El color de la app cambia contigo, y tu rutina también.}
@@ -139,7 +133,6 @@
 {\setbeamercolor{background canvas}{bg=crema}
 \begin{frame}
   \transpush<1>[direction=0, duration=0.5]
-  \tiempo{04:00 – 05:00}\par\vspace{.2cm}
   \titular[28]{Dos IAs y un guardián}
   \vspace{.05cm}
   \bajada{La matemática nunca la hace un modelo generativo.}
@@ -159,7 +152,6 @@
 \begin{frame}
   \transsplitverticalout<1>[duration=0.5]
   \transdissolve<2->[duration=0.35]
-  \tiempo{05:00 – 06:00}\par\vspace{.3cm}
   \titular[30]{Dos accesos, dos tareas}
   \vspace{.05cm}
   \bajada{Abre dos perfiles del navegador con los accesos rápidos.}
@@ -177,7 +169,6 @@
   \transdissolve<2->[duration=0.35]
   \begin{columns}[c]
     \column{.53\textwidth}
-      \tiempo{06:00 – 09:00}\par\vspace{.3cm}
       \titular[30]{Registra\\una máquina}
       \vspace{.35cm}
       \onslide<1->{\paso{folicular}{1}{Crea la máquina en el panel.}}\par\vspace{.15cm}
@@ -195,7 +186,6 @@
 \begin{frame}
   \transpush<1>[direction=0, duration=0.5]
   \transdissolve<2->[duration=0.35]
-  \tiempo{09:00 – 11:00}\par\vspace{.3cm}
   \titular[28]{Agrega un grupo muscular}
   \vspace{.05cm}
   \bajada{Una opción del Superadmin llega a la rutina, sin código.}
@@ -216,7 +206,6 @@
   \transdissolve<2->[duration=0.35]
   \begin{columns}[c]
     \column{.53\textwidth}
-      \tiempo{11:00 – 15:00}\par\vspace{.3cm}
       \titular[30]{Genera la rutina}
       \vspace{.3cm}
       \onslide<1->{\paso{lutea}{1}{Activa el gimnasio y elige el grupo.}}\par\vspace{.15cm}

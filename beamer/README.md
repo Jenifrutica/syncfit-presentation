@@ -1,7 +1,8 @@
 # Pitch en Beamer (estilo de marca)
 
-Versión en LaTeX Beamer del pitch de 15 minutos. Mismo guion y tiempos que
-`public/SyncFit-Pitch.html`, más portada, tres diapositivas de contexto (las fases,
+Versión en LaTeX Beamer del pitch: **5 minutos de presentación** (diapositivas
+1 a 5) y **10 minutos de demo en vivo** (diapositivas 6 a 9). Mismo guion que
+`public/SyncFit-Pitch.html`, sin cronómetros en pantalla, más portada, tres diapositivas de contexto (las fases,
 las dos IAs y por qué SyncFit) y cierre, con la marca de la app: cielo rosa, tinta índigo,
 nubes, goteo, Pulsi, Fredoka (títulos) y Nunito (texto). Los colores salen de
 `syncfit-frontend/app/tokens.css`.
@@ -17,8 +18,9 @@ nubes, goteo, Pulsi, Fredoka (títulos) y Nunito (texto). Los colores salen de
 
 - **Transiciones** al cambiar de diapositiva (disolver, barrido, persianas,
   cortina, empuje, destello) y un fundido corto en cada revelado.
-- **Animaciones de una sola vez** (paquete `animate`): Pulsi aparece en la
-  portada y el cierre, las nubes llegan a su sitio, el goteo sube al entrar a
+- **Pulsi flota en la portada** sin parar desde que se abre el PDF.
+- **Animaciones de una sola vez** (paquete `animate`), que esperan medio
+  segundo a que termine la transición antes de arrancar: Pulsi aparece en el cierre, las nubes llegan a su sitio, el goteo sube al entrar a
   la diapositiva lavanda y al cierre, Pulsi recorre las cuatro paradas de las
   dos IAs, avanza un tramo por clic en el catálogo, y la onda de pulso se
   dibuja al revelar el último paso. Ninguna se repite: al revelar el
