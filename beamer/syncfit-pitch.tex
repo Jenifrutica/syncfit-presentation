@@ -17,34 +17,40 @@
 % Card with a round icon badge, title and one line. {fill}{badge}{icon}{title}{line}
 \newcommand{\icontarjeta}[5]{%
   \begin{tikzpicture}[baseline=(current bounding box.north)]
-    \node[fill=#1, rounded corners=16pt, minimum height=1.9cm, text width=3.55cm, inner sep=9pt, align=center]
+    \node[fill=#1, sombra, rounded corners=16pt, minimum height=1.9cm, text width=3.55cm, inner sep=9pt, align=center]
       {\insignia{#2}{#3}\par\vspace{5pt}{\display\Large #4}\par\vspace{3pt}{\small #5}};
   \end{tikzpicture}}
 % Step card for the catalog → routine track. {fill}{n}{title}{line}{overlay}
 \newcommand{\etapa}[5]{%
   \onslide<#5->{\begin{tikzpicture}[baseline=(current bounding box.north)]
-    \node[fill=#1, rounded corners=14pt, text width=3.85cm, minimum height=1.75cm, inner sep=8pt, align=left]
+    \node[fill=#1, sombra, rounded corners=14pt, text width=3.85cm, minimum height=1.75cm, inner sep=8pt, align=left]
       {{\footnotesize\bfseries 0#2}\par{\display\Large #3}\par\vspace{2pt}{\small #4}};
   \end{tikzpicture}}}
 % Phase card: color dot, name, days, one line. {fill}{dot}{name}{days}{line}
 \newcommand{\fase}[5]{%
   \begin{tikzpicture}[baseline=(current bounding box.north)]
-    \node[fill=#1, rounded corners=14pt, text width=2.7cm, minimum height=1.95cm, inner sep=7pt, align=left]
-      {\tikz\fill[#2] (0,0) circle (.17);\ {\display\Large #3}\par\vspace{1pt}{\footnotesize\bfseries\color{inksuave} #4}\par\vspace{3pt}{\small #5}};
+    \fill[fondo!82!ink, rounded corners=14pt] (0,-.14) rectangle (3.25,3.16);
+    \begin{scope}
+      \clip[rounded corners=14pt] (0,0) rectangle (3.25,3.3);
+      \fill[nube] (0,0) rectangle (3.25,3.3);
+      \fill[#2] (0,2.85) rectangle (3.25,3.3);
+    \end{scope}
+    \node[anchor=north west, text width=2.75cm, inner sep=0pt, align=left] at (.25,2.6)
+      {{\display\Large #3}\par\vspace{2pt}{\footnotesize\bfseries\color{inksuave} #4}\par\vspace{5pt}{\small #5}};
   \end{tikzpicture}}
 % Station of the two-AIs flow: badge, title, one line. {badge}{icon}{title}{line}
 \newcommand{\estacion}[4]{%
   \begin{tikzpicture}[baseline=(current bounding box.north)]
-    \node[fill=nube, rounded corners=14pt, text width=2.7cm, minimum height=1.6cm, inner sep=7pt, align=center]
+    \node[fill=nube, sombra, rounded corners=14pt, text width=2.7cm, minimum height=1.6cm, inner sep=7pt, align=center]
       {\insignia{#1}{#2}\par\vspace{3pt}{\display\large #3}\par\vspace{2pt}{\footnotesize #4}};
   \end{tikzpicture}}
 % Small "dato" chip under a demo slide. {text}
-\newcommand{\dato}[1]{\tikz[baseline=(t.base)]\node[fill=nube, text=ink, rounded corners=9pt, inner xsep=9pt, inner ysep=5pt, text width=5.2cm, font=\small](t){\textbf{Dato:} #1};}
+\newcommand{\dato}[1]{\tikz[baseline=(t.base)]\node[fill=nube, sombra, text=ink, rounded corners=9pt, inner xsep=9pt, inner ysep=5pt, text width=5.2cm, font=\small](t){\textbf{Dato:} #1};}
 
 \begin{document}
 
 % ================================================================ Cover
-{\setbeamercolor{background canvas}{bg=rosa}
+{\fondo[ovulatoriasuave]{rosa}
 \begin{frame}[plain]
   \transdissolve[duration=0.8]
   \begin{tikzpicture}[remember picture, overlay]
@@ -66,7 +72,7 @@
 \end{frame}}
 
 % ================================================================ 1 · El contexto cambia
-{\setbeamercolor{background canvas}{bg=rosa}
+{\fondo[luteasuave]{rosa}
 \begin{frame}
   \transwipe<1>[direction=0, duration=0.6]
   \transdissolve<2->[duration=0.35]
@@ -86,7 +92,7 @@
 \end{frame}}
 
 % ================================================================ 2 · ¿Qué cambia hoy?
-{\setbeamercolor{background canvas}{bg=lavanda}\setbeamercolor{normal text}{fg=lavandatexto}
+{\fondo[lavandanoche]{lavanda}\setbeamercolor{normal text}{fg=lavandatexto}
 % Lavender slide: same reserved footer height, number only.
 \setbeamertemplate{footline}{\reservapie
   \begin{tikzpicture}[remember picture, overlay]
@@ -113,31 +119,40 @@
 \end{frame}}
 
 % ================================================================ Cada fase tiene su clima
-{\setbeamercolor{background canvas}{bg=luteasuave}
+{\fondo[lutea!55!nube]{luteasuave}
 \begin{frame}
   \transcover<1>[direction=0, duration=0.5]
   \titular[28]{Cada fase tiene su clima}
   \vspace{.05cm}
   \bajada{El color de la app cambia contigo, y tu rutina también.}
-  \vspace{.25cm}
-  \fase{menstrualsuave}{menstrual}{Menstrual}{Días 1–5}{Menos impacto; movilidad y fuerza suave.}\hfill
-  \fase{folicularsuave}{folicular}{Folicular}{Energía en alza}{Buen momento para progresar cargas.}\hfill
-  \fase{ovulatoriasuave}{ovulatoria}{Ovulatoria}{Mucha fuerza}{Sin saltos de alto impacto.}\hfill
-  \fase{nube}{lutea}{Lútea}{Fatiga antes}{Más descanso y carga ajustada.}
-  \vspace{.15cm}
-  \par\tikz\node[fill=gestacionsuave, rounded corners=12pt, inner xsep=12pt, inner ysep=4pt, text width=13.4cm, align=left, font=\small]{\textbf{¿Embarazada? También.} Tres trimestres con reglas propias; por ejemplo, nada boca arriba desde la semana 16.};
+  \vspace{.3cm}
+  \fase{folicularsuave}{menstrual}{Menstrual}{Días 1–5}{Bajo impacto y fuerza suave.}\hfill
+  \fase{folicularsuave}{folicular}{Folicular}{Energía en alza}{Ideal para subir las cargas.}\hfill
+  \fase{folicularsuave}{ovulatoria}{Ovulatoria}{Mucha fuerza}{Sin saltos de alto impacto.}\hfill
+  \fase{folicularsuave}{lutea}{Lútea}{Fatiga antes}{Más descanso y carga ajustada.}
+  \vspace{.3cm}
+  \par\noindent\begin{tikzpicture}
+    \fill[fondo!82!ink, rounded corners=14pt] (0,-.14) rectangle (\linewidth,1.16);
+    \begin{scope}
+      \clip[rounded corners=14pt] (0,0) rectangle (\linewidth,1.3);
+      \fill[nube] (0,0) rectangle (\linewidth,1.3);
+      \fill[gestacion] (0,0) rectangle (.3,1.3);
+    \end{scope}
+    \node[anchor=west, text width=\linewidth-1.2cm, inner sep=0pt, align=left] at (.7,.65)
+      {{\display\large ¿Embarazada? También.}\par\vspace{1pt}{\small Tres trimestres con reglas propias: nada boca arriba desde la semana 16.}};
+  \end{tikzpicture}
   \note{Cuatro fases del ciclo y tres trimestres. Cada fase cambia la propuesta: en menstrual baja el impacto, en folicular se progresa, en ovulatoria se evitan saltos, en lútea se ajusta la carga. En embarazo hay reglas propias, como no hacer ejercicios boca arriba desde la semana 16.}
 \end{frame}}
 
 % ================================================================ Dos IAs y un guardián
-{\setbeamercolor{background canvas}{bg=crema}
+{\fondo[ovulatoriasuave]{crema}
 \begin{frame}
   \transpush<1>[direction=0, duration=0.5]
   \titular[28]{Dos IAs y un guardián}
   \vspace{.05cm}
   \bajada{La matemática nunca la hace un modelo generativo.}
   \vspace{.15cm}
-  {\centering\pulsiviaja{13.6}{4}{0}{1}\par}
+  {\centering\pulsiviaja{13.2}{4}{0}{1}\par}
   \vspace{.05cm}
   \estacion{luteasuave}{\iconoPulso}{Sensor}{Pulso, piel y fuerza.}\hfill
   \estacion{folicularsuave}{\iconoChip}{IA local}{Fatiga y carga del día.}\hfill
@@ -148,7 +163,7 @@
 
 % ================================================================ 3 · Dos accesos
 \renewcommand{\parte}{Demostración}
-{\setbeamercolor{background canvas}{bg=rosaclaro}
+{\fondo[menstrualsuave]{rosaclaro}
 \begin{frame}
   \transsplitverticalout<1>[duration=0.5]
   \transdissolve<2->[duration=0.35]
@@ -163,7 +178,7 @@
 \end{frame}}
 
 % ================================================================ 4 · Registra una máquina
-{\setbeamercolor{background canvas}{bg=folicularsuave}
+{\fondo[folicular!60!nube]{folicularsuave}
 \begin{frame}
   \transcover<1>[direction=90, duration=0.5]
   \transdissolve<2->[duration=0.35]
@@ -182,7 +197,7 @@
 \end{frame}}
 
 % ================================================================ 5 · Agrega un grupo muscular
-{\setbeamercolor{background canvas}{bg=menstrualsuave}
+{\fondo[menstrual!50!nube]{menstrualsuave}
 \begin{frame}
   \transpush<1>[direction=0, duration=0.5]
   \transdissolve<2->[duration=0.35]
@@ -191,7 +206,7 @@
   \bajada{Una opción del Superadmin llega a la rutina, sin código.}
   \vspace{.15cm}
   % Pulsi moves one stop per click; each move plays once.
-  {\centering\only<1>{\pulsiquieto{13.6}{3}{0}}\only<2>{\pulsiviaja{13.6}{3}{0}{.5}}\only<3>{\pulsiviaja{13.6}{3}{.5}{1}}\par}
+  {\centering\only<1>{\pulsiquieto{13.2}{3}{0}}\only<2>{\pulsiviaja{13.2}{3}{0}{.5}}\only<3>{\pulsiviaja{13.2}{3}{.5}{1}}\par}
   \vspace{.05cm}
   \etapa{luteasuave}{1}{Crea el grupo}{Catálogos \(\rightarrow\) Opciones: un grupo de prueba.}{1}\hfill
   \etapa{folicularsuave}{2}{Asocia un ejercicio}{En Ejercicios, añádelo a sus grupos.}{2}\hfill
@@ -200,7 +215,7 @@
 \end{frame}}
 
 % ================================================================ 6 · Genera la rutina
-{\setbeamercolor{background canvas}{bg=ovulatoriasuave}
+{\fondo[ovulatoria!60!nube]{ovulatoriasuave}
 \begin{frame}
   \transglitter<1>[direction=315, duration=0.6]
   \transdissolve<2->[duration=0.35]
@@ -221,7 +236,7 @@
 
 % ================================================================ Por qué SyncFit
 \renewcommand{\parte}{Cierre}
-{\setbeamercolor{background canvas}{bg=rosa}
+{\fondo[folicularsuave]{rosa}
 \begin{frame}
   \transdissolve<1>[duration=0.6]
   \transdissolve<2->[duration=0.35]
@@ -236,7 +251,7 @@
 \end{frame}}
 
 % ================================================================ Closing
-{\setbeamercolor{background canvas}{bg=ink}\setbeamercolor{normal text}{fg=lavandatexto}
+{\fondo[lavandanoche]{ink}\setbeamercolor{normal text}{fg=lavandatexto}
 \begin{frame}[plain]
   \transdissolve[duration=0.8]
   \begin{tikzpicture}[remember picture, overlay]
