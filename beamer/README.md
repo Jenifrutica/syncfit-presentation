@@ -1,12 +1,13 @@
 # Pitch en Beamer (estilo de marca)
 
-Versión en LaTeX Beamer del pitch: **5 minutos de presentación** (diapositivas
-1 a 5) y **10 minutos de demo en vivo** (diapositivas 6 a 9). Mismo guion que
-`public/SyncFit-Pitch.html`, sin cronómetros en pantalla, más portada, tres diapositivas de contexto (las fases,
-las dos IAs y por qué SyncFit) y cierre, con la marca de la app: cielo rosa, tinta índigo,
-nubes, goteo, Pulsi, Fredoka (títulos) y Nunito (texto). Los colores salen de
-`syncfit-frontend/app/tokens.css`.
+Presentación **corta** de SyncFit Edge: 8 diapositivas con la idea (el problema,
+qué cambia hoy y las dos IAs), cómo se construyó el backend y las estructuras de
+datos que usa, más la de preguntas. La app se muestra en vivo, sin diapositivas.
+Usa la marca de la app: cielo rosa, tinta índigo, nubes, goteo, Pulsi, Fredoka
+(títulos) y Nunito (texto). Los colores salen de `syncfit-frontend/app/tokens.css`.
 
+- **Guion por persona:** [`GUION.md`](./GUION.md) (Juan López abre; Jenifer Urbano y
+  Juan Cuarán siguen). Cada nota del `.tex` empieza con quién presenta.
 - PDF listo: [`syncfit-pitch.pdf`](./syncfit-pitch.pdf)
 - Fuente: `syncfit-pitch.tex` + tema `beamerthemesyncfit.sty`
 - Fuentes tipográficas en `fonts/` (licencia OFL, ver `fonts/OFL.txt`)
@@ -30,14 +31,14 @@ Si Acrobat pregunta, permite el JavaScript del documento: las animaciones lo
 necesitan. En Vista Previa de macOS o en el navegador se ve un cuadro fijo
 de cada animación (el diseño sigue completo, pero sin movimiento).
 
-Avanza con las flechas o la barra espaciadora: las diapositivas 1 a 6 se
-revelan por pasos (11 diapositivas, 24 páginas).
+Avanza con las flechas o la barra espaciadora: varias diapositivas revelan sus
+tarjetas por pasos (8 diapositivas, 20 páginas).
 
 ## Antes de exponer
 
 - Acrobat con el JavaScript del documento permitido (sin él no hay animaciones).
 - Pantalla completa (Ctrl/Cmd + L) desde la portada, para que Pulsi ya esté flotando.
-- Para la demo (diapositivas 6 a 9), tres sesiones abiertas en el navegador:
+- Para la demo en vivo (después de la diapositiva 7), tres sesiones abiertas en el navegador:
   administrador del gimnasio de prueba, atleta con el código del gimnasio y
   superadministrador en Catálogos.
 - Si la demo es en local: backend y frontend corriendo, y el acceso de prueba

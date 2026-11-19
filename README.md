@@ -2,8 +2,8 @@
 
 **Live app:** https://syncfit.jenilarper.dev
 
-Defense and demo material for **SyncFit Edge**: the pitch slides, interactive
-diagrams and the speaker script.
+Defense and demo material for **SyncFit Edge**: a short pitch deck (the idea and
+the data structures), the speaker script for the three of us, and the live demo.
 
 ## Team
 
@@ -15,13 +15,14 @@ diagrams and the speaker script.
 
 | What | Where | Notes |
 |---|---|---|
-| **Pitch (Beamer PDF)** — main deck | [`beamer/syncfit-pitch.pdf`](./beamer/syncfit-pitch.pdf) | 11 slides / 24 pages. Open in Adobe Acrobat, full screen (Ctrl/Cmd+L), allow the document's JavaScript for the animations. |
+| **Pitch (Beamer PDF)** — main deck | [`beamer/syncfit-pitch.pdf`](./beamer/syncfit-pitch.pdf) | 8 slides / 20 pages. Open in Adobe Acrobat, full screen (Ctrl/Cmd+L), allow the document's JavaScript for the animations. |
+| **Script** | [`beamer/GUION.md`](./beamer/GUION.md) | What each of us says per slide, who drives each part of the demo, likely questions. |
 | Pitch (web) | [`public/SyncFit-Pitch.html`](./public/SyncFit-Pitch.html) · [online](https://syncfit-presentation-juan-5a09.vercel.app/) | Same script, opens in any browser. |
-| Live demo | https://syncfit.jenilarper.dev | Slides 6–9. |
+| Live demo | https://syncfit.jenilarper.dev | Shown in the app, without slides, after slide 7. |
 
-Timing: slides 1–5 are the 5-minute presentation, slides 6–9 the 10-minute live
-demo, then why SyncFit and questions. Checklist and build steps:
-[`beamer/README.md`](./beamer/README.md).
+Order: slides 1–7 (the idea, how the backend is built and the data structures it
+uses, about 4.5 minutes), then the live demo in the app, then slide 8 for
+questions. Checklist and build steps: [`beamer/README.md`](./beamer/README.md).
 
 ### Before presenting
 
@@ -32,23 +33,12 @@ demo, then why SyncFit and questions. Checklist and build steps:
   without it, the check-in's "Simulate" uses the athlete's own history or the
   values expected for her age, weight and height.
 
-## Diagrams
-
-Open directly in a browser (`xdg-open public/<file>`):
-
-- `flow.html` — the two-AI pipeline: hardware → local model (`k_load`) → cloud
-  AI designs the routine → deterministic validation → app.
-- `architecture.html` — the same flow in interactive 3D (needs internet for three.js).
-- `journey.html` — 3D walkthrough of the user journey in 9 stations.
-
 ## Contents
 
 ```
 syncfit-presentation/
-├── beamer/          # Main deck: syncfit-pitch.tex + brand theme, built PDF, fonts, images
-├── public/          # Web pitch, diagrams and pitch images
-├── notes/           # Speaker script
-├── slides.md        # Earlier Slidev deck (npm i && npm run dev)
+├── beamer/          # Main deck: syncfit-pitch.tex + brand theme, built PDF, fonts, Pulsi, GUION.md
+├── public/          # Web pitch (SyncFit-Pitch.html), its photos and Pulsi
 └── ARCHITECTURE.md  # Software architecture (layers, patterns, deployment, hybrid AI)
 ```
 

@@ -126,9 +126,8 @@ Client–server, REST + WebSocket, stateless backend that scales horizontally.
 - **Safety:** impact/supine rules, symptom-driven contraindications.
 - **Data:** Postgres (prod) / SQLite (dev); additive schema reconciliation.
 
-## Visual diagrams
+## Visual summary
 
-- `public/flow.html` — 2D two-AI pipeline.
-- `public/architecture.html` — interactive 3D architecture.
-- `public/journey.html` — 3D animated user journey (9 stations, per-stage
-  inputs/outputs).
+The Beamer deck (`beamer/syncfit-pitch.pdf`) shows the two-AI pipeline ("Dos IAs
+y un guardián"), the backend layers and the data structures used in the live
+flow ("Cómo está construido" and "Estructuras de datos").
