@@ -1,5 +1,7 @@
 # SyncFit Presentation
 
+**Live app:** https://syncfit.jenilarper.dev
+
 Academic defense and demo material for **SyncFit Edge**, built with Slidev
 (TypeScript + Vue). Everything here supports the oral defense of the project.
 
