@@ -12,15 +12,6 @@
 
 \title{SyncFit Edge}
 
-% Photo with the app's card radius and a soft drop shadow.
-\newcommand{\foto}[3]{% {file}{width}{height}
-  \begin{tikzpicture}
-    \fill[ink, opacity=.18, rounded corners=18pt] (.12,-.14) rectangle (#2+.12,#3-.14);
-    \begin{scope}
-      \clip[rounded corners=18pt] (0,0) rectangle (#2,#3);
-      \node[anchor=south west, inner sep=0pt] at (0,0) {\includegraphics[width=#2,height=#3,keepaspectratio=false]{#1}};
-    \end{scope}
-  \end{tikzpicture}}
 % Time pill, larger than the theme's for the projector.
 \newcommand{\tiempo}[1]{\tikz[baseline=(t.base)]\node[fill=nube, text=ink, rounded corners=9pt, inner xsep=10pt, inner ysep=4pt, font=\bfseries](t){#1};}
 % Card with a round icon badge, title and one line. {fill}{badge}{icon}{title}{line}
@@ -74,7 +65,7 @@
       \vspace{.4cm}
       \onslide<2->{\burbuja{¿Qué entrena hoy?}}
     \column{.37\textwidth}
-      \foto{img/athlete.jpg}{5.3cm}{4.2cm}
+      \centering\ilusciclo
   \end{columns}
   \note{Escena: una atleta llega al gimnasio con menos energía y encuentra su máquina habitual ocupada. Clic: deja la pregunta en el aire. ¿Cómo decide qué entrenar hoy?}
 \end{frame}}
@@ -135,8 +126,7 @@
       \onslide<2->{\paso{ovulatoria}{2}{Vincúlala con un ejercicio.}}\par\vspace{.18cm}
       \onslide<3->{\paso{lutea}{3}{Recarga: inventario y contador cambian.}}
     \column{.43\textwidth}
-      \foto{img/machine.jpg}{6cm}{4.5cm}\par\vspace{2pt}
-      {\footnotesize\color{inksuave} Máquina ilustrativa.}
+      \ilusmaquinas
   \end{columns}
   \note{Panel del gimnasio: crea una máquina, vincúlala con un ejercicio y guarda. Al recargar, el inventario y el contador reflejan el cambio.}
 \end{frame}}
@@ -173,8 +163,7 @@
       \onslide<2->{\paso{menstrual}{2}{Registra tu energía.}}\par\vspace{.15cm}
       \onslide<3->{\paso{folicular}{3}{Genera con telemetría simulada.}}
     \column{.43\textwidth}
-      \foto{img/training.jpg}{6cm}{4.1cm}\par\vspace{3pt}
-      \only<1-2>{{\footnotesize\color{inksuave} Ejercicio ilustrativo.}}%
+      \ilusrutina\par\vspace{4pt}
       \only<3->{{\footnotesize\bfseries\color{inksuave} Telemetría en vivo}\par\ondapulso{6}{menstrual}}
   \end{columns}
   \note{Atleta: activa el gimnasio de prueba, elige el grupo muscular y registra su energía. Genera la rutina con telemetría simulada y comenta qué ejercicios, carga (k\_load) y equipo propone SyncFit.}
