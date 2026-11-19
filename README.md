@@ -21,8 +21,8 @@ the data structures), the speaker script for the three of us, and the live demo.
 | Live demo | https://syncfit.jenilarper.dev | Shown in the app, without slides, after slide 7. |
 
 Order: slides 1–7 (the idea, how the backend is built and the data structures it
-uses, about 4.5 minutes), then the live demo in the app, then slide 8 for
-questions. Checklist and build steps: [`beamer/README.md`](./beamer/README.md).
+uses, about 4.5 minutes), then the live demo in the app, then slide 8 to
+say thanks. Checklist and build steps: [`beamer/README.md`](./beamer/README.md).
 
 ### Before presenting
 
