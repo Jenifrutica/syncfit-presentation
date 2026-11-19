@@ -136,7 +136,10 @@
 \newcommand{\insignia}[2]{\tikz[baseline=-.6ex, sharp corners]{\fill[#1] (0,0) circle (.68); \begin{scope}[scale=.78] #2 \end{scope}}}
 
 % ---------- Animations (animate package; play in Adobe Acrobat/Reader) ----------
-% Every animation plays ONCE when its page opens and stays on its last frame.
+% Every animation plays ONCE when its page opens and stays on its last frame
+% (the cover's floating Pulsi is the only loop). Each one first holds its start
+% frame ~0.6 s (rate 1.6, then \newframe[...]) so it does not finish hidden
+% behind the slide transition.
 % Each has a still twin (\...fijo) for the next reveal pages of the same slide,
 % so clicking to reveal a card never replays it. Animations are drawn above
 % page content in a PDF, so they are only placed where there is no text.
@@ -152,10 +155,23 @@
     \node[inner sep=0pt] at (#1*.475, {#1*.6 - #1*.35*(1-\e) + #1*.05*sin(\e*540)}) {\includegraphics[height=#1 cm]{img/pulsi.png}};
   \end{tikzpicture}}
 \newcommand{\pulsiflota}[1]{%
-  \begin{animateinline}[autoplay,poster=last]{24}
-    \multiframe{24}{rA=0+0.04348}{\cuadropulsi{#1}{\rA}}
+  \begin{animateinline}[autoplay,poster=last]{1.6}
+    \cuadropulsi{#1}{0}\newframe[24]
+    \multiframe{36}{rA=0.0278+0.0278}{\cuadropulsi{#1}{\rA}}
   \end{animateinline}}
 \newcommand{\pulsifijo}[1]{\cuadropulsi{#1}{1}}
+
+% Cover: Pulsi floats and sways in a gentle endless loop. {height in cm}
+\newcommand{\cuadrobaile}[2]{% {height}{phase 0..1}
+  \begin{tikzpicture}
+    \useasboundingbox (0,0) rectangle (#1*.95,#1*1.25);
+    \fill[ink, opacity=.12] (#1*.475,#1*.04) ellipse ({#1*(.24-.04*sin(#2*360))} and #1*.035);
+    \node[inner sep=0pt, rotate={4*sin(#2*360+90)}] at (#1*.475, {#1*.64 + #1*.07*sin(#2*360)}) {\includegraphics[height=#1 cm]{img/pulsi.png}};
+  \end{tikzpicture}}
+\newcommand{\pulsibaila}[1]{%
+  \begin{animateinline}[autoplay,loop,poster=first]{20}
+    \multiframe{50}{rB=0+0.02}{\cuadrobaile{#1}{\rB}}
+  \end{animateinline}}
 
 % Heart-rate line drawn once from left to right. {width in cm}{color}
 \newcommand{\ecg}[1]{((mod(#1,16)>6 && mod(#1,16)<10) ? (mod(#1,16)<8 ? .8*(mod(#1,16)-6)/2 - .1 : .7 - .9*(mod(#1,16)-8)) : .08*sin(#1*90))}
@@ -167,8 +183,9 @@
     \fill[#2] (#3, {\ecg{#3}}) circle (.12);
   \end{tikzpicture}}
 \newcommand{\ondapulso}[2]{%
-  \begin{animateinline}[autoplay,poster=last]{24}
-    \multiframe{48}{iT=1+1}{\cuadroonda{#1}{#2}{\iT}}
+  \begin{animateinline}[autoplay,poster=last]{1.6}
+    \cuadroonda{#1}{#2}{1}\newframe[18]
+    \multiframe{47}{iT=2+1}{\cuadroonda{#1}{#2}{\iT}}
   \end{animateinline}}
 
 % Pulsi on a track with N stops, at progress p (0 = first stop, 1 = last).
@@ -183,8 +200,9 @@
   \end{tikzpicture}}
 % Moves once from one progress to another. {width}{stops}{from}{to}
 \newcommand{\pulsiviaja}[4]{%
-  \begin{animateinline}[autoplay,poster=last]{24}
-    \multiframe{18}{rV=0+0.0588}{\cuadroviaje{#1}{#2}{#3+(#4-#3)*\facil{\rV}}}
+  \begin{animateinline}[autoplay,poster=last]{1.6}
+    \cuadroviaje{#1}{#2}{#3}\newframe[24]
+    \multiframe{36}{rV=0.0278+0.0278}{\cuadroviaje{#1}{#2}{#3+(#4-#3)*\facil{\rV}}}
   \end{animateinline}}
 \newcommand{\pulsiquieto}[3]{\cuadroviaje{#1}{#2}{#3}}
 
@@ -203,8 +221,9 @@
       \end{scope}}
   \end{tikzpicture}}
 \newcommand{\goteosube}[6]{%
-  \begin{animateinline}[autoplay,poster=last]{30}
-    \multiframe{30}{rG=0+0.0345}{\cuadrogoteo{#1}{#2}{#3}{#4}{#5}{#6}{\rG}}
+  \begin{animateinline}[autoplay,poster=last]{1.6}
+    \cuadrogoteo{#1}{#2}{#3}{#4}{#5}{#6}{0}\newframe[24]
+    \multiframe{48}{rG=0.0208+0.0208}{\cuadrogoteo{#1}{#2}{#3}{#4}{#5}{#6}{\rG}}
   \end{animateinline}}
 \newcommand{\goteofijo}[6]{\cuadrogoteo{#1}{#2}{#3}{#4}{#5}{#6}{1}}
 
@@ -218,8 +237,9 @@
     \nube[nube!80!rosa]{{#1-5.8+3.5*(1-\e)}, #2*.05}{2.4}
   \end{tikzpicture}}
 \newcommand{\nubesllegan}[2]{%
-  \begin{animateinline}[autoplay,poster=last]{24}
-    \multiframe{24}{rN=0+0.04348}{\cuadronubes{#1}{#2}{\rN}}
+  \begin{animateinline}[autoplay,poster=last]{1.6}
+    \cuadronubes{#1}{#2}{0}\newframe[24]
+    \multiframe{40}{rN=0.025+0.025}{\cuadronubes{#1}{#2}{\rN}}
   \end{animateinline}}
 
 % ---------- Brand illustrations (instead of stock photos) ----------
