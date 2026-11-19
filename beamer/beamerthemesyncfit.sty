@@ -77,4 +77,44 @@
       {{\display\normalsize #3}\par\vspace{2pt}{\scriptsize\hyphenpenalty=10000\exhyphenpenalty=10000 #4}};
   \end{tikzpicture}}
 
+% ---------- Pitch building blocks ----------
+% Huge headline and short lead (one idea per slide).
+\newcommand{\titular}[2][34]{{\display\fontsize{#1}{#1}\selectfont #2\par}}
+\newcommand{\bajada}[1]{{\fontsize{14}{18}\selectfont #1\par}}
+
+% Speech bubble in ink, like Pulsi's in the app.
+\newcommand{\burbuja}[2][ink]{%
+  \tikz[baseline=(b.base)]\node[fill=#1, text=nube, rounded corners=12pt, inner xsep=12pt, inner ysep=7pt, font=\display\large](b){#2};}
+
+% Numbered step chip: big number in a colored circle + text.
+\newcommand{\paso}[3]{% {circle color}{number}{text}
+  \begin{tikzpicture}[baseline=(t.base)]
+    \node[circle, fill=#1, text=ink, minimum size=1.05cm, font=\display\Large](n){#2};
+    \node[right=6pt of n, text width=4.4cm, align=left, font=\large](t){#3};
+  \end{tikzpicture}}
+
+% Icons drawn in TikZ (no icon font needed), sized by the current tikz scale.
+\newcommand{\iconoCiclo}{%
+  \foreach \c/\a in {menstrual/0, folicular/90, ovulatoria/180, lutea/270}
+    \draw[\c, line width=5pt] (0,0) ++(\a:.55) arc (\a:\a+80:.55);
+  \fill[ink] (0,0) circle (.12);}
+\newcommand{\iconoEnergia}{%
+  \draw[ink, line width=2.4pt, rounded corners=3pt] (-.55,-.3) rectangle (.45,.3);
+  \fill[ink] (.48,-.12) rectangle (.6,.12);
+  \foreach \x in {-.42,-.16,.1} \fill[folicular] (\x,-.18) rectangle ++(.2,.36);}
+\newcommand{\iconoEquipo}{%
+  \fill[ink, rounded corners=1pt] (-.42,-.05) rectangle (.42,.05);
+  \foreach \s in {-1,1} {\fill[ink, rounded corners=2pt] (\s*.42-.07,-.3) rectangle (\s*.42+.07,.3);
+    \fill[ink, rounded corners=2pt] (\s*.58-.06,-.2) rectangle (\s*.58+.06,.2);}}
+\newcommand{\iconoGym}{%
+  \fill[ink] (-.55,-.4) rectangle (.55,.15); \fill[ink] (-.65,.15) -- (0,.55) -- (.65,.15) -- cycle;
+  \fill[crema] (-.15,-.4) rectangle (.15,-.05);}
+\newcommand{\iconoAtleta}{%
+  \fill[ink] (0,.32) circle (.2); \fill[ink, rounded corners=8pt] (-.38,-.45) rectangle (.38,.08);}
+\newcommand{\iconoEscudo}{%
+  \fill[ink] (0,.5) -- (.45,.32) -- (.4,-.1) .. controls (.3,-.35) .. (0,-.5) .. controls (-.3,-.35) .. (-.4,-.1) -- (-.45,.32) -- cycle;
+  \draw[nube, line width=2pt, line cap=round, line join=round] (-.18,0) -- (-.03,-.15) -- (.2,.12);}
+% Round icon badge: {fill}{icon macro}.
+\newcommand{\insignia}[2]{\tikz[baseline=-.6ex]{\fill[#1] (0,0) circle (.85); \begin{scope}[scale=.95] #2 \end{scope}}}
+
 \endinput
