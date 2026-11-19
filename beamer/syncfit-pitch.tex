@@ -7,7 +7,7 @@
 % Build:  cd beamer && xelatex syncfit-pitch.tex && xelatex syncfit-pitch.tex
 % Present in Adobe Acrobat/Reader, full screen (Ctrl/Cmd+L): it plays the slide
 % transitions and the animations (animate package, needs JavaScript on).
-% Each animation plays once; later reveal pages of a slide show it already finished.
+% Each animation plays once; every slide shows all its content at once (no reveals).
 % Speaker notes: uncomment \setbeameroption below.
 \documentclass[aspectratio=169,11pt]{beamer}
 \usepackage{beamerthemesyncfit}
@@ -87,7 +87,7 @@
     \column{.37\textwidth}
       \centering\ilusciclo
   \end{columns}
-  \note{[Juan López] Escena: una atleta llega al gimnasio con menos energía y encuentra su máquina habitual ocupada. Casi todos los planes de entrenamiento se pensaron con datos de cuerpos masculinos. Clic: deja la pregunta en el aire.}
+  \note{[Juan López] Escena: una atleta llega al gimnasio con menos energía y encuentra su máquina habitual ocupada. Casi todos los planes de entrenamiento se pensaron con datos de cuerpos masculinos. Deja la pregunta en el aire.}
 \end{frame}}
 
 % ================================================================ 2 · ¿Qué cambia hoy?
@@ -154,7 +154,7 @@
       {\hecho{Sin duplicados}{Si se cae la red, la rutina no se crea dos veces.}}\par\vspace{.18cm}
       {\hecho{Casi 500 pruebas}{Revisan solas que ningún cambio rompa nada.}}
   \end{columns}
-  \note{[Juan Cuarán] El backend está en FastAPI y separado en capas. La API solo recibe peticiones: unas 85 rutas HTTP y un WebSocket por el que llega el prototipo; ahí se revisan los roles (atleta, gimnasio, superadmin) y hay límites por IP en el login. Los servicios tienen los casos de uso; por ejemplo, la autenticación se separó de las rutas. La analítica tiene las estructuras de datos y la base de datos son 22 tablas con SQLAlchemy. Clic: seguridad con Argon2 y JWT con versión. Clic: la captura es reanudable con un request\_id. Clic: casi 500 pruebas automáticas en 7 repositorios.}
+  \note{[Juan Cuarán] El backend está en FastAPI y separado en capas. La API solo recibe peticiones: unas 85 rutas HTTP y un WebSocket por el que llega el prototipo; ahí se revisan los roles (atleta, gimnasio, superadmin) y hay límites por IP en el login. Los servicios tienen los casos de uso; por ejemplo, la autenticación se separó de las rutas. La analítica tiene las estructuras de datos y la base de datos son 22 tablas con SQLAlchemy. seguridad con Argon2 y JWT con versión. la captura es reanudable con un request\_id. casi 500 pruebas automáticas en 7 repositorios.}
 \end{frame}}
 
 % ================================================================ Estructuras de datos (1 de 2)
