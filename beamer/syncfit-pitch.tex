@@ -83,7 +83,7 @@
     \column{.36\textwidth}
       \centering\pulsibaila{4.2}
   \end{columns}
-  \note{Saluda y presenta a Pulsi. Una frase: SyncFit adapta el entrenamiento a la fisiología de cada atleta, ciclo o embarazo, con sensores y las máquinas reales del gimnasio.}
+  \note{[Juan López] Saluda y presenta a Pulsi. Una frase: SyncFit adapta el entrenamiento a la fisiología de cada atleta, ciclo o embarazo, con sensores y las máquinas reales del gimnasio.}
 \end{frame}}
 
 % ================================================================ 1 · El contexto cambia
@@ -103,7 +103,7 @@
     \column{.37\textwidth}
       \centering\ilusciclo
   \end{columns}
-  \note{Escena: una atleta llega al gimnasio con menos energía y encuentra su máquina habitual ocupada. Casi todos los planes de entrenamiento se pensaron con datos de cuerpos masculinos. Clic: deja la pregunta en el aire.}
+  \note{[Juan López] Escena: una atleta llega al gimnasio con menos energía y encuentra su máquina habitual ocupada. Casi todos los planes de entrenamiento se pensaron con datos de cuerpos masculinos. Clic: deja la pregunta en el aire.}
 \end{frame}}
 
 % ================================================================ 2 · ¿Qué cambia hoy?
@@ -130,7 +130,7 @@
   \onslide<1->{\icontarjeta{menstrualsuave}{nube}{\iconoCiclo}{Ciclo o gestación}{La fase da contexto.}}\hfill
   \onslide<2->{\icontarjeta{folicularsuave}{nube}{\iconoEnergia}{Energía}{Lo que sientes + tus sensores.}}\hfill
   \onslide<3->{\icontarjeta{ovulatoriasuave}{nube}{\iconoEquipo}{Equipo}{Las máquinas de tu gym.}}
-  \note{Pide respuestas al público y revela una tarjeta por respuesta. Ciclo o gestación: la fase aporta contexto fisiológico. Energía: la atleta registra cómo se siente y SyncFit lo combina con su pulso en reposo, su temperatura y su fuerza de empuje, comparados con sus propias referencias. Equipo: el plan prioriza ejercicios de las máquinas registradas en el gimnasio activo.}
+  \note{[Juan López] Pide respuestas al público y revela una tarjeta por respuesta. Ciclo o gestación: la fase aporta contexto fisiológico. Energía: la atleta registra cómo se siente y SyncFit lo combina con su pulso en reposo, su temperatura y su fuerza de empuje, comparados con sus propias referencias. Equipo: el plan prioriza ejercicios de las máquinas registradas en el gimnasio activo.}
 \end{frame}}
 
 % ================================================================ Cada fase tiene su clima
@@ -156,7 +156,7 @@
     \node[anchor=west, text width=\linewidth-1.2cm, inner sep=0pt, align=left] at (.7,.65)
       {{\display\large ¿Embarazada? También.}\par\vspace{1pt}{\small Tres trimestres con reglas propias: nada boca arriba desde la semana 16.}};
   \end{tikzpicture}
-  \note{Cuatro fases del ciclo y tres trimestres. Cada fase cambia la propuesta: en menstrual baja el impacto, en folicular se progresa, en ovulatoria se evitan saltos, en lútea se ajusta la carga. En embarazo hay reglas propias, como no hacer ejercicios boca arriba desde la semana 16.}
+  \note{[Jenifer Urbano] Cuatro fases del ciclo y tres trimestres. Cada fase cambia la propuesta: en menstrual baja el impacto, en folicular se progresa, en ovulatoria se evitan saltos, en lútea se ajusta la carga. En embarazo hay reglas propias, como no hacer ejercicios boca arriba desde la semana 16.}
 \end{frame}}
 
 % ================================================================ Dos IAs y un guardián
@@ -173,7 +173,7 @@
   \estacion{folicularsuave}{\iconoChip}{IA local}{Fatiga y carga del día.}\hfill
   \estacion{ovulatoriasuave}{\iconoChispa}{DeepSeek}{Diseña tu rutina.}\hfill
   \estacion{menstrualsuave}{\iconoEscudo}{Validador}{Bloquea lo riesgoso.}
-  \note{El dato viaja en cuatro paradas. El prototipo ESP32 mide el pulso a unos 100 Hz durante 15 segundos, la temperatura en la frente durante 10 segundos (con la mediana de cada paso) y el empuje isométrico. La IA local limpia la señal, estima la fatiga y fija la carga del día, k\_load; además compara el pulso en reposo con su rango esperado, la temperatura con la suya de siempre y el empuje con su mejor marca. DeepSeek, con GPT-6 Luna de respaldo, diseña la rutina con el objetivo, la fase y las máquinas. Un validador con reglas fijas bloquea lo contraindicado y respeta la carga. La matemática nunca la hace un modelo generativo.}
+  \note{[Jenifer Urbano] El dato viaja en cuatro paradas. El prototipo ESP32 mide el pulso a unos 100 Hz durante 15 segundos, la temperatura en la frente durante 10 segundos (con la mediana de cada paso) y el empuje isométrico. La IA local limpia la señal, estima la fatiga y fija la carga del día, k\_load; además compara el pulso en reposo con su rango esperado, la temperatura con la suya de siempre y el empuje con su mejor marca. DeepSeek, con GPT-6 Luna de respaldo, diseña la rutina con el objetivo, la fase y las máquinas. Un validador con reglas fijas bloquea lo contraindicado y respeta la carga. La matemática nunca la hace un modelo generativo.}
 \end{frame}}
 
 % ================================================================ Cómo está construido
@@ -245,7 +245,7 @@
   \onslide<1->{\icontarjeta{nube}{luteasuave}{\iconoGym}{Gimnasio}{Abre el panel y elige el gimnasio de prueba.}}\hfill
   \onslide<2->{\icontarjeta{nube}{folicularsuave}{\iconoAtleta}{Atleta}{Abre la app y ten listo el código del gimnasio.}}\hfill
   \onslide<3->{\icontarjeta{nube}{menstrualsuave}{\iconoEscudo}{Super admin}{Deja abiertos los Catálogos.}}
-  \note{Antes de empezar, tres sesiones listas: administrador de gimnasio con el gimnasio de prueba, atleta con el código para unirse y superadministrador en Catálogos.}
+  \note{[Juan Cuarán] Antes de empezar, tres sesiones listas: administrador de gimnasio con el gimnasio de prueba, atleta con el código para unirse y superadministrador en Catálogos.}
 \end{frame}}
 
 % ================================================================ 4 · Registra una máquina
@@ -264,7 +264,7 @@
       \ilusmaquinas\par\vspace{.25cm}
       \onslide<3->{\dato{la IA infiere para qué sirve la máquina y su factor de carga a partir del nombre.}}
   \end{columns}
-  \note{Panel del gimnasio: crea una máquina, vincúlala con un ejercicio y guarda. La IA infiere el propósito y el factor de carga a partir del nombre. Al recargar, el inventario y el contador reflejan el cambio.}
+  \note{[Juan Cuarán] Panel del gimnasio: crea una máquina, vincúlala con un ejercicio y guarda. La IA infiere el propósito y el factor de carga a partir del nombre. Al recargar, el inventario y el contador reflejan el cambio.}
 \end{frame}}
 
 % ================================================================ 5 · Agrega un grupo muscular
@@ -282,7 +282,7 @@
   \etapa{luteasuave}{1}{Crea el grupo}{Catálogos \(\rightarrow\) Opciones: un grupo de prueba.}{1}\hfill
   \etapa{folicularsuave}{2}{Asocia un ejercicio}{En Ejercicios, añádelo a sus grupos.}{2}\hfill
   \etapa{ovulatoriasuave}{3}{Compruébalo}{La atleta recarga y elige el grupo nuevo.}{3}
-  \note{Superadmin: Catálogos, Opciones, crea un grupo muscular de prueba. En Ejercicios, añade el grupo a un ejercicio compatible con su zona (el backend valida que grupo y zona encajen; ensáyalo antes con el mismo grupo). Desde la sesión de atleta, recarga la vista de rutina y selecciona el grupo nuevo. Todo sale de la base de datos: no hay que tocar código.}
+  \note{[Jenifer Urbano] Superadmin: Catálogos, Opciones, crea un grupo muscular de prueba. En Ejercicios, añade el grupo a un ejercicio compatible con su zona (el backend valida que grupo y zona encajen; ensáyalo antes con el mismo grupo). Desde la sesión de atleta, recarga la vista de rutina y selecciona el grupo nuevo. Todo sale de la base de datos: no hay que tocar código.}
 \end{frame}}
 
 % ================================================================ 6 · Genera la rutina
@@ -302,7 +302,7 @@
       \only<3>{{\footnotesize\bfseries\color{inksuave} Captura en vivo}\par\vspace{4pt}\ondapulso{6}{menstrual}}%
       \only<1-2>{\dato{cada ejercicio trae su porqué, y la app muestra cómo tus sensores cambiaron la rutina de hoy.}}
   \end{columns}
-  \note{Atleta: el panel empieza en blanco; activa el gimnasio de prueba, elige grupos y cuántos ejercicios, y registra su energía. Haz la captura guiada (pulso 15 s, temperatura 10 s, empuje) con el prototipo o con Simular. Mientras se crea, señala los cuatro pasos. En el resultado comenta: cómo los sensores cambiaron la rutina de hoy, por qué cada ejercicio, las series y el peso por la carga del día (k\_load), la máquina del gimnasio, y en Cambiar las sugerencias por nombre.}
+  \note{[Juan López] Atleta: el panel empieza en blanco; activa el gimnasio de prueba, elige grupos y cuántos ejercicios, y registra su energía. Haz la captura guiada (pulso 15 s, temperatura 10 s, empuje) con el prototipo o con Simular. Mientras se crea, señala los cuatro pasos. En el resultado comenta: cómo los sensores cambiaron la rutina de hoy, por qué cada ejercicio, las series y el peso por la carga del día (k\_load), la máquina del gimnasio, y en Cambiar las sugerencias por nombre.}
 \end{frame}}
 
 \renewcommand{\parte}{Cierre}
@@ -326,7 +326,7 @@
     \column{.36\textwidth}
       \centering\pulsiflota{3.3}
   \end{columns}
-  \note{Cierra con la frase de la landing y abre preguntas. Si queda tiempo, muestra la demo de fases en la landing: sin cuenta, cambia el día del ciclo y mira cómo cambia la rutina.}
+  \note{[Jenifer Urbano] Cierra con la frase de la landing y abre preguntas. Si queda tiempo, muestra la demo de fases en la landing: sin cuenta, cambia el día del ciclo y mira cómo cambia la rutina.}
 \end{frame}}
 
 \end{document}
