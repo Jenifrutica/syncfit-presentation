@@ -47,6 +47,26 @@
 % Small "dato" chip under a demo slide. {text}
 \newcommand{\dato}[1]{\tikz[baseline=(t.base)]\node[fill=nube, sombra, text=ink, rounded corners=9pt, inner xsep=9pt, inner ysep=5pt, text width=5.2cm, font=\small](t){\textbf{Dato:} #1};}
 
+% Backend layer bar. {fill}{name}{line}
+\newcommand{\capa}[3]{%
+  \tikz\node[fill=#1, sombra, rounded corners=12pt, text width=7.2cm, inner xsep=12pt, inner ysep=6pt, align=left]
+    {{\display\large #2}\par\vspace{1pt}{\small #3}};}
+% Arrow between layers.
+\newcommand{\bajacapa}{{\centering\tikz\fill[inksuave] (0,0) -- (.18,.18) -- (-.18,.18) -- cycle;\par}}
+% Fact chip for the backend slide. {fill}{title}{line}
+\newcommand{\hecho}[3]{%
+  \tikz\node[fill=#1, sombra, rounded corners=12pt, text width=5.1cm, inner xsep=10pt, inner ysep=6pt, align=left]
+    {{\display\normalsize #2}\par\vspace{1pt}{\footnotesize #3}};}
+% Data structure card. {badge fill}{name}{cost}{what it stores}{where it runs}
+\newcommand{\estructura}[5]{%
+  \begin{tikzpicture}[baseline=(current bounding box.north)]
+    \node[fill=nube, sombra, rounded corners=14pt, text width=4.15cm, minimum height=2.45cm, inner sep=8pt, align=left]
+      {{\display\large #2}\par\vspace{3pt}
+       \tikz[baseline=(c.base)]\node[fill=#1, rounded corners=6pt, inner xsep=5pt, inner ysep=2pt, font=\scriptsize\bfseries](c){#3};\
+       {\scriptsize\bfseries\color{inksuave} #5}\par\vspace{4pt}
+       {\footnotesize #4}};
+  \end{tikzpicture}}
+
 \begin{document}
 
 % ================================================================ Cover
