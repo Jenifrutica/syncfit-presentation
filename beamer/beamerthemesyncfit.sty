@@ -44,11 +44,6 @@
   \begin{scope}[shift={(#2)}, xscale=#3*0.14226, yscale=-#3*0.14226]% svg.path units are pt: 1cm = 28.4527pt over 200 units
     \fill[#1] svg {M40 100 C14 100 4 78 18 64 C8 44 30 26 52 36 C56 14 92 6 106 28 C122 10 160 18 158 46 C186 46 196 76 176 90 C170 100 160 100 150 100 Z};
   \end{scope}}
-% Dripping edge: the "gotea" path in DripDivider.tsx (viewBox 1440x110).
-\newcommand{\gotea}[2]{% {color}{height in cm}, anchored at the top of the slide
-  \begin{scope}[shift={(current page.north west)}, xscale=0.31614, yscale=-#2*0.25866]% 16cm wide page = 455.24pt over 1440; 1cm = 28.4527pt over 110
-    \fill[#1] svg {M0 0 L1440 0 L1440 30 C1380 30 1370 78 1330 78 C1290 78 1300 26 1220 26 C1120 26 1100 60 1010 60 C960 60 966 86 930 86 C892 86 900 34 830 34 C720 34 700 64 600 64 C540 64 548 88 510 88 C472 88 480 28 400 28 C300 28 280 56 190 56 C140 56 150 80 110 80 C70 80 76 32 0 32 Z};
-  \end{scope}}
 
 % ---------- Beamer chrome ----------
 \setbeamercolor{background canvas}{bg=rosa}
@@ -99,12 +94,6 @@
       {\parte\ \textperiodcentered\ \insertframenumber\ de \inserttotalframenumber};
   \end{tikzpicture}}
 
-% Rounded "cloud card" used across slides (cards in the app: radius-nube).
-\newcommand{\tarjeta}[4]{% {fill}{width}{title}{body}
-  \begin{tikzpicture}[baseline=(current bounding box.north)]
-    \node[fill=#1, sombra, rounded corners=14pt, inner sep=10pt, text width=#2, align=left]
-      {{\display\normalsize #3}\par\vspace{2pt}{\scriptsize\hyphenpenalty=10000\exhyphenpenalty=10000 #4}};
-  \end{tikzpicture}}
 
 % ---------- Pitch building blocks ----------
 % Huge headline and short lead (one idea per slide).
@@ -115,12 +104,6 @@
 \newcommand{\burbuja}[2][ink]{%
   \tikz[baseline=(b.base)]\node[fill=#1, text=nube, rounded corners=12pt, inner xsep=12pt, inner ysep=7pt, font=\display\large](b){#2};}
 
-% Numbered step chip: big number in a colored circle + text.
-\newcommand{\paso}[3]{% {circle color}{number}{text}
-  \begin{tikzpicture}[baseline=(t.base)]
-    \node[circle, fill=#1, text=ink, minimum size=1.05cm, font=\display\Large](n){#2};
-    \node[right=6pt of n, text width=5.6cm, align=left, font=\large](t){\hyphenpenalty=10000 #3};
-  \end{tikzpicture}}
 
 % Icons drawn in TikZ (no icon font needed), sized by the current tikz scale.
 \newcommand{\iconoCiclo}{%
@@ -135,11 +118,6 @@
   \fill[ink, rounded corners=1pt] (-.42,-.05) rectangle (.42,.05);
   \foreach \s in {-1,1} {\fill[ink, rounded corners=2pt] (\s*.42-.07,-.3) rectangle (\s*.42+.07,.3);
     \fill[ink, rounded corners=2pt] (\s*.58-.06,-.2) rectangle (\s*.58+.06,.2);}}
-\newcommand{\iconoGym}{%
-  \fill[ink] (-.55,-.4) rectangle (.55,.15); \fill[ink] (-.65,.15) -- (0,.55) -- (.65,.15) -- cycle;
-  \fill[crema] (-.15,-.4) rectangle (.15,-.05);}
-\newcommand{\iconoAtleta}{%
-  \fill[ink] (0,.32) circle (.2); \fill[ink, rounded corners=8pt] (-.38,-.45) rectangle (.38,.08);}
 \newcommand{\iconoEscudo}{%
   \fill[ink] (0,.5) -- (.45,.32) -- (.4,-.1) .. controls (.3,-.35) .. (0,-.5) .. controls (-.3,-.35) .. (-.4,-.1) -- (-.45,.32) -- cycle;
   \draw[nube, line width=2pt, line cap=round, line join=round] (-.18,0) -- (-.03,-.15) -- (.2,.12);}
@@ -181,7 +159,6 @@
     \cuadropulsi{#1}{0}\newframe[24]
     \multiframe{36}{rA=0.0278+0.0278}{\cuadropulsi{#1}{\rA}}
   \end{animateinline}}
-\newcommand{\pulsifijo}[1]{\cuadropulsi{#1}{1}}
 
 % Cover: Pulsi floats and sways in a gentle endless loop. {height in cm}
 \newcommand{\cuadrobaile}[2]{% {height}{phase 0..1}
@@ -195,20 +172,6 @@
     \multiframe{50}{rB=0+0.02}{\cuadrobaile{#1}{\rB}}
   \end{animateinline}}
 
-% Heart-rate line drawn once from left to right. {width in cm}{color}
-\newcommand{\ecg}[1]{((mod(#1,16)>6 && mod(#1,16)<10) ? (mod(#1,16)<8 ? .8*(mod(#1,16)-6)/2 - .1 : .7 - .9*(mod(#1,16)-8)) : .08*sin(#1*90))}
-\newcommand{\cuadroonda}[3]{% {width}{color}{step 1..48}
-  \begin{tikzpicture}[x=#1cm/48, y=1cm]
-    \useasboundingbox (0,-.7) rectangle (48,.9);
-    \draw[#2!35, line width=2pt, line cap=round] (0,0) -- (48,0);
-    \draw[#2, line width=3pt, line cap=round, line join=round] plot[domain=0:#3, samples=#3*3+2, smooth] (\x, {\ecg{\x}});
-    \fill[#2] (#3, {\ecg{#3}}) circle (.12);
-  \end{tikzpicture}}
-\newcommand{\ondapulso}[2]{%
-  \begin{animateinline}[autoplay,poster=last]{1.6}
-    \cuadroonda{#1}{#2}{1}\newframe[18]
-    \multiframe{47}{iT=2+1}{\cuadroonda{#1}{#2}{\iT}}
-  \end{animateinline}}
 
 % Pulsi on a track with N stops, at progress p (0 = first stop, 1 = last).
 \newcommand{\cuadroviaje}[3]{% {width}{stops}{progress}
@@ -226,7 +189,6 @@
     \cuadroviaje{#1}{#2}{#3}\newframe[24]
     \multiframe{36}{rV=0.0278+0.0278}{\cuadroviaje{#1}{#2}{#3+(#4-#3)*\facil{\rV}}}
   \end{animateinline}}
-\newcommand{\pulsiquieto}[3]{\cuadroviaje{#1}{#2}{#3}}
 
 % The melting edge rising once over the previous section's color: three solid
 % layers, the back one first. {width}{height} in cm, {previous}{back}{mid}{front}, {progress}
@@ -277,38 +239,6 @@
     \node[fill=crema, text=ink, rounded corners=10pt, inner xsep=9pt, inner ysep=5pt, font=\display\small] at (.75,-2.05) {Máquina ocupada};
   \end{tikzpicture}}
 
-% Gym panel: code, machines and the new one highlighted (slide 4).
-\newcommand{\ilusmaquinas}{%
-  \begin{tikzpicture}[sharp corners, font=\small]
-    \fill[fondo!82!ink, rounded corners=16pt] (0,-.14) rectangle (6,4.36); \fill[ink, rounded corners=16pt] (0,0) rectangle (6,4.5);
-    \fill[nube, rounded corners=6pt] (.4,3.35) rectangle (1.3,4.15);
-    \foreach \x/\y in {.5/3.45, .5/3.8, .85/3.8, .85/3.45} \fill[ink] (\x,\y) rectangle ++(.28,.28);
-    \node[anchor=west, text=crema, font=\display\Large] at (1.5,3.75) {A1B2C3};
-    \foreach \y/\t in {2.55/Prensa de piernas, 1.75/Polea alta} {
-      \fill[lavandanoche, rounded corners=9pt] (.4,\y-.32) rectangle (5.6,\y+.32);
-      \begin{scope}[shift={(.8,\y)}, scale=.32] \fill[crema, rounded corners=1pt] (-.42,-.05) rectangle (.42,.05);
-        \foreach \s in {-1,1} {\fill[crema, rounded corners=2pt] (\s*.42-.07,-.3) rectangle (\s*.42+.07,.3);} \end{scope}
-      \node[anchor=west, text=nube, font=\bfseries\small] at (1.15,\y) {\t};}
-    \fill[folicular, rounded corners=9pt] (.4,.63) rectangle (5.6,1.27);
-    \node[anchor=west, text=ink, font=\display\normalsize] at (.65,.95) {+ \ Nueva máquina};
-    \node[anchor=east, text=ink, font=\bfseries\scriptsize] at (5.45,.95) {Sentadilla};
-  \end{tikzpicture}}
 
-% Routine card like the app's result: exercises, sets x reps, today's load (slide 6).
-\newcommand{\ilusrutina}{%
-  \begin{tikzpicture}[sharp corners]
-    \fill[fondo!82!ink, rounded corners=16pt] (0,-.14) rectangle (6,4.16); \fill[nube, rounded corners=16pt] (0,0) rectangle (6,4.3);
-    \node[anchor=west, font=\display\large, text=ink] at (.35,3.85) {Tu rutina de hoy};
-    \node[anchor=east, fill=luteasuave, text=ink, rounded corners=7pt, inner xsep=6pt, inner ysep=2pt, font=\bfseries\scriptsize] at (5.7,3.85) {Lútea};
-    \foreach \y/\t/\d/\c in {3.05/Sentadilla goblet/3 × 10/folicularsuave, 2.3/Puente de glúteo/3 × 12/ovulatoriasuave, 1.55/Step-ups/3 × 10/menstrualsuave} {
-      \fill[rosaclaro, rounded corners=9pt] (.3,\y-.3) rectangle (5.7,\y+.3);
-      \fill[\c, rounded corners=6pt] (.42,\y-.21) rectangle (.84,\y+.21);
-      \node[anchor=west, text=ink, font=\bfseries\small] at (.98,\y) {\t};
-      \node[anchor=east, text=inksuave, font=\bfseries\scriptsize] at (5.55,\y) {\d};}
-    \node[anchor=west, text=inksuave, font=\bfseries\scriptsize] at (.35,.78) {Carga de hoy};
-    \fill[rosaclaro, rounded corners=4pt] (.35,.3) rectangle (5.65,.52);
-    \fill[ink, rounded corners=4pt] (.35,.3) rectangle (.35+5.3*.85,.52);
-    \node[anchor=east, text=ink, font=\display\small] at (5.65,.8) {85 \%};
-  \end{tikzpicture}}
 
 \endinput
