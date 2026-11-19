@@ -3,14 +3,15 @@
 Defense and demo material for **SyncFit Edge**: the deck the team presents and
 the script for each speaker. No production code lives here.
 
-## The presentation (5 min + 10 min of live demo)
+## The presentation (short deck + live demo in the app)
 
 - **Deck:** [`beamer/syncfit-pitch.pdf`](./beamer/syncfit-pitch.pdf), LaTeX Beamer
   in the SyncFit brand style. Present it in Adobe Acrobat, full screen, so the
   transitions and animations play. How to build and present it:
   [`beamer/README.md`](./beamer/README.md).
 - **Script:** [`beamer/GUION.md`](./beamer/GUION.md) — what Juan López, Jenifer
-  Urbano and Juan Cuarán say on each slide, with times and hand-offs.
+  Urbano and Juan Cuarán say on each of the 8 slides, and who drives each part of
+  the live demo.
 - **Web version:** [the public pitch on Vercel](https://syncfit-presentation-juan-5a09.vercel.app/),
   a single page (`public/SyncFit-Pitch.html` with `public/pitch-assets/`).
 
