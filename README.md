@@ -3,6 +3,11 @@
 Academic defense and demo material for **SyncFit Edge**, built with Slidev
 (TypeScript + Vue). Everything here supports the oral defense of the project.
 
+## 15-minute pitch
+
+Open [the standalone HTML pitch](./public/SyncFit-Pitch.html) in your browser.
+It includes five minutes on the problem and ten minutes for the live demo.
+
 ## Architecture
 
 See [`ARCHITECTURE.md`](./ARCHITECTURE.md) for the software architecture
