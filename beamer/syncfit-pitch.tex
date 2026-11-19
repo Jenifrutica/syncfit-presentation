@@ -154,11 +154,11 @@
   \vspace{.15cm}
   {\centering\pulsiviaja{13.2}{4}{0}{1}\par}
   \vspace{.05cm}
-  \estacion{luteasuave}{\iconoPulso}{Sensor}{Pulso, piel y fuerza.}\hfill
+  \estacion{luteasuave}{\iconoPulso}{Sensor}{Pulso, temperatura y empuje.}\hfill
   \estacion{folicularsuave}{\iconoChip}{IA local}{Fatiga y carga del día.}\hfill
   \estacion{ovulatoriasuave}{\iconoChispa}{DeepSeek}{Diseña tu rutina.}\hfill
   \estacion{menstrualsuave}{\iconoEscudo}{Validador}{Bloquea lo riesgoso.}
-  \note{El dato viaja en cuatro paradas. El sensor toma pulso a 100 Hz, temperatura de la piel y fuerza. La IA local limpia la señal, calcula la variabilidad (RMSSD) y la fatiga y fija la carga del día, k\_load. DeepSeek, con GPT-6 Luna de respaldo, diseña la rutina con el objetivo, la fase y las máquinas. Un validador con reglas fijas bloquea lo contraindicado y respeta la carga. La matemática nunca la hace un modelo generativo.}
+  \note{El dato viaja en cuatro paradas. El prototipo ESP32 mide el pulso a unos 100 Hz durante 15 segundos, la temperatura en la frente durante 10 segundos (con la mediana de cada paso) y el empuje isométrico. La IA local limpia la señal, estima la fatiga y fija la carga del día, k\_load; además compara el pulso en reposo con su rango esperado, la temperatura con la suya de siempre y el empuje con su mejor marca. DeepSeek, con GPT-6 Luna de respaldo, diseña la rutina con el objetivo, la fase y las máquinas. Un validador con reglas fijas bloquea lo contraindicado y respeta la carga. La matemática nunca la hace un modelo generativo.}
 \end{frame}}
 
 % ================================================================ 3 · Dos accesos
