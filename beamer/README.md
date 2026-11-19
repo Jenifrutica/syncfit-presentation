@@ -33,6 +33,16 @@ de cada animación (el diseño sigue completo, pero sin movimiento).
 Avanza con las flechas o la barra espaciadora: las diapositivas 1 a 6 se
 revelan por pasos (11 diapositivas, 24 páginas).
 
+## Antes de exponer
+
+- Acrobat con el JavaScript del documento permitido (sin él no hay animaciones).
+- Pantalla completa (Ctrl/Cmd + L) desde la portada, para que Pulsi ya esté flotando.
+- Para la demo (diapositivas 6 a 9), tres sesiones abiertas en el navegador:
+  administrador del gimnasio de prueba, atleta con el código del gimnasio y
+  superadministrador en Catálogos.
+- Si la demo es en local: backend y frontend corriendo, y el acceso de prueba
+  visible en `/entrar`.
+
 ## Compilar
 
 ```bash
