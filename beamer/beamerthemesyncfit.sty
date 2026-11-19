@@ -33,6 +33,8 @@
 \newfontfamily\display{Fredoka}[Path=fonts/, Extension=.ttf, UprightFont=*-Bold, BoldFont=*-Bold]
 \newfontfamily\displaymedium{Fredoka}[Path=fonts/, Extension=.ttf, UprightFont=*-Medium]
 \renewcommand{\familydefault}{\sfdefault}
+% No word splitting: big pitch type reads better whole (and the default patterns are English).
+\lefthyphenmin=62
 
 % ---------- Shapes (paths from components/decor/) ----------
 % Cloud: CLOUD_PATH in Cloud.tsx (viewBox 200x110, y grows downward).
@@ -90,7 +92,7 @@
 \newcommand{\paso}[3]{% {circle color}{number}{text}
   \begin{tikzpicture}[baseline=(t.base)]
     \node[circle, fill=#1, text=ink, minimum size=1.05cm, font=\display\Large](n){#2};
-    \node[right=6pt of n, text width=4.4cm, align=left, font=\large](t){#3};
+    \node[right=6pt of n, text width=5.6cm, align=left, font=\large](t){\hyphenpenalty=10000 #3};
   \end{tikzpicture}}
 
 % Icons drawn in TikZ (no icon font needed), sized by the current tikz scale.
@@ -115,6 +117,80 @@
   \fill[ink] (0,.5) -- (.45,.32) -- (.4,-.1) .. controls (.3,-.35) .. (0,-.5) .. controls (-.3,-.35) .. (-.4,-.1) -- (-.45,.32) -- cycle;
   \draw[nube, line width=2pt, line cap=round, line join=round] (-.18,0) -- (-.03,-.15) -- (.2,.12);}
 % Round icon badge: {fill}{icon macro}.
-\newcommand{\insignia}[2]{\tikz[baseline=-.6ex]{\fill[#1] (0,0) circle (.85); \begin{scope}[scale=.95] #2 \end{scope}}}
+% sharp corners: a nested picture would otherwise inherit the card's rounded corners.
+\newcommand{\insignia}[2]{\tikz[baseline=-.6ex, sharp corners]{\fill[#1] (0,0) circle (.85); \begin{scope}[scale=.95] #2 \end{scope}}}
+
+% ---------- Animations (animate package; play in Adobe Acrobat/Reader) ----------
+% Each one loops on its own when the slide opens. Viewers without JavaScript
+% (macOS Preview, browsers) show the first frame, which is a complete picture.
+\RequirePackage{animate}
+
+% Pulsi floating up and down. {height in cm}
+\newcommand{\pulsiflota}[1]{%
+  \begin{animateinline}[autoplay,loop]{20}
+    \multiframe{40}{rA=0+0.15708}{%
+      \begin{tikzpicture}
+        \useasboundingbox (0,0) rectangle (#1*.95,#1*1.25);
+        \node[inner sep=0pt] at (#1*.475, {#1*.625 + #1*.06*sin(\rA r)}) {\includegraphics[height=#1 cm]{img/pulsi.png}};
+      \end{tikzpicture}}
+  \end{animateinline}}
+
+% Heart-rate line sweeping left to right, like the live capture. {width in cm}{color}
+\newcommand{\ondapulso}[2]{%
+  \begin{animateinline}[autoplay,loop,poster=last]{24}
+    \multiframe{48}{iT=1+1}{%
+      \begin{tikzpicture}[x=#1cm/48, y=1cm]
+        \useasboundingbox (0,-.7) rectangle (48,.9);
+        \draw[#2!35, line width=2pt, line cap=round] (0,0) -- (48,0);
+        \draw[#2, line width=3pt, line cap=round, line join=round]
+          plot[domain=0:\iT, samples=\iT*3+2, smooth] (\x, {(mod(\x,16)>6 && mod(\x,16)<10) ? (mod(\x,16)<8 ? .8*(mod(\x,16)-6)/2 - .1 : .7 - .9*(mod(\x,16)-8)) : .08*sin(\x*90)});
+        \fill[#2] (\iT, {(mod(\iT,16)>6 && mod(\iT,16)<10) ? (mod(\iT,16)<8 ? .8*(mod(\iT,16)-6)/2 - .1 : .7 - .9*(mod(\iT,16)-8)) : .08*sin(\iT*90)}) circle (.12);
+      \end{tikzpicture}}
+  \end{animateinline}}
+
+% Pulsi travelling along a track and back. {width in cm}
+\newcommand{\pulsiviaja}[1]{%
+  \begin{animateinline}[autoplay,loop]{24}
+    \multiframe{72}{rP=0+0.0873}{%
+      \begin{tikzpicture}
+        \useasboundingbox (0,-.3) rectangle (#1,1.5);
+        \fill[nube, rounded corners=3pt] (0,-.1) rectangle (#1,.1);
+        \fill[ink, rounded corners=3pt] (0,-.1) rectangle ({.05+(#1-.1)*(1-cos(\rP r))/2},.1);
+        \foreach \k in {0,.5,1} \fill[ink] (.05+\k*#1-\k*.1,0) circle (.18);
+        \node[inner sep=0pt] at ({.05+(#1-.1)*(1-cos(\rP r))/2}, {.7+.08*sin(4*\rP r)}) {\includegraphics[height=1.05cm]{img/pulsi.png}};
+      \end{tikzpicture}}
+  \end{animateinline}}
+
+% Clouds drifting across a band. {width in cm}{height in cm}
+\newcommand{\nubesviajan}[2]{%
+  \begin{animateinline}[autoplay,loop]{15}
+    \multiframe{90}{rN=0+0.0111}{%
+      \begin{tikzpicture}
+        \useasboundingbox (0,0) rectangle (#1,#2);
+        \clip (0,0) rectangle (#1,#2);
+        \nube{{mod(\rN,1)*(#1+4)-3}, #2*.15}{3}
+        \nube[nube!80!rosa]{{mod(\rN+.45,1)*(#1+3)-2.4}, #2*.5}{2.2}
+        \nube[rosaclaro]{{mod(\rN+.75,1)*(#1+5)-3.6}, #2*.05}{3.8}
+      \end{tikzpicture}}
+  \end{animateinline}}
+
+% The melting edge rising once when the slide opens: three solid layers, the
+% back one first, each easing out, over the previous section's color.
+% {width}{height} in cm, then {previous}{back}{mid}{front} colors.
+\newcommand{\goteosube}[6]{%
+  \begin{animateinline}[autoplay,poster=last]{30}
+    \multiframe{30}{rG=0+0.0345}{%
+      \begin{tikzpicture}
+        \useasboundingbox (0,0) rectangle (#1,#2);
+        \clip (0,0) rectangle (#1,#2);
+        \fill[#3] (0,0) rectangle (#1,#2);
+        \foreach \c/\l/\h in {#4/0/1, #5/.15/.8, #6/.3/.6} {
+          \pgfmathsetmacro\q{max(0,min(1,(\rG-\l)/(1-\l)))}
+          \pgfmathsetmacro\e{1-(1-\q)^3}
+          \begin{scope}[shift={(0,\e*\h*#2)}, xscale=#1*28.4527/1440, yscale=-\h*#2*28.4527/110]
+            \fill[\c] svg {M1440 30 C1380 30 1370 78 1330 78 C1290 78 1300 26 1220 26 C1120 26 1100 60 1010 60 C960 60 966 86 930 86 C892 86 900 34 830 34 C720 34 700 64 600 64 C540 64 548 88 510 88 C472 88 480 28 400 28 C300 28 280 56 190 56 C140 56 150 80 110 80 C70 80 76 32 0 32 L0 330 L1440 330 Z};
+          \end{scope}}
+      \end{tikzpicture}}
+  \end{animateinline}}
 
 \endinput
