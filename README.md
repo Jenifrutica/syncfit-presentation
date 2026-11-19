@@ -10,6 +10,9 @@ It includes five minutes on the problem and ten minutes for the live demo.
 
 A Beamer (LaTeX) version in the SyncFit brand style, with the same script, is in
 [`beamer/syncfit-pitch.pdf`](./beamer/syncfit-pitch.pdf) (see [`beamer/README.md`](./beamer/README.md)).
+It has 11 slides: slides 1–5 cover the 5-minute presentation and slides 6–9 the
+10-minute demo, followed by why SyncFit and questions. Present it in Adobe Acrobat
+so the transitions and animations play.
 
 ## Architecture
 
