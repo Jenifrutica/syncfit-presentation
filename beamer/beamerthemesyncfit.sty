@@ -6,7 +6,7 @@
 
 \RequirePackage{fontspec}
 \RequirePackage{tikz}
-\usetikzlibrary{svg.path,positioning,calc}
+\usetikzlibrary{svg.path,positioning,calc,shadows}
 \RequirePackage{graphicx}
 
 % ---------- Colors (same hex as app/tokens.css) ----------
@@ -52,6 +52,32 @@
 
 % ---------- Beamer chrome ----------
 \setbeamercolor{background canvas}{bg=rosa}
+% Slide color: sets the canvas and the tones the decoration and card shadows use.
+% [accent] colors the big corner sun.
+\colorlet{fondo}{rosa}\colorlet{acento}{rosa!72!nube}
+\newcommand{\fondo}[2][]{\setbeamercolor{background canvas}{bg=#2}\colorlet{fondo}{#2}%
+  \if\relax\detokenize{#1}\relax\colorlet{acento}{#2!72!nube}\else\colorlet{acento}{#1}\fi}
+% Solid (no transparency) shadow under cards, a deeper tone of the slide color.
+\tikzset{sombra/.style={drop shadow={shadow xshift=0pt, shadow yshift=-4pt, fill=fondo!82!ink, opacity=1}}}
+% Four-point sparkle. {color}{center}{size}
+\newcommand{\chispa}[3]{\fill[#1] ($#2+(0,#3)$) .. controls ($#2+(.12*#3,.12*#3)$) .. ($#2+(#3,0)$) .. controls ($#2+(.12*#3,-.12*#3)$) .. ($#2+(0,-#3)$) .. controls ($#2+(-.12*#3,-.12*#3)$) .. ($#2+(-#3,0)$) .. controls ($#2+(-.12*#3,.12*#3)$) .. cycle;}
+% Decoration behind every slide, kept to the corners and the footer so it
+% never sits under text: a big soft sun top right, a ring, a small sun bottom
+% left under the wordmark, sparkles and the four phase dots in the footer.
+\setbeamertemplate{background}{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \coordinate (ne) at (current page.north east);
+    \coordinate (sw) at (current page.south west);
+    \fill[acento] ($(ne)+(-.2,.3)$) circle (2.35);
+    \fill[fondo!72!nube] ($(ne)+(-.2,.3)$) circle (1.2);
+    \draw[fondo!80!ink, line width=3pt] ($(ne)+(-2.75,-1.55)$) circle (.42);
+    \fill[fondo!72!nube] ($(sw)+(.2,-.5)$) circle (1.35);
+    \chispa{fondo!70!ink}{($(ne)+(-3.6,-.55)$)}{.2}
+    \chispa{fondo!70!ink}{($(ne)+(-.45,-3.0)$)}{.14}
+    \chispa{fondo!70!ink}{($(sw)+(2.9,.95)$)}{.11}
+    \foreach \c [count=\i] in {menstrual,folicular,ovulatoria,lutea}
+      \fill[\c] ($(current page.south)+(-.75+\i*.3,.55)$) circle (.08);
+  \end{tikzpicture}}
 \setbeamercolor{normal text}{fg=ink}
 \setbeamercolor{structure}{fg=ink}
 \setbeamercolor{frametitle}{fg=ink}
@@ -80,7 +106,7 @@
 % Rounded "cloud card" used across slides (cards in the app: radius-nube).
 \newcommand{\tarjeta}[4]{% {fill}{width}{title}{body}
   \begin{tikzpicture}[baseline=(current bounding box.north)]
-    \node[fill=#1, rounded corners=14pt, inner sep=10pt, text width=#2, align=left]
+    \node[fill=#1, sombra, rounded corners=14pt, inner sep=10pt, text width=#2, align=left]
       {{\display\normalsize #3}\par\vspace{2pt}{\scriptsize\hyphenpenalty=10000\exhyphenpenalty=10000 #4}};
   \end{tikzpicture}}
 
@@ -191,7 +217,7 @@
 % Pulsi on a track with N stops, at progress p (0 = first stop, 1 = last).
 \newcommand{\cuadroviaje}[3]{% {width}{stops}{progress}
   \begin{tikzpicture}
-    \useasboundingbox (0,-.25) rectangle (#1,1.25);
+    \useasboundingbox (-.45,-.25) rectangle (#1+.45,1.25);
     \pgfmathsetmacro\px{.18+(#1-.36)*(#3)}
     \fill[nube, rounded corners=3pt] (.18,-.1) rectangle (#1-.18,.1);
     \fill[ink, rounded corners=3pt] (.18,-.1) rectangle (\px,.1);
@@ -258,7 +284,7 @@
 % Gym panel: code, machines and the new one highlighted (slide 4).
 \newcommand{\ilusmaquinas}{%
   \begin{tikzpicture}[sharp corners, font=\small]
-    \fill[ink, rounded corners=16pt] (0,0) rectangle (6,4.5);
+    \fill[fondo!82!ink, rounded corners=16pt] (0,-.14) rectangle (6,4.36); \fill[ink, rounded corners=16pt] (0,0) rectangle (6,4.5);
     \fill[nube, rounded corners=6pt] (.4,3.35) rectangle (1.3,4.15);
     \foreach \x/\y in {.5/3.45, .5/3.8, .85/3.8, .85/3.45} \fill[ink] (\x,\y) rectangle ++(.28,.28);
     \node[anchor=west, text=crema, font=\display\Large] at (1.5,3.75) {A1B2C3};
@@ -275,7 +301,7 @@
 % Routine card like the app's result: exercises, sets x reps, today's load (slide 6).
 \newcommand{\ilusrutina}{%
   \begin{tikzpicture}[sharp corners]
-    \fill[nube, rounded corners=16pt] (0,0) rectangle (6,4.3);
+    \fill[fondo!82!ink, rounded corners=16pt] (0,-.14) rectangle (6,4.16); \fill[nube, rounded corners=16pt] (0,0) rectangle (6,4.3);
     \node[anchor=west, font=\display\large, text=ink] at (.35,3.85) {Tu rutina de hoy};
     \node[anchor=east, fill=luteasuave, text=ink, rounded corners=7pt, inner xsep=6pt, inner ysep=2pt, font=\bfseries\scriptsize] at (5.7,3.85) {Lútea};
     \foreach \y/\t/\d/\c in {3.05/Sentadilla goblet/3 × 10/folicularsuave, 2.3/Puente de glúteo/3 × 12/ovulatoriasuave, 1.55/Step-ups/3 × 10/menstrualsuave} {
