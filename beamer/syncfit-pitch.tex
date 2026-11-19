@@ -49,22 +49,17 @@
 
 % Backend layer bar. {fill}{name}{line}
 \newcommand{\capa}[3]{%
-  \tikz\node[fill=#1, sombra, rounded corners=12pt, text width=7.2cm, inner xsep=12pt, inner ysep=6pt, align=left]
-    {{\display\large #2}\par\vspace{1pt}{\small #3}};}
-% Arrow between layers.
-\newcommand{\bajacapa}{{\centering\tikz\fill[inksuave] (0,0) -- (.18,.18) -- (-.18,.18) -- cycle;\par}}
-% Fact chip for the backend slide. {fill}{title}{line}
-\newcommand{\hecho}[3]{%
-  \tikz\node[fill=#1, sombra, rounded corners=12pt, text width=5.1cm, inner xsep=10pt, inner ysep=6pt, align=left]
-    {{\display\normalsize #2}\par\vspace{1pt}{\footnotesize #3}};}
-% Data structure card. {badge fill}{name}{cost}{what it stores}{where it runs}
-\newcommand{\estructura}[5]{%
+  \tikz\node[fill=#1, sombra, rounded corners=11pt, text width=7.3cm, inner xsep=11pt, inner ysep=4pt, align=left]
+    {{\display\normalsize #2}\quad{\footnotesize #3}};}
+% Fact chip for the backend slide. {title}{line}
+\newcommand{\hecho}[2]{%
+  \tikz\node[fill=nube, sombra, rounded corners=11pt, text width=5.2cm, inner xsep=10pt, inner ysep=5pt, align=left]
+    {{\display\normalsize #1}\par{\footnotesize #2}};}
+% Data structure type card: where it is used and why this one. {fill}{type}{where}{why}
+\newcommand{\tipoestructura}[4]{%
   \begin{tikzpicture}[baseline=(current bounding box.north)]
-    \node[fill=nube, sombra, rounded corners=14pt, text width=4.15cm, minimum height=2.45cm, inner sep=8pt, align=left]
-      {{\display\large #2}\par\vspace{3pt}
-       \tikz[baseline=(c.base)]\node[fill=#1, rounded corners=6pt, inner xsep=5pt, inner ysep=2pt, font=\scriptsize\bfseries](c){#3};\
-       {\scriptsize\bfseries\color{inksuave} #5}\par\vspace{4pt}
-       {\footnotesize #4}};
+    \node[fill=#1, sombra, rounded corners=13pt, text width=6.15cm, minimum height=1.75cm, inner xsep=10pt, inner ysep=5pt, align=left]
+      {{\display\large #2}\par\vspace{2pt}{\footnotesize\textbf{Dónde:} #3}\par\vspace{1pt}{\footnotesize\textbf{Por qué:} #4}};
   \end{tikzpicture}}
 
 \begin{document}
@@ -179,6 +174,62 @@
   \estacion{ovulatoriasuave}{\iconoChispa}{DeepSeek}{Diseña tu rutina.}\hfill
   \estacion{menstrualsuave}{\iconoEscudo}{Validador}{Bloquea lo riesgoso.}
   \note{El dato viaja en cuatro paradas. El prototipo ESP32 mide el pulso a unos 100 Hz durante 15 segundos, la temperatura en la frente durante 10 segundos (con la mediana de cada paso) y el empuje isométrico. La IA local limpia la señal, estima la fatiga y fija la carga del día, k\_load; además compara el pulso en reposo con su rango esperado, la temperatura con la suya de siempre y el empuje con su mejor marca. DeepSeek, con GPT-6 Luna de respaldo, diseña la rutina con el objetivo, la fase y las máquinas. Un validador con reglas fijas bloquea lo contraindicado y respeta la carga. La matemática nunca la hace un modelo generativo.}
+\end{frame}}
+
+% ================================================================ Cómo está construido
+\renewcommand{\parte}{El backend}
+{\fondo[lutea!55!nube]{rosaclaro}
+\begin{frame}
+  \transwipe<1>[direction=90, duration=0.5]
+  \transdissolve<2->[duration=0.35]
+  \titular[28]{Cómo está construido}
+  \vspace{.05cm}
+  \bajada{Un backend en capas: cada una hace una sola cosa.}
+  \vspace{.25cm}
+  \begin{columns}[t]
+    \column{.54\textwidth}
+      \capa{luteasuave}{API}{Recibe lo que pide la app y lo que manda el prototipo.}\par\vspace{.18cm}
+      \capa{folicularsuave}{Servicios}{Las reglas: crear la rutina, unirse a un gimnasio, cuentas.}\par\vspace{.18cm}
+      \capa{ovulatoriasuave}{Analítica}{Ordena los datos para responder rápido.}\par\vspace{.18cm}
+      \capa{menstrualsuave}{Datos}{Guarda todo en una base de datos.}
+    \column{.42\textwidth}
+      \onslide<2->{\hecho{Seguridad}{Contraseñas cifradas y cada rol ve solo lo suyo.}}\par\vspace{.18cm}
+      \onslide<3->{\hecho{Sin duplicados}{Si se cae la red, la rutina no se crea dos veces.}}\par\vspace{.18cm}
+      \onslide<4->{\hecho{Casi 500 pruebas}{Revisan solas que ningún cambio rompa nada.}}
+  \end{columns}
+  \note{[Juan Cuarán] El backend está en FastAPI y separado en capas. La API solo recibe peticiones: unas 85 rutas HTTP y un WebSocket por el que llega el prototipo; ahí se revisan los roles (atleta, gimnasio, superadmin) y hay límites por IP en el login. Los servicios tienen los casos de uso; por ejemplo, la autenticación se separó de las rutas. La analítica tiene las estructuras de datos y la base de datos son 22 tablas con SQLAlchemy. Clic: seguridad con Argon2 y JWT con versión. Clic: la captura es reanudable con un request\_id. Clic: casi 500 pruebas automáticas en 7 repositorios.}
+\end{frame}}
+
+% ================================================================ Estructuras de datos (1 de 2)
+{\fondo[folicular!60!nube]{crema}
+\begin{frame}
+  \transpush<1>[direction=0, duration=0.5]
+  \transdissolve<2->[duration=0.35]
+  \titular[28]{Estructuras de datos}
+  \vspace{.05cm}
+  \bajada{Dónde las usamos y por qué esa y no otra.}
+  \vspace{.12cm}
+  \onslide<1->{\tipoestructura{nube}{Arreglos}{las últimas muestras del pulso y del peso.}{siempre son las mismas; un tamaño fijo es lo más rápido.}}\hfill
+  \onslide<2->{\tipoestructura{nube}{Listas}{tu rutina, tus máquinas y tus suplementos.}{crecen o se achican y se recorren en orden.}}\par\vspace{.15cm}
+  \onslide<3->{\tipoestructura{nube}{Cola circular}{el pulso, que llega 100 veces por segundo.}{solo importan los últimos segundos.}}\hfill
+  \onslide<4->{\tipoestructura{nube}{Cola de prioridad}{las alertas de salud al medir.}{la grave va antes, aunque llegue después.}}
+  \note{[Juan Cuarán] No elegimos estructuras por elegir: cada una resuelve un problema concreto. Arreglos: el prototipo guarda siempre la misma cantidad de muestras del pulso y del peso, así que un tamaño fijo es lo más rápido y no gasta memoria. Listas: la rutina, tus máquinas y tus suplementos crecen o se achican y se recorren en orden. Cola circular: el pulso llega 100 veces por segundo y solo nos importan los últimos segundos; el dato nuevo pisa al más viejo y la memoria nunca crece. Cola de prioridad: si hay varias alertas, la grave se atiende primero aunque haya llegado después.}
+\end{frame}}
+
+% ================================================================ Estructuras de datos (2 de 2)
+{\fondo[lutea!55!nube]{crema}
+\begin{frame}
+  \transpush<1>[direction=0, duration=0.5]
+  \transdissolve<2->[duration=0.35]
+  \titular[28]{Estructuras de datos}
+  \vspace{.05cm}
+  \bajada{Las que conectan y buscan datos.}
+  \vspace{.12cm}
+  \onslide<1->{\tipoestructura{nube}{Árboles}{tus estadísticas entre dos fechas.}{responde rápido sin recorrer todo el historial.}}\hfill
+  \onslide<2->{\tipoestructura{nube}{Grafos}{las fases del ciclo y del embarazo.}{una fase lleva a la siguiente y el ciclo se repite.}}\par\vspace{.15cm}
+  \onslide<3->{\tipoestructura{nube}{Tablas hash}{qué máquina sirve para cada ejercicio.}{encuentra un dato por su nombre al instante.}}\hfill
+  \onslide<4->{\tipoestructura{nube}{Claves únicas}{cada pedido de rutina.}{una rutina nunca se genera dos veces.}}\par\vspace{.2cm}
+  \note{[Juan Cuarán] Árboles: para ver tus estadísticas de pulso o temperatura entre dos fechas, un árbol responde rápido sobre cualquier rango sin recorrer todo el historial. Grafos: las fases del ciclo van una detrás de otra y vuelven a empezar, y el embarazo avanza por trimestres; un grafo modela eso tal cual y nos dice cuánto falta para la siguiente fase. Tablas hash: para saber qué máquina del gimnasio sirve para cada ejercicio, buscamos por nombre al instante; la IA también recuerda respuestas así. Claves únicas: cada pedido de rutina tiene un identificador, así una rutina nunca se genera dos veces. No usamos pilas porque ningún proceso necesita deshacer en orden inverso. Si preguntan: hay dos colas más programadas y probadas que hoy no están en uso.}
 \end{frame}}
 
 % ================================================================ 3 · Dos accesos
