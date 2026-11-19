@@ -8,6 +8,9 @@ Academic defense and demo material for **SyncFit Edge**, built with Slidev
 Open [the public SyncFit pitch on Vercel](https://syncfit-presentation-juan-5a09.vercel.app/) in your browser.
 It includes five minutes on the problem and ten minutes for the live demo.
 
+A Beamer (LaTeX) version in the SyncFit brand style, with the same script, is in
+[`beamer/syncfit-pitch.pdf`](./beamer/syncfit-pitch.pdf) (see [`beamer/README.md`](./beamer/README.md)).
+
 ## Architecture
 
 See [`ARCHITECTURE.md`](./ARCHITECTURE.md) for the software architecture

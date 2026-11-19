@@ -22,3 +22,12 @@ pnpm-debug.log*
 .DS_Store
 .idea/
 .vscode/
+
+# LaTeX build files (beamer/)
+beamer/*.aux
+beamer/*.log
+beamer/*.nav
+beamer/*.out
+beamer/*.snm
+beamer/*.toc
+beamer/*.vrb

@@ -1,0 +1,80 @@
+% SyncFit Edge Beamer theme: the brand of the app (syncfit-frontend/app/tokens.css).
+% Pink sky, deep indigo ink, cloud shapes, dripping edges and Pulsi.
+% Compile with XeLaTeX (fontspec loads Fredoka + Nunito from ./fonts).
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerthemesyncfit}[2026/11/19 SyncFit Edge brand theme]
+
+\RequirePackage{fontspec}
+\RequirePackage{tikz}
+\usetikzlibrary{svg.path,positioning,calc}
+\RequirePackage{graphicx}
+
+% ---------- Colors (same hex as app/tokens.css) ----------
+\definecolor{rosa}{HTML}{F1CCDE}
+\definecolor{rosaclaro}{HTML}{F7E4EE}
+\definecolor{nube}{HTML}{FFFAFC}
+\definecolor{crema}{HTML}{F4E1C1}
+\definecolor{ink}{HTML}{2A1D65}
+\definecolor{inksuave}{HTML}{4A3D85}
+\definecolor{lavanda}{HTML}{5E5290}
+\definecolor{lavandanoche}{HTML}{3B2E80}
+\definecolor{lavandatexto}{HTML}{E9E2FF}
+\definecolor{menstrual}{HTML}{F08A7E}
+\definecolor{menstrualsuave}{HTML}{FBD1CB}
+\definecolor{folicular}{HTML}{8FD3B6}
+\definecolor{folicularsuave}{HTML}{D3F1E4}
+\definecolor{ovulatoria}{HTML}{F7C75C}
+\definecolor{ovulatoriasuave}{HTML}{FCE6AE}
+\definecolor{lutea}{HTML}{B9ACEB}
+\definecolor{luteasuave}{HTML}{E3DCFA}
+
+% ---------- Fonts ----------
+\setsansfont{Nunito}[Path=fonts/, Extension=.ttf, UprightFont=*-Regular, BoldFont=*-ExtraBold]
+\newfontfamily\display{Fredoka}[Path=fonts/, Extension=.ttf, UprightFont=*-Bold, BoldFont=*-Bold]
+\newfontfamily\displaymedium{Fredoka}[Path=fonts/, Extension=.ttf, UprightFont=*-Medium]
+\renewcommand{\familydefault}{\sfdefault}
+
+% ---------- Shapes (paths from components/decor/) ----------
+% Cloud: CLOUD_PATH in Cloud.tsx (viewBox 200x110, y grows downward).
+\newcommand{\nube}[3][nube]{% [color]{$tikz coordinate$}{width in cm}
+  \begin{scope}[shift={(#2)}, xscale=#3*0.14226, yscale=-#3*0.14226]% svg.path units are pt: 1cm = 28.4527pt over 200 units
+    \fill[#1] svg {M40 100 C14 100 4 78 18 64 C8 44 30 26 52 36 C56 14 92 6 106 28 C122 10 160 18 158 46 C186 46 196 76 176 90 C170 100 160 100 150 100 Z};
+  \end{scope}}
+% Dripping edge: the "gotea" path in DripDivider.tsx (viewBox 1440x110).
+\newcommand{\gotea}[2]{% {color}{height in cm}, anchored at the top of the slide
+  \begin{scope}[shift={(current page.north west)}, xscale=0.31614, yscale=-#2*0.25866]% 16cm wide page = 455.24pt over 1440; 1cm = 28.4527pt over 110
+    \fill[#1] svg {M0 0 L1440 0 L1440 30 C1380 30 1370 78 1330 78 C1290 78 1300 26 1220 26 C1120 26 1100 60 1010 60 C960 60 966 86 930 86 C892 86 900 34 830 34 C720 34 700 64 600 64 C540 64 548 88 510 88 C472 88 480 28 400 28 C300 28 280 56 190 56 C140 56 150 80 110 80 C70 80 76 32 0 32 Z};
+  \end{scope}}
+
+% ---------- Beamer chrome ----------
+\setbeamercolor{background canvas}{bg=rosa}
+\setbeamercolor{normal text}{fg=ink}
+\setbeamercolor{structure}{fg=ink}
+\setbeamercolor{frametitle}{fg=ink}
+\setbeamerfont{frametitle}{family=\display, size=\huge}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize item}{\color{ink}\raisebox{.15ex}{\tikz\fill[ink] (0,0) circle (.6ex);}}
+\setbeamertemplate{frametitle}{\vspace*{.2cm}\insertframetitle\par}
+
+% Small pill with the minute range of each slide, e.g. "02:00 – 05:00".
+\newcommand{\minutos}[1]{%
+  \tikz[baseline=(t.base)]\node[fill=nube, text=inksuave, rounded corners=7pt, inner xsep=8pt, inner ysep=3pt, font=\small\bfseries](t){#1};}
+
+% Footer: wordmark + part of the talk + slide number.
+\newcommand{\parte}{El problema}
+\setbeamertemplate{footline}{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=south west, inner sep=0pt] at ($(current page.south west)+(.6,.35)$)
+      {\includegraphics[height=.42cm]{img/pulsi.png}\hspace{4pt}{\display\color{ink}\normalsize syncfit}};
+    \node[anchor=south east, font=\footnotesize\bfseries, text=inksuave] at ($(current page.south east)+(-.6,.42)$)
+      {\parte\ \textperiodcentered\ \insertframenumber\ de \inserttotalframenumber};
+  \end{tikzpicture}}
+
+% Rounded "cloud card" used across slides (cards in the app: radius-nube).
+\newcommand{\tarjeta}[4]{% {fill}{width}{title}{body}
+  \begin{tikzpicture}[baseline=(current bounding box.north)]
+    \node[fill=#1, rounded corners=14pt, inner sep=10pt, text width=#2, align=left]
+      {{\display\normalsize #3}\par\vspace{2pt}{\scriptsize\hyphenpenalty=10000\exhyphenpenalty=10000 #4}};
+  \end{tikzpicture}}
+
+\endinput
