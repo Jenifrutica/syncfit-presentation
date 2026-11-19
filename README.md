@@ -15,7 +15,7 @@ the data structures), the speaker script for the three of us, and the live demo.
 
 | What | Where | Notes |
 |---|---|---|
-| **Pitch (Beamer PDF)** — main deck | [`beamer/syncfit-pitch.pdf`](./beamer/syncfit-pitch.pdf) | 8 slides / 20 pages. Open in Adobe Acrobat, full screen (Ctrl/Cmd+L), allow the document's JavaScript for the animations. |
+| **Pitch (Beamer PDF)** — main deck | [`beamer/syncfit-pitch.pdf`](./beamer/syncfit-pitch.pdf) | 8 slides, one page each. Open in Adobe Acrobat, full screen (Ctrl/Cmd+L), allow the document's JavaScript for the animations. |
 | **Script** | [`beamer/GUION.md`](./beamer/GUION.md) | What each of us says per slide, who drives each part of the demo, likely questions. |
 | Pitch (web) | [`public/SyncFit-Pitch.html`](./public/SyncFit-Pitch.html) · [online](https://syncfit-presentation-juan-5a09.vercel.app/) | Same script, opens in any browser. |
 | Live demo | https://syncfit.jenilarper.dev | Shown in the app, without slides, after slide 7. |
