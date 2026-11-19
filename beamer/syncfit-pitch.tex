@@ -44,6 +44,16 @@
       {{\display\large #2}\par\vspace{2pt}{\footnotesize\textbf{Dónde:} #3}\par\vspace{1pt}{\footnotesize\textbf{Por qué:} #4}};
   \end{tikzpicture}}
 
+% Scene card for the context slide: small badge, title, one line. {badge}{icon}{title}{line}
+\newcommand{\escena}[4]{%
+  \begin{tikzpicture}[baseline=(current bounding box.north)]
+    \node[fill=nube, sombra, rounded corners=14pt, text width=3.25cm, minimum height=2cm, inner sep=8pt, align=left]
+      {\scalebox{.55}{\insignia{#1}{#2}}\par\vspace{1pt}{\display\normalsize #3}\par\vspace{1pt}{\footnotesize #4}};
+  \end{tikzpicture}}
+% Wide highlighted fact. {text}
+\newcommand{\destacado}[1]{%
+  \tikz[baseline=(current bounding box.north)]\node[fill=ink, text=nube, sombra, rounded corners=14pt, text width=\dimexpr\linewidth-20pt\relax, inner xsep=10pt, inner ysep=7pt, align=left, font=\small]{#1};}
+
 \begin{document}
 
 % ================================================================ Cover
@@ -78,14 +88,13 @@
   \begin{columns}[c]
     \column{.6\textwidth}
       \titular[25]{El contexto cambia.\\La rutina también.}
-      \vspace{.35cm}
-      \bajada{Llega con menos energía y su máquina está ocupada.}
-      \vspace{.25cm}
-      {\small\color{inksuave} La mayoría de planes se diseñaron con datos de cuerpos masculinos y no cambian con el ciclo.\par}
       \vspace{.3cm}
-      {\burbuja{¿Qué entrena hoy?}}
+      \escena{luteasuave}{\iconoEnergia}{Menos energía}{Hoy llega más cansada que ayer.}\hfill
+      \escena{ovulatoriasuave}{\iconoEquipo}{Máquina ocupada}{Su máquina de siempre no está libre.}\par\vspace{.25cm}
+      \destacado{\textbf{Casi todos los planes} se diseñaron con datos de cuerpos masculinos y no cambian con el ciclo.}
     \column{.37\textwidth}
-      \centering\ilusciclo
+      \centering\ilusciclo\par\vspace{.4cm}
+      {\burbuja{¿Qué entrena hoy?}}
   \end{columns}
   \note{[Juan López] Escena: una atleta llega al gimnasio con menos energía y encuentra su máquina habitual ocupada. Casi todos los planes de entrenamiento se pensaron con datos de cuerpos masculinos. Deja la pregunta en el aire.}
 \end{frame}}
